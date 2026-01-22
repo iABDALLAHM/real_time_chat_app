@@ -6,6 +6,6 @@ Route onGenerateRoute(RouteSettings settings) {
     case SplashView.routeName:
       return MaterialPageRoute(builder: (context) => SplashView());
     default:
-      return MaterialPageRoute(builder: (context) => Placeholder());
+      return MaterialPageRoute(builder: (context) => Scaffold());
   }
 }

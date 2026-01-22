@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:real_time_chat_app/core/functions/on_generate_route.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
+import 'package:real_time_chat_app/features/splash/presentation/views/widgets/splash_view.dart';
 import 'package:real_time_chat_app/firebase_options.dart';
 
 void main() async {
@@ -16,13 +17,12 @@ class RealTimeChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // initialRoute: ,
+      initialRoute: SplashView.routeName,
       onGenerateRoute: onGenerateRoute,
       themeMode: ThemeMode.light,
       theme: AppTheme.lightTheme,
       title: "Chat App",
       debugShowCheckedModeBanner: false,
-      home: Placeholder(),
     );
   }
 }
