@@ -6,20 +6,21 @@ class CustomTextFormField extends StatelessWidget {
     required this.labelText,
     required this.hintText,
     required this.onSaved,
+    required this.prefixIcon,
   });
   final String labelText, hintText;
   final Function(String?) onSaved;
+  final Icon prefixIcon;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       onSaved: onSaved,
-      
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         errorStyle: TextStyle(fontSize: 0),
         labelText: labelText,
-        prefixIcon: Icon(Icons.email_outlined),
+        prefixIcon: prefixIcon,
         hintText: hintText,
       ),
       validator: (value) {

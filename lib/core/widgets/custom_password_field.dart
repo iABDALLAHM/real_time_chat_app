@@ -6,9 +6,13 @@ class CustomPasswordField extends StatefulWidget {
     required this.labelText,
     required this.hintText,
     required this.onSaved,
+     this.controller,
+    required this.validator,
   });
   final String labelText, hintText;
   final Function(String?) onSaved;
+  final TextEditingController? controller;
+  final String? Function(String?)? validator;
   @override
   State<CustomPasswordField> createState() => _CustomPasswordFieldState();
 }
@@ -18,6 +22,7 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.controller,
       onSaved: widget.onSaved,
       obscureText: isPassword,
       keyboardType: TextInputType.emailAddress,
@@ -29,23 +34,14 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
             setState(() {});
           },
           child: isPassword
-              ? Icon(Icons.visibility_off)
-              : Icon(Icons.remove_red_eye),
+              ? Icon(Icons.visibility_off_outlined)
+              : Icon(Icons.remove_red_eye_outlined),
         ),
         labelText: widget.labelText,
         prefixIcon: Icon(Icons.lock_outline),
         hintText: widget.hintText,
       ),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return "";
-        }
-        if (value.length < 6) {
-          return "password must be at least 6 characters";
-        } else {
-          return null;
-        }
-      },
+      validator: widget.validator,
     );
   }
 }

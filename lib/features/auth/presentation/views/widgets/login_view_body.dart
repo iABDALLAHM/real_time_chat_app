@@ -3,7 +3,8 @@ import 'package:real_time_chat_app/core/utils/app_theme.dart';
 import 'package:real_time_chat_app/core/widgets/custom_button.dart';
 import 'package:real_time_chat_app/core/widgets/custom_password_field.dart';
 import 'package:real_time_chat_app/core/widgets/custom_text_form_field.dart';
-import 'package:real_time_chat_app/features/auth/presentation/views/widgets/login_rich_text.dart';
+import 'package:real_time_chat_app/features/auth/presentation/views/register_view.dart';
+import 'package:real_time_chat_app/features/auth/presentation/views/widgets/forget_password_text_button.dart';
 
 class LoginViewBody extends StatefulWidget {
   const LoginViewBody({super.key});
@@ -15,11 +16,13 @@ class LoginViewBody extends StatefulWidget {
 class _LoginViewBodyState extends State<LoginViewBody> {
   bool isPressed = false;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Form(
+        autovalidateMode: autovalidateMode,
         key: formKey,
         child: SingleChildScrollView(
           child: Column(
@@ -53,12 +56,23 @@ class _LoginViewBodyState extends State<LoginViewBody> {
               ),
               const SizedBox(height: 40),
               CustomTextFormField(
+                prefixIcon: Icon(Icons.email_outlined),
                 onSaved: (value) {},
                 labelText: "Email",
                 hintText: "Enter your email",
               ),
               const SizedBox(height: 16),
               CustomPasswordField(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "";
+                  }
+                  if (value.length < 6) {
+                    return "password must be at least 6 characters";
+                  } else {
+                    return null;
+                  }
+                },
                 onSaved: (value) {},
                 labelText: "Password",
                 hintText: "Enter your password",
@@ -82,12 +96,15 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                       formKey.currentState!.save();
                       // isPressed = !isPressed;
                       setState(() {});
+                    } else {
+                      autovalidateMode = AutovalidateMode.always;
+                      setState(() {});
                     }
                   },
                 ),
               ),
               const SizedBox(height: 24),
-              LoginRichText(),
+              ForgetPasswordTextButton(),
               const SizedBox(height: 24),
               Row(
                 children: [
@@ -107,12 +124,12 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Don't have an account?  ",
+                    "Don't have an account? ",
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   GestureDetector(
                     onTap: () {
-                      // Navigator.of(context).pushNamed(routeName)
+                      Navigator.of(context).pushNamed(RegisterView.routeName);
                     },
                     child: Text(
                       "Sign Up",

@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
 
-class LoginRichText extends StatelessWidget {
-  const LoginRichText({super.key});
+class ForgetPasswordTextButton extends StatelessWidget {
+  const ForgetPasswordTextButton({super.key});
 
   @override
   Widget build(BuildContext context) {
