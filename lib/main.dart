@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:real_time_chat_app/core/functions/on_generate_route.dart';
+import 'package:real_time_chat_app/core/services/get_it_service.dart';
+import 'package:real_time_chat_app/core/services/shared_prefs_service.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
 import 'package:real_time_chat_app/features/splash/presentation/views/splash_view.dart';
 import 'package:real_time_chat_app/firebase_options.dart';
@@ -8,6 +10,9 @@ import 'package:real_time_chat_app/firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  Firebase.initializeApp();
+  setupGetIt();
+  SharedPrefsService.initSharedPrefs();
   runApp(const RealTimeChat());
 }
 
