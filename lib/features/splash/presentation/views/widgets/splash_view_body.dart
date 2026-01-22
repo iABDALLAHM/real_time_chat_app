@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
+import 'package:real_time_chat_app/features/auth/presentation/views/login_view.dart';
 
 class SplashViewBody extends StatefulWidget {
   const SplashViewBody({super.key});
@@ -27,7 +28,7 @@ class _SplashViewBodyState extends State<SplashViewBody>
     _scaleAnimation = Tween<double>(begin: 0.5, end: 1).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.elasticOut),
     );
-
+    navigateToLogin();
     _animationController.forward();
   }
 
@@ -92,5 +93,11 @@ class _SplashViewBodyState extends State<SplashViewBody>
         ),
       ),
     );
+  }
+
+  void navigateToLogin() {
+    Future.delayed(Duration(seconds: 2), () {
+      Navigator.pushNamed(context, LoginView.routeName);
+    });
   }
 }
