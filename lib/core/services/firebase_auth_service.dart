@@ -102,4 +102,25 @@ class FirebaseAuthService implements AuthService {
       );
     }
   }
+
+  @override
+  Future<void> sendPasswordResetEmail({required String email}) async {
+    try {
+      await firebaseAuth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      throw CustomException(
+        exceptionMeassge: "faild to send password reset email $e",
+      );
+    }
+  }
+
+  @override
+  Future<void> signOut() async {
+    await firebaseAuth.signOut();
+  }
+
+  @override
+  Future<void> deleteAccount() async {
+    await firebaseAuth.currentUser!.delete();
+  }
 }
