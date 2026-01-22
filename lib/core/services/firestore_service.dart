@@ -7,14 +7,21 @@ class FirestoreService implements DataBaseService {
   Future<void> addData({
     required String path,
     required Map<String, dynamic> data,
-    required String documentId,
+    String? documentId,
   }) async {
-    await firestore.collection(path).doc(documentId).set(data);
+    if (documentId != null) {
+      await firestore.collection(path).doc(documentId).set(data);
+    } else {
+      await firestore.collection(path).add(data);
+    }
   }
 
   @override
-  Future<void> getData({required String path}) {
-    // TODO: implement getData
-    throw UnimplementedError();
+  Future<void> getData({required String path, String? documentId}) async {
+    if (documentId != null) {
+      await firestore.collection(path).doc(documentId).get();
+    } else {
+      await firestore.collection(path).get();
+    }
   }
 }
