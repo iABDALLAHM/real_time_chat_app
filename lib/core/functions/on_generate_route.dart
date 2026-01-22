@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:real_time_chat_app/features/splash/presentation/views/widgets/splash_view.dart';
+import 'package:real_time_chat_app/features/splash/presentation/views/splash_view.dart';
 
 Route onGenerateRoute(RouteSettings settings) {
   switch (settings.name) {
