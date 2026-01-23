@@ -5,12 +5,12 @@ class CustomPasswordField extends StatefulWidget {
     super.key,
     required this.labelText,
     required this.hintText,
-    required this.onSaved,
+     this.onSaved,
      this.controller,
     required this.validator,
   });
   final String labelText, hintText;
-  final Function(String?) onSaved;
+  final Function(String?)? onSaved;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
   @override

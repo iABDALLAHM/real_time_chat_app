@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
 import 'package:real_time_chat_app/core/widgets/custom_button.dart';
 import 'package:real_time_chat_app/core/widgets/custom_password_field.dart';
 import 'package:real_time_chat_app/core/widgets/custom_text_form_field.dart';
+import 'package:real_time_chat_app/features/auth/presentation/manager/register_cubit/cubit/register_cubit.dart';
+import 'package:real_time_chat_app/features/auth/presentation/views/widgets/custom_or_section.dart';
 import 'package:real_time_chat_app/features/auth/presentation/views/widgets/register_rich_text.dart';
 
 class RegisterViewBody extends StatefulWidget {
@@ -14,7 +17,7 @@ class RegisterViewBody extends StatefulWidget {
 
 class _RegisterViewBodyState extends State<RegisterViewBody> {
   late TextEditingController passwordController, confirmPasswordController;
-
+  late String email, name, password;
   bool isPressed = false;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
@@ -69,14 +72,18 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
               const SizedBox(height: 40),
               CustomTextFormField(
                 prefixIcon: Icon(Icons.person_outlined),
-                onSaved: (value) {},
+                onSaved: (value) {
+                  name = value!;
+                },
                 labelText: "Display Name",
                 hintText: "Enter your name",
               ),
               const SizedBox(height: 16),
               CustomTextFormField(
                 prefixIcon: Icon(Icons.email_outlined),
-                onSaved: (value) {},
+                onSaved: (value) {
+                  email = value!;
+                },
                 labelText: "Email",
                 hintText: "Enter your email",
               ),
@@ -93,7 +100,9 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                   }
                 },
                 controller: passwordController,
-                onSaved: (value) {},
+                onSaved: (value) {
+                  password = value!;
+                },
                 labelText: "Password",
                 hintText: "Enter your password",
               ),
@@ -114,7 +123,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                   }
                 },
                 controller: confirmPasswordController,
-                onSaved: (value) {},
+
                 labelText: "Confirm Password",
                 hintText: "Confirm your password",
               ),
@@ -135,8 +144,10 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();
-                      // isPressed = !isPressed;
+                      isPressed = true;
+                      triggerRegisterCubit(context);
                       setState(() {});
+                      isPressed = false;
                     } else {
                       autovalidateMode = AutovalidateMode.always;
                       setState(() {});
@@ -145,25 +156,21 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                 ),
               ),
               const SizedBox(height: 24),
-              Row(
-                children: [
-                  Expanded(child: Divider(color: AppTheme.borderColor)),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: Text(
-                      "OR",
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ),
-                  Expanded(child: Divider(color: AppTheme.borderColor)),
-                ],
-              ),
+              CustomOrSection(),
               const SizedBox(height: 32),
               RegisterRichText(),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  void triggerRegisterCubit(BuildContext context) {
+    context.read<RegisterCubit>().register(
+      email: email,
+      name: name,
+      password: password,
     );
   }
 }
