@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
 import 'package:real_time_chat_app/core/widgets/custom_button.dart';
 import 'package:real_time_chat_app/core/widgets/custom_password_field.dart';
 import 'package:real_time_chat_app/core/widgets/custom_text_form_field.dart';
+import 'package:real_time_chat_app/features/auth/presentation/manager/login_cubit/login_cubit.dart';
 import 'package:real_time_chat_app/features/auth/presentation/views/register_view.dart';
 import 'package:real_time_chat_app/features/auth/presentation/views/widgets/forget_password_text_button.dart';
 
@@ -17,6 +19,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
   bool isPressed = false;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+  late String email, password;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -57,7 +60,9 @@ class _LoginViewBodyState extends State<LoginViewBody> {
               const SizedBox(height: 40),
               CustomTextFormField(
                 prefixIcon: Icon(Icons.email_outlined),
-                onSaved: (value) {},
+                onSaved: (value) {
+                  email = value!;
+                },
                 labelText: "Email",
                 hintText: "Enter your email",
               ),
@@ -73,7 +78,9 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                     return null;
                   }
                 },
-                onSaved: (value) {},
+                onSaved: (value) {
+                  password = value!;
+                },
                 labelText: "Password",
                 hintText: "Enter your password",
               ),
@@ -93,8 +100,10 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                       : Text("Sign In"),
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
+                      isPressed = true;
                       formKey.currentState!.save();
-                      // isPressed = !isPressed;
+                      triggerLoginCubit(context);
+                      isPressed = false;
                       setState(() {});
                     } else {
                       autovalidateMode = AutovalidateMode.always;
@@ -146,5 +155,9 @@ class _LoginViewBodyState extends State<LoginViewBody> {
         ),
       ),
     );
+  }
+
+  void triggerLoginCubit(BuildContext context) {
+    context.read<LoginCubit>().login(email: email, password: password);
   }
 }

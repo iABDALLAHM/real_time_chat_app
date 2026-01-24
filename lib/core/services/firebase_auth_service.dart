@@ -88,6 +88,16 @@ class FirebaseAuthService implements AuthService {
           exceptionMeassge:
               "No internet connection. Please check your network and try again.",
         );
+      } else if (e.code == "invalid-credential") {
+        throw CustomException(
+          exceptionMeassge:
+              "No account found with this email. Please sign up to continue.",
+        );
+      } else if (e.code == "too-many-requests") {
+        throw CustomException(
+          exceptionMeassge:
+              "For security reasons, too many requests were made. Please try again after a few minutes.",
+        );
       } else {
         throw CustomException(
           exceptionMeassge: "Something went wrong. Please try again later.",

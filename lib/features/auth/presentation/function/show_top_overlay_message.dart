@@ -21,7 +21,9 @@ void showTopOverlayMessage(BuildContext context, {required String message}) {
           ),
           child: Text(
             message,
-            style: const TextStyle(color: Colors.white),
+            style: Theme.of(
+              context,
+            ).textTheme.headlineSmall?.copyWith(color: Colors.white),
             textAlign: TextAlign.center,
           ),
         ),
