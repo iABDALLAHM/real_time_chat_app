@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:real_time_chat_app/features/auth/presentation/views/forget_password_view.dart';
 import 'package:real_time_chat_app/features/auth/presentation/views/login_view.dart';
 import 'package:real_time_chat_app/features/auth/presentation/views/register_view.dart';
 import 'package:real_time_chat_app/features/splash/presentation/views/splash_view.dart';
@@ -11,6 +12,8 @@ Route onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => LoginView());
     case RegisterView.routeName:
       return MaterialPageRoute(builder: (context) => RegisterView());
+    case ForgetPasswordView.routeName:
+      return MaterialPageRoute(builder: (context) => ForgetPasswordView());
     default:
       return MaterialPageRoute(builder: (context) => Scaffold());
   }
