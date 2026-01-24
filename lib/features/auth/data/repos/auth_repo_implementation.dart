@@ -59,4 +59,14 @@ class AuthRepoImplementation implements AuthRepo {
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> resetPassword({required String email}) async {
+    try {
+      await authService.sendPasswordResetEmail(email: email);
+      return Right(null);
+    } catch (e) {
+      return Left(ServerFailure(errMessage: e.toString()));
+    }
+  }
 }
