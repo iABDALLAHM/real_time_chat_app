@@ -5,8 +5,8 @@ class CustomPasswordField extends StatefulWidget {
     super.key,
     required this.labelText,
     required this.hintText,
-     this.onSaved,
-     this.controller,
+    this.onSaved,
+    this.controller,
     required this.validator,
   });
   final String labelText, hintText;
@@ -18,7 +18,7 @@ class CustomPasswordField extends StatefulWidget {
 }
 
 class _CustomPasswordFieldState extends State<CustomPasswordField> {
-  bool isPassword = false;
+  bool isPassword = true;
   @override
   Widget build(BuildContext context) {
     return TextFormField(

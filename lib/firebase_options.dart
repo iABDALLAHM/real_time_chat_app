@@ -41,48 +41,49 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAtCEzLN-UPWJakhZQs3vX477jtTjEUa7o',
-    appId: '1:35575413229:web:7be53a75c1d6c978838fe4',
-    messagingSenderId: '35575413229',
-    projectId: 'chat-real-time-ab69e',
-    authDomain: 'chat-real-time-ab69e.firebaseapp.com',
-    storageBucket: 'chat-real-time-ab69e.firebasestorage.app',
-    measurementId: 'G-25W6RR0D4X',
+    apiKey: 'AIzaSyAiUeuP3kUqXmkxZzUVzxBGi1FaSRKh57k',
+    appId: '1:265856517704:web:35a591811eb4515bc27a7d',
+    messagingSenderId: '265856517704',
+    projectId: 'real-time-chat-applicati-2b6bd',
+    authDomain: 'real-time-chat-applicati-2b6bd.firebaseapp.com',
+    storageBucket: 'real-time-chat-applicati-2b6bd.firebasestorage.app',
+    measurementId: 'G-Z4JJPYLQR8',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCWL21_4nd_GIMOC2gCxGJV0bX4BEyHyn4',
-    appId: '1:35575413229:android:1800ac2fd66dbb57838fe4',
-    messagingSenderId: '35575413229',
-    projectId: 'chat-real-time-ab69e',
-    storageBucket: 'chat-real-time-ab69e.firebasestorage.app',
+    apiKey: 'AIzaSyB5X53PZxXyCuAn4qFE62uK4BKsynvLDPQ',
+    appId: '1:265856517704:android:1d43188a5aeade80c27a7d',
+    messagingSenderId: '265856517704',
+    projectId: 'real-time-chat-applicati-2b6bd',
+    storageBucket: 'real-time-chat-applicati-2b6bd.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCFejgcVmLHGbpD9baGHev7ZR4DehJ888c',
-    appId: '1:35575413229:ios:3b5a54c174392d31838fe4',
-    messagingSenderId: '35575413229',
-    projectId: 'chat-real-time-ab69e',
-    storageBucket: 'chat-real-time-ab69e.firebasestorage.app',
+    apiKey: 'AIzaSyCat4hwXZzJPucnIYe5qCYynERUmvahMjU',
+    appId: '1:265856517704:ios:bf7aec28ef0fc394c27a7d',
+    messagingSenderId: '265856517704',
+    projectId: 'real-time-chat-applicati-2b6bd',
+    storageBucket: 'real-time-chat-applicati-2b6bd.firebasestorage.app',
     iosBundleId: 'com.example.realTimeChatApp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCFejgcVmLHGbpD9baGHev7ZR4DehJ888c',
-    appId: '1:35575413229:ios:3b5a54c174392d31838fe4',
-    messagingSenderId: '35575413229',
-    projectId: 'chat-real-time-ab69e',
-    storageBucket: 'chat-real-time-ab69e.firebasestorage.app',
+    apiKey: 'AIzaSyCat4hwXZzJPucnIYe5qCYynERUmvahMjU',
+    appId: '1:265856517704:ios:bf7aec28ef0fc394c27a7d',
+    messagingSenderId: '265856517704',
+    projectId: 'real-time-chat-applicati-2b6bd',
+    storageBucket: 'real-time-chat-applicati-2b6bd.firebasestorage.app',
     iosBundleId: 'com.example.realTimeChatApp',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyAtCEzLN-UPWJakhZQs3vX477jtTjEUa7o',
-    appId: '1:35575413229:web:fc85222db4985d6a838fe4',
-    messagingSenderId: '35575413229',
-    projectId: 'chat-real-time-ab69e',
-    authDomain: 'chat-real-time-ab69e.firebaseapp.com',
-    storageBucket: 'chat-real-time-ab69e.firebasestorage.app',
-    measurementId: 'G-239MFNLCD4',
+    apiKey: 'AIzaSyAiUeuP3kUqXmkxZzUVzxBGi1FaSRKh57k',
+    appId: '1:265856517704:web:dd584bf438683899c27a7d',
+    messagingSenderId: '265856517704',
+    projectId: 'real-time-chat-applicati-2b6bd',
+    authDomain: 'real-time-chat-applicati-2b6bd.firebaseapp.com',
+    storageBucket: 'real-time-chat-applicati-2b6bd.firebasestorage.app',
+    measurementId: 'G-95EY3T77HX',
   );
+
 }

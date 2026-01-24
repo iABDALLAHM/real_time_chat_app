@@ -1,15 +1,24 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:real_time_chat_app/core/entities/user_entity.dart';
 import 'package:real_time_chat_app/core/errors/custom_exception.dart';
 import 'package:real_time_chat_app/core/errors/failure.dart';
+import 'package:real_time_chat_app/core/models/user_model.dart';
 import 'package:real_time_chat_app/core/services/auth_service.dart';
+import 'package:real_time_chat_app/core/services/data_base_service.dart';
+import 'package:real_time_chat_app/core/utils/backend_end_points.dart';
 import 'package:real_time_chat_app/features/auth/domain/repos/auth_repo.dart';
 
 class AuthRepoImplementation implements AuthRepo {
   final AuthService authService;
+  final DataBaseService dataBaseService;
 
-  AuthRepoImplementation({required this.authService});
+  AuthRepoImplementation({
+    required this.authService,
+    required this.dataBaseService,
+  });
   @override
   Future<Either<Failure, UserEntity>> register({
     required String email,
@@ -31,8 +40,24 @@ class AuthRepoImplementation implements AuthRepo {
         lastSeen: DateTime.now(),
         createdAt: DateTime.now(),
       );
-      return Right(userEntity);
+      try {
+        await addUserData(userEntity: userEntity);
+        return Right(userEntity);
+      } catch (e) {
+        authService.deleteAccount();
+        log(
+          "error in the AuthRepoImplementation in addUserData method the error is {$e} فشل إضافة المستخدم الي ال dataBase",
+        );
+        return Left(
+          ServerFailure(
+            errMessage: "Failed to create account. Please try again.",
+          ),
+        );
+      }
     } on CustomException catch (e) {
+      log(
+        "error in the AuthRepoImplementation in register method the error is $e",
+      );
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -68,5 +93,14 @@ class AuthRepoImplementation implements AuthRepo {
     } catch (e) {
       return Left(ServerFailure(errMessage: e.toString()));
     }
+  }
+
+  @override
+  Future<void> addUserData({required UserEntity userEntity}) async {
+    await dataBaseService.addData(
+      documentId: userEntity.uId,
+      path: BackendEndPoints.addUsers,
+      data: UserModel.fromEntity(userEntity).toMap(),
+    );
   }
 }

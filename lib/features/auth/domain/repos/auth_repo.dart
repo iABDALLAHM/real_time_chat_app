@@ -13,4 +13,5 @@ abstract class AuthRepo {
     required String name,
   });
   Future<Either<Failure, void>> resetPassword({required String email});
+  Future<void> addUserData({required UserEntity userEntity});
 }

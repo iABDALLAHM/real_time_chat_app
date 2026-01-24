@@ -21,7 +21,6 @@ class FirebaseAuthService implements AuthService {
       log(
         "error happend in FirebaseAuthService in register method please check it, the error: $e",
       );
-
       if (e.code == 'weak-password') {
         throw CustomException(
           exceptionMeassge:

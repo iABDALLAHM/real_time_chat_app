@@ -23,5 +23,5 @@ class FirestoreService implements DataBaseService {
     } else {
       await firestore.collection(path).get();
     }
-  }
+  }     
 }
