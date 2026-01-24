@@ -5,6 +5,8 @@ import 'package:real_time_chat_app/core/widgets/custom_button.dart';
 import 'package:real_time_chat_app/core/widgets/custom_text_form_field.dart';
 import 'package:real_time_chat_app/features/auth/presentation/manager/reset_password_cubit/reset_password_cubit.dart';
 import 'package:real_time_chat_app/features/auth/presentation/views/widgets/email_sent_content_bloc_builder.dart';
+import 'package:real_time_chat_app/features/auth/presentation/views/widgets/remember_password_section.dart';
+import 'package:real_time_chat_app/features/auth/presentation/views/widgets/reset_password_home_icon.dart';
 
 class ForgetPasswordViewBody extends StatefulWidget {
   const ForgetPasswordViewBody({super.key});
@@ -55,21 +57,7 @@ class _ForgetPasswordViewBodyState extends State<ForgetPasswordViewBody> {
                 ),
               ),
               const SizedBox(height: 60),
-              Center(
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    color: AppTheme.primaryColor.withOpacity(0.1),
-                  ),
-                  child: Icon(
-                    Icons.lock_reset_rounded,
-                    size: 50,
-                    color: AppTheme.primaryColor,
-                  ),
-                ),
-              ),
+              ResetPasswordHomeIcon(),
               const SizedBox(height: 40),
               EmailSentContentBlocBuilder(),
               const SizedBox(height: 40),
@@ -108,27 +96,7 @@ class _ForgetPasswordViewBodyState extends State<ForgetPasswordViewBody> {
                 ),
               ),
               const SizedBox(height: 32),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Remember Your Password?",
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  const SizedBox(width: 8),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      "Sign In",
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: AppTheme.primaryColor,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              RememberPasswordSection(),
             ],
           ),
         ),
@@ -136,3 +104,4 @@ class _ForgetPasswordViewBodyState extends State<ForgetPasswordViewBody> {
     );
   }
 }
+
