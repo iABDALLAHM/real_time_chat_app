@@ -4,7 +4,7 @@ import 'package:real_time_chat_app/core/utils/app_theme.dart';
 import 'package:real_time_chat_app/core/widgets/custom_button.dart';
 import 'package:real_time_chat_app/core/widgets/custom_password_field.dart';
 import 'package:real_time_chat_app/core/widgets/custom_text_form_field.dart';
-import 'package:real_time_chat_app/features/auth/presentation/manager/register_cubit/cubit/register_cubit.dart';
+import 'package:real_time_chat_app/features/auth/presentation/manager/register_cubit/register_cubit.dart';
 import 'package:real_time_chat_app/features/auth/presentation/views/widgets/custom_or_section.dart';
 import 'package:real_time_chat_app/features/auth/presentation/views/widgets/register_rich_text.dart';
 
