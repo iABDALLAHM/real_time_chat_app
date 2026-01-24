@@ -4,5 +4,5 @@ abstract class DataBaseService {
     required Map<String, dynamic> data,
     String? documentId,
   });
-  Future<void> getData({required String path, String? documentId});
+  Future<dynamic> getData({required String path, String? documentId});
 }
