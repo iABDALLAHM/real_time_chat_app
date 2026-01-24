@@ -12,7 +12,7 @@ class RegisterViewBodyBlocListener extends StatelessWidget {
     return BlocListener<RegisterCubit, RegisterStates>(
       listener: (context, state) {
         if (state is SuccessRegisterState) {
-          showTopOverlayMessage(context, message: "success create account");
+          showTopOverlayMessage(context, message: "Success create account");
           Navigator.pop(context);
         } else if (state is FailureRegisterState) {
           showTopOverlayMessage(context, message: state.errMessage);
