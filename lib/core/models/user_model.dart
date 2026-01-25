@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:real_time_chat_app/core/entities/user_entity.dart';
 
 class UserModel {
@@ -23,9 +24,9 @@ class UserModel {
       uId: json["uId"],
       email: json["email"],
       displayName: json["displayName"],
-      photoUrl: json["photoUrl"],
-      lastSeen: DateTime.fromMicrosecondsSinceEpoch(json["lastSeen"]),
-      createdAt: DateTime.fromMicrosecondsSinceEpoch(json["createdAt"]),
+      photoUrl: json["photoUrl"] ?? " ",
+      lastSeen: (json["lastSeen"] as Timestamp).toDate(),
+      createdAt: (json["createdAt"] as Timestamp).toDate(),
     );
   }
   factory UserModel.fromEntity(UserEntity userEntity) {
@@ -55,8 +56,8 @@ class UserModel {
       "email": email,
       "displayName": displayName,
       "isOnline": isOnline,
-      "lastSeen": lastSeen,
-      "createdAt": createdAt,
+      "lastSeen": lastSeen.toString(),
+      "createdAt": createdAt.toString(),
       "photoUrl": photoUrl,
     };
   }

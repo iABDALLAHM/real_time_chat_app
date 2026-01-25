@@ -19,9 +19,10 @@ class FirestoreService implements DataBaseService {
   @override
   Future<dynamic> getData({required String path, String? documentId}) async {
     if (documentId != null) {
-      await firestore.collection(path).doc(documentId).get();
+      var data = await firestore.collection(path).doc(documentId).get();
+      return data.data();
     } else {
-      await firestore.collection(path).get();
+      return await firestore.collection(path).get();
     }
-  }     
+  }
 }
