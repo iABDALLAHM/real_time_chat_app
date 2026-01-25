@@ -19,16 +19,30 @@ class UserModel {
     required this.lastSeen,
     required this.createdAt,
   });
+
+  factory UserModel.fromMap(Map<String, dynamic> json) {
+    return UserModel(
+      uId: json["uId"],
+      email: json["email"],
+      displayName: json["displayName"],
+      photoUrl: json["photoUrl"] ?? "",
+      lastSeen: (json["lastSeen"] as Timestamp).toDate(),
+      createdAt: (json["createdAt"] as Timestamp).toDate(),
+    );
+  }
+  
+  // This is a specific to the case of the get data in adevice localy
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       uId: json["uId"],
       email: json["email"],
       displayName: json["displayName"],
-      photoUrl: json["photoUrl"] ?? " ",
-      lastSeen: (json["lastSeen"] as Timestamp).toDate(),
-      createdAt: (json["createdAt"] as Timestamp).toDate(),
+      photoUrl: json["photoUrl"] ?? "",
+      lastSeen: DateTime.fromMillisecondsSinceEpoch(json["lastSeen"]),
+      createdAt: DateTime.fromMillisecondsSinceEpoch(json["createdAt"]),
     );
   }
+
   factory UserModel.fromEntity(UserEntity userEntity) {
     return UserModel(
       uId: userEntity.uId,
@@ -39,6 +53,7 @@ class UserModel {
       createdAt: userEntity.createdAt,
     );
   }
+
   UserEntity toEntity() {
     return UserEntity(
       uId: uId,
@@ -50,14 +65,25 @@ class UserModel {
     );
   }
 
+  // This is a specific to the case of the save data in adevice localy
+  Map<String, dynamic> toJson() {
+    return {
+      "uId": uId,
+      "email": email,
+      "displayName": displayName,
+      "lastSeen": lastSeen.millisecondsSinceEpoch,
+      "createdAt": createdAt.millisecondsSinceEpoch,
+    };
+  }
+
   Map<String, dynamic> toMap() {
     return {
       "uId": uId,
       "email": email,
       "displayName": displayName,
       "isOnline": isOnline,
-      "lastSeen": lastSeen.toString(),
-      "createdAt": createdAt.toString(),
+      "lastSeen": lastSeen,
+      "createdAt": createdAt,
       "photoUrl": photoUrl,
     };
   }

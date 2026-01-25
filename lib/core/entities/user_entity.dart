@@ -16,8 +16,4 @@ class UserEntity {
     required this.lastSeen,
     required this.createdAt,
   });
-
-
-
-  
 }

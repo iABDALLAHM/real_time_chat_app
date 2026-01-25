@@ -110,13 +110,13 @@ class AuthRepoImplementation implements AuthRepo {
       path: BackendEndPoints.getUsers,
       documentId: uId,
     );
-    UserEntity userEntity = UserModel.fromJson(userMap).toEntity();
+    UserEntity userEntity = UserModel.fromMap(userMap).toEntity();
     return userEntity;
   }
 
   @override
   void saveUserData({required UserEntity userEntity}) {
-    var value = jsonEncode(UserModel.fromEntity(userEntity).toMap());
+    var value = jsonEncode(UserModel.fromEntity(userEntity).toJson());
     SharedPrefsService.setData(key: kUserLocalData, value: value);
   }
 }

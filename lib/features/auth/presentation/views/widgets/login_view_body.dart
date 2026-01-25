@@ -103,6 +103,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                       isPressed = true;
                       formKey.currentState!.save();
                       triggerLoginCubit(context);
+
                       isPressed = false;
                       setState(() {});
                     } else {
