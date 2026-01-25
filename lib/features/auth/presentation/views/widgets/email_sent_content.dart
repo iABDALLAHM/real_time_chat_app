@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
+import 'package:real_time_chat_app/features/auth/presentation/manager/reset_password_cubit/reset_password_cubit.dart';
 
 class EmailSentContent extends StatelessWidget {
   const EmailSentContent({super.key});
@@ -40,11 +42,11 @@ class EmailSentContent extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                "amabdgalil@gmail.com",
+                context.read<ResetPasswordCubit>().emailResend!,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: AppTheme.textsecondaryColor,
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodySmall?.copyWith(color: AppTheme.primaryColor),
               ),
               const SizedBox(height: 12),
               Text(

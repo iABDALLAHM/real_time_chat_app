@@ -16,7 +16,7 @@ class ForgetPasswordViewBody extends StatefulWidget {
 }
 
 class _ForgetPasswordViewBodyState extends State<ForgetPasswordViewBody> {
-  late String emailResend;
+  String? emailResend;
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
@@ -86,7 +86,7 @@ class _ForgetPasswordViewBodyState extends State<ForgetPasswordViewBody> {
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();
                       context.read<ResetPasswordCubit>().resetPassword(
-                        email: emailResend,
+                        email: emailResend!,
                       );
                     } else {
                       autovalidateMode = AutovalidateMode.always;
@@ -104,4 +104,3 @@ class _ForgetPasswordViewBodyState extends State<ForgetPasswordViewBody> {
     );
   }
 }
-

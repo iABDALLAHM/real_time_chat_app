@@ -6,7 +6,10 @@ class ResetPasswordCubit extends Cubit<ResetPasswordStates> {
   ResetPasswordCubit({required this.authRepo})
     : super(InitialResetPasswordState());
   final AuthRepo authRepo;
+  String? emailResend;
   Future resetPassword({required String email}) async {
+    emit(LoadingResetPasswordState());
+    emailResend = email;
     var result = await authRepo.resetPassword(email: email);
     result.fold(
       (failure) {
