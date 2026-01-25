@@ -97,6 +97,7 @@ class _ForgetPasswordViewBodyState extends State<ForgetPasswordViewBody> {
               ),
               const SizedBox(height: 32),
               RememberPasswordSection(),
+              const SizedBox(height: 40),
             ],
           ),
         ),
