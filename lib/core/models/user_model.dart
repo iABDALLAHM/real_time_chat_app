@@ -15,13 +15,14 @@ class UserModel {
     required this.email,
     required this.displayName,
     this.photoUrl,
-    this.isOnline = false,
+    required this.isOnline,
     required this.lastSeen,
     required this.createdAt,
   });
 
   factory UserModel.fromMap(Map<String, dynamic> json) {
     return UserModel(
+      isOnline: json["isOnline"],
       uId: json["uId"],
       email: json["email"],
       displayName: json["displayName"],
@@ -30,10 +31,11 @@ class UserModel {
       createdAt: (json["createdAt"] as Timestamp).toDate(),
     );
   }
-  
+
   // This is a specific to the case of the get data in adevice localy
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
+      isOnline: json["isOnline"],
       uId: json["uId"],
       email: json["email"],
       displayName: json["displayName"],
@@ -45,6 +47,7 @@ class UserModel {
 
   factory UserModel.fromEntity(UserEntity userEntity) {
     return UserModel(
+      isOnline: userEntity.isOnline,
       uId: userEntity.uId,
       email: userEntity.email,
       displayName: userEntity.displayName,
@@ -56,6 +59,7 @@ class UserModel {
 
   UserEntity toEntity() {
     return UserEntity(
+      isOnline: isOnline,
       uId: uId,
       email: email,
       displayName: displayName,
@@ -68,6 +72,7 @@ class UserModel {
   // This is a specific to the case of the save data in adevice localy
   Map<String, dynamic> toJson() {
     return {
+      "isOnline":isOnline,
       "uId": uId,
       "email": email,
       "displayName": displayName,
