@@ -127,4 +127,13 @@ class AuthRepoImplementation implements AuthRepo {
     var value = jsonEncode(UserModel.fromEntity(userEntity).toJson());
     SharedPrefsService.setData(key: kUserLocalData, value: value);
   }
+
+  @override
+  Future<void> signOut({required String userId}) async {
+    await authService.signOut();
+    await dataBaseService.updateUserOnlineStatus(
+      userId: userId,
+      isOnline: false,
+    );
+  }
 }
