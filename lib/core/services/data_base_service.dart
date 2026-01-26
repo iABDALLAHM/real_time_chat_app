@@ -6,7 +6,7 @@ abstract class DataBaseService {
   });
   Future<dynamic> getData({required String path, String? documentId});
 
-  Future<void> updateUserOnlineStatus({
+  Stream updateUserOnlineStatus({
     required String userId,
     required bool isOnline,
   });

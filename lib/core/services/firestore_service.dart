@@ -29,10 +29,10 @@ class FirestoreService implements DataBaseService {
   }
 
   @override
-  Future<void> updateUserOnlineStatus({
+  Stream updateUserOnlineStatus({
     required String userId,
     required bool isOnline,
-  }) async {
+  }) async* {
     try {
       var data = await firestore
           .collection(BackendEndPoints.getUsers)
