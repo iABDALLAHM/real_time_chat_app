@@ -8,17 +8,23 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Profile"),
-        leading: IconButton(onPressed: () {}, icon: Icon(Icons.arrow_back)),
-        actions: [
-          TextButton(
-            onPressed: () {},
-            child: Text("Edit", style: TextStyle(color: AppTheme.primaryColor)),
-          ),
-        ],
-      ),
+      appBar: buildProfileViewAppBar(context),
       body: ProfileViewBody(),
+    );
+  }
+
+  AppBar buildProfileViewAppBar(BuildContext context) {
+    return AppBar(
+      title: Text("Profile"),
+      leading: IconButton(onPressed: () {
+        Navigator.pop(context);
+      }, icon: Icon(Icons.arrow_back)),
+      actions: [
+        TextButton(
+          onPressed: () {},
+          child: Text("Edit", style: TextStyle(color: AppTheme.primaryColor)),
+        ),
+      ],
     );
   }
 }
