@@ -77,7 +77,15 @@ class AuthRepoImplementation implements AuthRepo {
                 email: email,
               )
               as User;
+      await dataBaseService.updateUserOnlineStatus(
+        isOnline: true,
+        userId: user.uid,
+      );
       UserEntity userEntity = await getUserData(uId: user.uid);
+      await dataBaseService.updateUserOnlineStatus(
+        isOnline: true,
+        userId: user.uid,
+      );
       saveUserData(userEntity: userEntity);
       return Right(userEntity);
     } on CustomException catch (e) {
