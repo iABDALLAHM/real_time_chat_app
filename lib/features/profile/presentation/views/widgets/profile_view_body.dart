@@ -5,6 +5,8 @@ import 'package:real_time_chat_app/core/utils/app_theme.dart';
 import 'package:real_time_chat_app/core/widgets/custom_text_form_field.dart';
 import 'package:real_time_chat_app/features/auth/presentation/function/show_top_overlay_message.dart';
 import 'package:real_time_chat_app/features/auth/presentation/views/login_view.dart';
+import 'package:real_time_chat_app/features/profile/presentation/manager/delete_account_cubit/delete_account_cubit.dart';
+import 'package:real_time_chat_app/features/profile/presentation/manager/delete_account_cubit/delete_account_state.dart';
 import 'package:real_time_chat_app/features/profile/presentation/manager/sign_out_cubit/sign_out_cubit.dart';
 import 'package:real_time_chat_app/features/profile/presentation/manager/sign_out_cubit/sign_out_state.dart';
 import 'package:real_time_chat_app/features/profile/presentation/views/widgets/custom_profile_image.dart';
@@ -76,13 +78,35 @@ class ProfileViewBody extends StatelessWidget {
             ),
 
             const SizedBox(height: 32),
-            BlocListener<SignOutCubit, SignOutStates>(
-              listener: (context, state) {
-                if (state is SuccessSignOutState) {
-                  Navigator.of(context).pushReplacementNamed(LoginView.routeName);
-                  showTopOverlayMessage(context, message: "Success SignOut");
-                }
-              },
+            MultiBlocListener(
+              listeners: [
+                BlocListener<SignOutCubit, SignOutStates>(
+                  listener: (context, state) {
+                    if (state is SuccessSignOutState) {
+                      Navigator.of(
+                        context,
+                      ).pushReplacementNamed(LoginView.routeName);
+                      showTopOverlayMessage(
+                        context,
+                        message: "Success SignOut",
+                      );
+                    }
+                  },
+                ),
+                BlocListener<DeleteAccountCubit, DeleteAccountStates>(
+                  listener: (context, state) {
+                    if (state is SuccessDeleteAccountState) {
+                      Navigator.of(
+                        context,
+                      ).pushReplacementNamed(LoginView.routeName);
+                      showTopOverlayMessage(
+                        context,
+                        message: "Success delete Account",
+                      );
+                    }
+                  },
+                ),
+              ],
               child: ProfileBodyFooter(),
             ),
           ],

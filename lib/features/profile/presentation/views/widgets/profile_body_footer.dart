@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/functions/get_user_data.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
 import 'package:real_time_chat_app/features/auth/presentation/views/widgets/custom_divider.dart';
+import 'package:real_time_chat_app/features/profile/presentation/manager/delete_account_cubit/delete_account_cubit.dart';
 import 'package:real_time_chat_app/features/profile/presentation/manager/sign_out_cubit/sign_out_cubit.dart';
 import 'package:real_time_chat_app/features/profile/presentation/views/widgets/profile_badge.dart';
 import 'package:real_time_chat_app/features/profile/presentation/views/widgets/profile_body_item.dart';
@@ -24,7 +25,11 @@ class ProfileBodyFooter extends StatelessWidget {
               ),
               CustomDivider(),
               ProfileBodyItem(
-                onPressed: () {},
+                onPressed: () {
+                  context.read<DeleteAccountCubit>().deleteAccount(
+                    userId: getUserData().uId,
+                  );
+                },
                 text: "Delete Account",
                 icon: Icon(Icons.delete_forever, color: AppTheme.errorColor),
               ),
