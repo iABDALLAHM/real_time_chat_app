@@ -10,4 +10,9 @@ abstract class DataBaseService {
     required String userId,
     required bool isOnline,
   });
+  Future<void> updateData({
+    required String path,
+    required Map<String, dynamic> data,
+    String? documentId,
+  });
 }
