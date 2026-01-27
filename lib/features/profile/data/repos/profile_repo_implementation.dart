@@ -1,3 +1,5 @@
+import 'package:real_time_chat_app/core/entities/user_entity.dart';
+import 'package:real_time_chat_app/core/models/user_model.dart';
 import 'package:real_time_chat_app/core/services/auth_service.dart';
 import 'package:real_time_chat_app/core/services/data_base_service.dart';
 import 'package:real_time_chat_app/core/utils/backend_end_points.dart';
@@ -26,6 +28,15 @@ class ProfileRepoImplementation implements ProfileRepo {
     await dataBaseService.deleteData(
       path: BackendEndPoints.deleteUser,
       documentId: userId,
+    );
+  }
+
+  @override
+  Future<void> updateUserInfo({required UserEntity userEntity}) async {
+    await dataBaseService.updateData(
+      path: BackendEndPoints.updateUser,
+      data: UserModel.fromEntity(userEntity).toMap(),
+      documentId: userEntity.uId,
     );
   }
 }
