@@ -124,12 +124,5 @@ class AuthRepoImplementation implements AuthRepo {
     SharedPrefsService.setData(key: kUserLocalData, value: value);
   }
 
-  @override
-  Future<void> signOut({required String userId}) async {
-    await authService.signOut();
-    await dataBaseService.updateUserOnlineStatus(
-      userId: userId,
-      isOnline: false,
-    );
-  }
+
 }
