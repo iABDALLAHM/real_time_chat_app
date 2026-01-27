@@ -11,6 +11,7 @@ import 'package:real_time_chat_app/features/profile/presentation/manager/sign_ou
 import 'package:real_time_chat_app/features/profile/presentation/manager/sign_out_cubit/sign_out_state.dart';
 import 'package:real_time_chat_app/features/profile/presentation/views/widgets/custom_profile_image.dart';
 import 'package:real_time_chat_app/features/profile/presentation/views/widgets/online_or_offline_status.dart';
+import 'package:real_time_chat_app/features/profile/presentation/views/widgets/profile_body_app_bar.dart';
 import 'package:real_time_chat_app/features/profile/presentation/views/widgets/profile_body_footer.dart';
 import 'package:real_time_chat_app/features/profile/presentation/views/widgets/user_joined_date.dart';
 
@@ -20,97 +21,106 @@ class ProfileViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CustomProfileImage(),
-            const SizedBox(height: 16),
-            Text(
-              getUserData().displayName,
-              style: Theme.of(
-                context,
-              ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              getUserData().email,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: AppTheme.textsecondaryColor,
-              ),
-            ),
-            const SizedBox(height: 8),
-            OnlineOrOfflineStatus(),
-            const SizedBox(height: 8),
-            UserJoinedDate(),
-            const SizedBox(height: 32),
+      child: Column(
+        children: [
+          const SizedBox(height: 32),
+          ProfileBodyAppBar(),
+          const SizedBox(height: 32),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CustomProfileImage(),
+                const SizedBox(height: 16),
+                Text(
+                  getUserData().displayName,
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  getUserData().email,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: AppTheme.textsecondaryColor,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                OnlineOrOfflineStatus(),
+                const SizedBox(height: 8),
+                UserJoinedDate(),
+                const SizedBox(height: 32),
+                Card(
+                  child: Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Personal Information",
+                          style: Theme.of(context).textTheme.headlineSmall
+                              ?.copyWith(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                              ),
+                        ),
+                        const SizedBox(height: 32),
+                        CustomTextFormField(
+                          labelText: "Display Name",
+                          hintText: getUserData().displayName,
+                          onSaved: (value) {},
+                          prefixIcon: Icon(Icons.person_outlined),
+                        ),
+                        const SizedBox(height: 16),
+                        CustomTextFormField(
+                          helperText: "Email can't be changed",
+                          labelText: "Email",
+                          hintText: getUserData().email,
+                          onSaved: (value) {},
+                          prefixIcon: Icon(Icons.email_outlined),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
 
-            Card(
-              child: Padding(
-                padding: EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Personal Information",
-                      style: Theme.of(context).textTheme.headlineSmall
-                          ?.copyWith(fontSize: 18, fontWeight: FontWeight.w600),
+                const SizedBox(height: 32),
+                MultiBlocListener(
+                  listeners: [
+                    BlocListener<SignOutCubit, SignOutStates>(
+                      listener: (context, state) {
+                        if (state is SuccessSignOutState) {
+                          Navigator.of(
+                            context,
+                          ).pushReplacementNamed(LoginView.routeName);
+                          showTopOverlayMessage(
+                            context,
+                            message: "Success SignOut",
+                          );
+                        }
+                      },
                     ),
-                    const SizedBox(height: 32),
-                    CustomTextFormField(
-                      labelText: "Display Name",
-                      hintText: getUserData().displayName,
-                      onSaved: (value) {},
-                      prefixIcon: Icon(Icons.person_outlined),
-                    ),
-                    const SizedBox(height: 16),
-                    CustomTextFormField(
-                      helperText: "Email can't be changed",
-                      labelText: "Email",
-                      hintText: getUserData().email,
-                      onSaved: (value) {},
-                      prefixIcon: Icon(Icons.email_outlined),
+                    BlocListener<DeleteAccountCubit, DeleteAccountStates>(
+                      listener: (context, state) {
+                        if (state is SuccessDeleteAccountState) {
+                          Navigator.of(
+                            context,
+                          ).pushReplacementNamed(LoginView.routeName);
+                          showTopOverlayMessage(
+                            context,
+                            message: "Success delete Account",
+                          );
+                        }
+                      },
                     ),
                   ],
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 32),
-            MultiBlocListener(
-              listeners: [
-                BlocListener<SignOutCubit, SignOutStates>(
-                  listener: (context, state) {
-                    if (state is SuccessSignOutState) {
-                      Navigator.of(
-                        context,
-                      ).pushReplacementNamed(LoginView.routeName);
-                      showTopOverlayMessage(
-                        context,
-                        message: "Success SignOut",
-                      );
-                    }
-                  },
-                ),
-                BlocListener<DeleteAccountCubit, DeleteAccountStates>(
-                  listener: (context, state) {
-                    if (state is SuccessDeleteAccountState) {
-                      Navigator.of(
-                        context,
-                      ).pushReplacementNamed(LoginView.routeName);
-                      showTopOverlayMessage(
-                        context,
-                        message: "Success delete Account",
-                      );
-                    }
-                  },
+                  child: ProfileBodyFooter(),
                 ),
               ],
-              child: ProfileBodyFooter(),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
