@@ -51,4 +51,15 @@ class FirestoreService implements DataBaseService {
       );
     }
   }
+
+  @override
+  Future<dynamic> deleteData({required String path, String? documentId}) async {
+    try {
+      await firestore.collection(path).doc(documentId).delete();
+    } catch (e) {
+      throw CustomException(
+        exceptionMeassge: "Failed to deleteData :${e.toString()}",
+      );
+    }
+  }
 }
