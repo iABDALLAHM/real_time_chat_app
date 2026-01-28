@@ -5,6 +5,7 @@ import 'package:real_time_chat_app/core/utils/app_theme.dart';
 import 'package:real_time_chat_app/features/auth/presentation/views/widgets/custom_divider.dart';
 import 'package:real_time_chat_app/features/profile/presentation/manager/delete_account_cubit/delete_account_cubit.dart';
 import 'package:real_time_chat_app/features/profile/presentation/manager/sign_out_cubit/sign_out_cubit.dart';
+import 'package:real_time_chat_app/features/profile/presentation/views/change_password_view.dart';
 import 'package:real_time_chat_app/features/profile/presentation/views/widgets/profile_badge.dart';
 import 'package:real_time_chat_app/features/profile/presentation/views/widgets/profile_body_item.dart';
 
@@ -19,7 +20,9 @@ class ProfileBodyFooter extends StatelessWidget {
           child: Column(
             children: [
               ProfileBodyItem(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamed(ChangePasswordView.routeName);
+                },
                 text: "Change Password",
                 icon: Icon(Icons.security, color: AppTheme.primaryColor),
               ),
