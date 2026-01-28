@@ -7,8 +7,8 @@ class ChangePasswordView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("ChangePasswordView")),
-      body: ChangePasswordViewBody(),
+      appBar: AppBar(title: Text("Change Password")),
+      body: SafeArea(child: ChangePasswordViewBody()),
     );
   }
 }
