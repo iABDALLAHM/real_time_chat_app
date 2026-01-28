@@ -9,7 +9,7 @@ class UserJoinedDate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      "${getUserData().createdAt.day}-${getMonth(month: getUserData().createdAt.month)}-${getUserData().createdAt.year}",
+      "Joined ${getMonth(month: getUserData().createdAt.month)} ${getUserData().createdAt.year}",
       style: Theme.of(
         context,
       ).textTheme.bodySmall?.copyWith(color: AppTheme.textsecondaryColor),
