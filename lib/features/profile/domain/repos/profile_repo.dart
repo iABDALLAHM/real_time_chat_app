@@ -4,4 +4,5 @@ abstract class ProfileRepo {
   Future<void> signOut({required String userId});
   Future<void> deleteUser({required String userId});
   Future<void> updateUserInfo({required UserEntity userEntity});
+  Future<void> updateUserPassword({required String newPassword});
 }
