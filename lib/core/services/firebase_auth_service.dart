@@ -132,4 +132,9 @@ class FirebaseAuthService implements AuthService {
   Future<void> deleteAccount() async {
     await firebaseAuth.currentUser!.delete();
   }
+
+  @override
+  Future<void> updatePassword({required String newPassword}) async {
+    await firebaseAuth.currentUser!.updatePassword(newPassword);
+  }
 }
