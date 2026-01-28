@@ -25,8 +25,7 @@ class ProfileViewBody extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          const SizedBox(height: 32),
-          const SizedBox(height: 32),
+          const SizedBox(height: 16),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
@@ -96,7 +95,7 @@ class ProfileViewBody extends StatelessWidget {
                     ),
                   ),
                 ),
-                
+
                 const SizedBox(height: 32),
                 MultiBlocListener(
                   listeners: [

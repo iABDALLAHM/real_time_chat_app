@@ -43,5 +43,6 @@ class ProfileRepoImplementation implements ProfileRepo {
   @override
   Future<void> updateUserPassword({required String newPassword}) async {
     await authService.updatePassword(newPassword: newPassword);
+    await authService.signOut();
   }
 }
