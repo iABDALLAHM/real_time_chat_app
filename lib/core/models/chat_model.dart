@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class ChatModel {
   final String id;
   final List<String> participants;
@@ -54,12 +56,31 @@ class ChatModel {
         ),
       );
     }
+    Map<String, DateTime?> deletedAtMap = {};
+    if (map["deletedAt"] != null) {
+      Map<String, dynamic> rawDeletedAt = Map<String, dynamic>.from(
+        map["lastSeenBy"],
+      );
+      deletedAtMap = rawDeletedAt.map(
+        (key, value) => MapEntry(
+          key,
+          value != null ? DateTime.fromMillisecondsSinceEpoch(value) : null,
+        ),
+      );
+    }
+
     return ChatModel(
-      id: map["id"],
-      participants: map["participants"],
-      unreadCount: map["unreadCount"],
-      createdAt: map["createdAt"],
-      updatedAt: map["updatedAt"],
+      id: map["id"] ?? "",
+      participants: List<String>.from(map["participants"] ?? []),
+      lastMessage: map["lastMessage"],
+      lastMessageTime: (map["lastMessageTime"] as Timestamp).toDate(),
+      lastMessageSenderId: map["lastMessageSenderId"],
+      unreadCount: Map<String, int>.from(map["unreadCount"]),
+      deletedBy: Map<String, bool>.from(map["deletedBy"]),
+      deletedAt: deletedAtMap,
+      lastSeenBy: lastSeenMap,
+      createdAt: (map["createdAt"] as Timestamp).toDate(),
+      updatedAt: (map["updatedAt"] as Timestamp).toDate(),
     );
   }
 }
