@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:real_time_chat_app/features/home/presentation/views/widgets/chat_body.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/custom_bottom_navigation_bar.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/find_people_body.dart';
 import 'package:real_time_chat_app/features/profile/presentation/views/profile_view.dart';
@@ -24,12 +25,7 @@ class _MainViewState extends State<MainView> {
       ),
       body: IndexedStack(
         index: currentIndex,
-        children: [
-          ProfileView(),
-          FindPeopleBody(),
-          Placeholder(),
-          Placeholder(),
-        ],
+        children: [ProfileView(), FindPeopleBody(), Placeholder(), ChatBody()],
       ),
     );
   }
