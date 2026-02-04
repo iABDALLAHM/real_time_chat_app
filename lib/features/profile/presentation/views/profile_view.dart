@@ -29,12 +29,7 @@ class ProfileView extends StatelessWidget {
     final controller = context.watch<ProfileController>();
     return AppBar(
       title: Text("Profile"),
-      leading: IconButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        icon: Icon(Icons.arrow_back),
-      ),
+      leading: SizedBox(),
       actions: [
         TextButton(
           onPressed: () {
