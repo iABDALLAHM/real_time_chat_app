@@ -30,13 +30,27 @@ class ChatBody extends StatelessWidget {
                 itemCount: 4,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: SeparatedSectionsItem(
-                      title: "Abdallah",
-                      isSelected: true,
+                  List<SeparatedSectionsItem> itemsList = [
+                    SeparatedSectionsItem(title: "All", isSelected: true),
+                    SeparatedSectionsItem(
+                      title: "Unread",
+                      isSelected: false,
                       count: 0,
                     ),
+                    SeparatedSectionsItem(
+                      title: "Recent",
+                      isSelected: false,
+                      count: 0,
+                    ),
+                    SeparatedSectionsItem(
+                      title: "Active",
+                      isSelected: false,
+                      count: 0,
+                    ),
+                  ];
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: itemsList[index],
                   );
                 },
               ),
@@ -46,7 +60,4 @@ class ChatBody extends StatelessWidget {
       ),
     );
   }
-
-
 }
-                               

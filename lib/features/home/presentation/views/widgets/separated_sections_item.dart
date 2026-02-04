@@ -16,12 +16,34 @@ class SeparatedSectionsItem extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
-        color: AppTheme.primaryColor,
+        color: isSelected ? AppTheme.primaryColor : Colors.grey[200],
         borderRadius: BorderRadius.circular(15),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        children: [count != null ? Text("$title ($count)") : Text(title)],
+        children: [
+          count != null
+              ? Text(
+                  "$title ($count)",
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                    color: isSelected
+                        ? Colors.white
+                        : AppTheme.textsecondaryColor,
+                  ),
+                )
+              : Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                    color: isSelected
+                        ? Colors.white
+                        : AppTheme.textsecondaryColor,
+                  ),
+                ),
+        ],
       ),
     );
   }
