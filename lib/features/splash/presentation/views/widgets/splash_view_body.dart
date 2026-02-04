@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:real_time_chat_app/constants.dart';
+import 'package:real_time_chat_app/core/services/shared_prefs_service.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
 import 'package:real_time_chat_app/features/auth/presentation/views/login_view.dart';
+import 'package:real_time_chat_app/features/home/presentation/views/main_view.dart';
 
 class SplashViewBody extends StatefulWidget {
   const SplashViewBody({super.key});
@@ -97,7 +100,12 @@ class _SplashViewBodyState extends State<SplashViewBody>
 
   void navigateToLogin() {
     Future.delayed(Duration(seconds: 2), () {
-      Navigator.pushNamed(context, LoginView.routeName);
+      var userLogin = SharedPrefsService.getBool(key: kUserLogin);
+      if (userLogin) {
+        Navigator.of(context).pushNamed(MainView.routeName);
+      } else {
+        Navigator.of(context).pushNamed(LoginView.routeName);
+      }
     });
   }
 }

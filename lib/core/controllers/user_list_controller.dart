@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 enum UserRelationshipStatus {
   none,
   friendRequestSent,
@@ -6,4 +8,6 @@ enum UserRelationshipStatus {
   blocked,
 }
 
+class UserListController extends ChangeNotifier {
 
+}

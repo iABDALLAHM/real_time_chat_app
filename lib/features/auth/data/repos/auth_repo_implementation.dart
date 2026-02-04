@@ -82,6 +82,7 @@ class AuthRepoImplementation implements AuthRepo {
         userId: user.uid,
       );
       UserEntity userEntity = await getUserData(uId: user.uid);
+      SharedPrefsService.setBool(key: kUserLogin, value: true);
       saveUserData(userEntity: userEntity);
       return Right(userEntity);
     } on CustomException catch (e) {
@@ -123,6 +124,4 @@ class AuthRepoImplementation implements AuthRepo {
     var value = jsonEncode(UserModel.fromEntity(userEntity).toJson());
     SharedPrefsService.setData(key: kUserLocalData, value: value);
   }
-
-
 }
