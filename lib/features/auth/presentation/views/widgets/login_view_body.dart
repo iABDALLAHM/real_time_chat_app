@@ -6,6 +6,7 @@ import 'package:real_time_chat_app/core/widgets/custom_password_field.dart';
 import 'package:real_time_chat_app/core/widgets/custom_text_form_field.dart';
 import 'package:real_time_chat_app/features/auth/presentation/manager/login_cubit/login_cubit.dart';
 import 'package:real_time_chat_app/features/auth/presentation/views/register_view.dart';
+import 'package:real_time_chat_app/features/auth/presentation/views/widgets/application_primary_icon.dart';
 import 'package:real_time_chat_app/features/auth/presentation/views/widgets/forget_password_text_button.dart';
 
 class LoginViewBody extends StatefulWidget {
@@ -32,19 +33,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 40),
-              Container(
-                decoration: BoxDecoration(
-                  color: AppTheme.primaryColor,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                width: 80,
-                height: 80,
-                child: Icon(
-                  Icons.chat_bubble_rounded,
-                  size: 40,
-                  color: Colors.white,
-                ),
-              ),
+              ApplicationPrimaryIcon(),
               const SizedBox(height: 32),
               Text(
                 "Welcome Back!",
@@ -162,3 +151,5 @@ class _LoginViewBodyState extends State<LoginViewBody> {
     context.read<LoginCubit>().login(email: email, password: password);
   }
 }
+
+

@@ -1,7 +1,9 @@
+import 'package:real_time_chat_app/constants.dart';
 import 'package:real_time_chat_app/core/entities/user_entity.dart';
 import 'package:real_time_chat_app/core/models/user_model.dart';
 import 'package:real_time_chat_app/core/services/auth_service.dart';
 import 'package:real_time_chat_app/core/services/data_base_service.dart';
+import 'package:real_time_chat_app/core/services/shared_prefs_service.dart';
 import 'package:real_time_chat_app/core/utils/backend_end_points.dart';
 import 'package:real_time_chat_app/features/profile/domain/repos/profile_repo.dart';
 
@@ -16,6 +18,7 @@ class ProfileRepoImplementation implements ProfileRepo {
   @override
   Future<void> signOut({required String userId}) async {
     await authService.signOut();
+    SharedPrefsService.setBool(key: kUserLogin, value: false);
     await dataBaseService.updateUserOnlineStatus(
       userId: userId,
       isOnline: false,
