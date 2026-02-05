@@ -102,9 +102,9 @@ class _SplashViewBodyState extends State<SplashViewBody>
     Future.delayed(Duration(seconds: 2), () {
       var userLogin = SharedPrefsService.getBool(key: kUserLogin);
       if (userLogin) {
-        Navigator.of(context).pushNamed(MainView.routeName);
+        Navigator.of(context).pushReplacementNamed(MainView.routeName);
       } else {
-        Navigator.of(context).pushNamed(LoginView.routeName);
+        Navigator.of(context).pushReplacementNamed(LoginView.routeName);
       }
     });
   }

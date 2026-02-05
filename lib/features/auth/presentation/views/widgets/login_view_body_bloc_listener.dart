@@ -14,7 +14,7 @@ class LoginViewBodyBlocListener extends StatelessWidget {
       listener: (context, state) {
         if (state is SuccessLoginState) {
           showTopOverlayMessage(context, message: "Success Login");
-          Navigator.of(context).pushNamed(MainView.routeName);
+          Navigator.of(context).pushReplacementNamed(MainView.routeName);
         } else if (state is FailureLoginState) {
           showTopOverlayMessage(context, message: state.errMessage);
         }
