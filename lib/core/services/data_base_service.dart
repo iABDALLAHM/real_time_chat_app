@@ -15,6 +15,6 @@ abstract class DataBaseService {
     required Map<String, dynamic> data,
     String? documentId,
   });
-  Stream<void> getUserStream({required String uId, required String path});
+  Stream getUserStream({required String uId, required String path});
   Stream<void> getAllUsersStream({required String uId, required String path});
 }

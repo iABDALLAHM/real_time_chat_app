@@ -57,4 +57,16 @@ class ProfileRepoImplementation implements ProfileRepo {
     var value = jsonEncode(UserModel.fromEntity(userEntity).toJson());
     SharedPrefsService.setData(key: kUserLocalData, value: value);
   }
+
+  @override
+  Stream<UserEntity> getUserStream({required String uId}) async* {
+    await for (var (result as Map<String, dynamic>)
+        in dataBaseService.getUserStream(
+          uId: uId,
+          path: BackendEndPoints.getUsers,
+        )) {
+      var data = UserModel.fromMap(result).toEntity();
+      yield data;
+    }
+  }
 }

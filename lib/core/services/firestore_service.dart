@@ -73,9 +73,11 @@ class FirestoreService implements DataBaseService {
   }
 
   @override
-  Stream<void> getUserStream({required String uId, required String path}) {
-    var data = firestore.collection(path).doc(uId).snapshots();
-    return data.map((data) => data.data());
+  Stream getUserStream({required String uId, required String path}) async* {
+    var data = firestore.collection(path).doc(uId);
+    await for (var result in data.snapshots()) {
+      yield result.data();
+    }
   }
 
   @override

@@ -6,4 +6,5 @@ abstract class ProfileRepo {
   Future<void> updateUserInfo({required UserEntity userEntity});
   Future<void> updateUserPassword({required String newPassword});
   void updateUserData({required UserEntity userEntity});
+  Stream<UserEntity> getUserStream({required String uId});
 }
