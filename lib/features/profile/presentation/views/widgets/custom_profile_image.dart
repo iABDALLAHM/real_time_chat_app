@@ -19,7 +19,18 @@ class CustomProfileImage extends StatelessWidget {
           child: CircleAvatar(
             backgroundColor: AppTheme.primaryColor,
             child: getUserData().photoUrl == null
-                ? ClipOval(child: SizedBox(width: 120, height: 120))
+                // if i have an image !!!
+                ? ClipOval(
+                    child: Image.asset(
+                      "",
+                      width: 120,
+                      height: 120,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return buildDefaultAvatar();
+                      },
+                    ),
+                  )
                 : buildDefaultAvatar(),
           ),
         ),

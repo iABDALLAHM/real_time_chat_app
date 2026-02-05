@@ -4,9 +4,7 @@ import 'package:real_time_chat_app/core/utils/app_theme.dart';
 import 'package:real_time_chat_app/features/profile/presentation/views/widgets/user_status.dart';
 
 class OnlineOrOfflineStatus extends StatelessWidget {
-  const OnlineOrOfflineStatus({
-    super.key,
-  });
+  const OnlineOrOfflineStatus({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +29,7 @@ class OnlineOrOfflineStatus extends StatelessWidget {
                   : AppTheme.textsecondaryColor,
             ),
           ),
-    
           const SizedBox(width: 6),
-    
           UserStatus(),
         ],
       ),
