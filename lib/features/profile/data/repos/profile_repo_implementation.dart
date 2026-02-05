@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:real_time_chat_app/constants.dart';
 import 'package:real_time_chat_app/core/entities/user_entity.dart';
 import 'package:real_time_chat_app/core/models/user_model.dart';
@@ -41,11 +43,18 @@ class ProfileRepoImplementation implements ProfileRepo {
       data: UserModel.fromEntity(userEntity).toMap(),
       documentId: userEntity.uId,
     );
+    updateUserData(userEntity: userEntity);
   }
 
   @override
   Future<void> updateUserPassword({required String newPassword}) async {
     await authService.updatePassword(newPassword: newPassword);
     await authService.signOut();
+  }
+
+  @override
+  void updateUserData({required UserEntity userEntity}) {
+    var value = jsonEncode(UserModel.fromEntity(userEntity).toJson());
+    SharedPrefsService.setData(key: kUserLocalData, value: value);
   }
 }

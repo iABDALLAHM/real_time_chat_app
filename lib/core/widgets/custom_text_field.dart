@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CustomTextFormField extends StatelessWidget {
-  const CustomTextFormField({
+class CustomTextField extends StatelessWidget {
+  const CustomTextField({
     super.key,
     required this.labelText,
     required this.hintText,
@@ -17,7 +17,6 @@ class CustomTextFormField extends StatelessWidget {
   final String? helperText;
   final TextEditingController? controller;
   final bool isEnabled;
-
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -32,15 +31,6 @@ class CustomTextFormField extends StatelessWidget {
         prefixIcon: prefixIcon,
         hintText: hintText,
       ),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return "";
-        } else {
-          return null;
-        }
-      },
     );
   }
 }
-
-
