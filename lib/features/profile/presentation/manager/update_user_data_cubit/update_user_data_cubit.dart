@@ -11,8 +11,5 @@ class UpdateUserDataCubit extends Cubit<UpdateUserDataStates> {
     emit(LoadingUpdateUserDataState());
     await profileRepo.updateUserInfo(userEntity: userEntity);
     emit(SuccessUpdateUserDataState());
-    // await for (var result in profileRepo.getUserStream(uId: userEntity.uId)) {
-    
-    // }
   }
 }

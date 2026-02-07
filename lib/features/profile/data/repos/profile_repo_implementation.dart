@@ -60,12 +60,12 @@ class ProfileRepoImplementation implements ProfileRepo {
 
   @override
   Stream<UserEntity> getUserStream({required String uId}) async* {
-    await for (var (result as Map<String, dynamic>)
-        in dataBaseService.getUserStream(
-          uId: uId,
-          path: BackendEndPoints.getUsers,
-        )) {
-      var data = UserModel.fromMap(result).toEntity();
+    await for (var (result) in dataBaseService.getUserStream(
+      uId: uId,
+      path: BackendEndPoints.getUsers,
+    )) {
+      final map = result as Map<String, dynamic>;
+      var data = UserModel.fromMap(map).toEntity();
       yield data;
     }
   }

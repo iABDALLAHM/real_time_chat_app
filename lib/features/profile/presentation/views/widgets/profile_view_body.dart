@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:real_time_chat_app/core/cubits/user_stream_cubit/user_stream_cubit.dart';
 import 'package:real_time_chat_app/core/entities/user_entity.dart';
 import 'package:real_time_chat_app/core/functions/get_user_data.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
@@ -130,11 +131,18 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                                           isOnline: true,
                                           createdAt: DateTime.now(),
                                         );
+                                        // trigger User Stream cubit.
+                                        context
+                                            .read<UserStreamCubit>()
+                                            .getUserStream(
+                                              userId: getUserData().uId,
+                                            );
                                         context
                                             .read<UpdateUserDataCubit>()
                                             .updateUserInfo(
                                               userEntity: userEntity,
                                             );
+                                        nameController.clear();
                                       } else {
                                         autovalidateMode =
                                             AutovalidateMode.always;

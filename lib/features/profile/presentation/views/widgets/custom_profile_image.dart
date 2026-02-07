@@ -27,11 +27,11 @@ class CustomProfileImage extends StatelessWidget {
                       height: 120,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
-                        return buildDefaultAvatar();
+                        return buildDefaultAvatar(context: context);
                       },
                     ),
                   )
-                : buildDefaultAvatar(),
+                : buildDefaultAvatar(context: context),
           ),
         ),
 
