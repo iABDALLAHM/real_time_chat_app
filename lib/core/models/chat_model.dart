@@ -83,4 +83,41 @@ class ChatModel {
       updatedAt: (map["updatedAt"] as Timestamp).toDate(),
     );
   }
+
+  String getOtherParticipant({required String currentUserId}) {
+    return participants.firstWhere(
+      (id) => id != currentUserId,
+      orElse: () => "",
+    );
+  }
+
+  int getUnreadCount({required String userId}) {
+    return unreadCount[userId] ?? 0;
+  }
+
+  bool isDeletedBy({required String userId}) {
+    return deletedBy[userId] ?? false;
+  }
+
+  DateTime? getDeletedAt({required String userId}) {
+    return deletedAt[userId];
+  }
+
+  DateTime? getLastSeenBy({required String userId}) {
+    return lastSeenBy[userId];
+  }
+
+  bool isMessageSeen({
+    required String currentUserId,
+    required String otherUserId,
+  }) {
+    if (lastMessageSenderId == currentUserId) {
+      final otherUserLastSeen = getLastSeenBy(userId: otherUserId);
+      if (otherUserLastSeen != null && lastMessageTime != null) {
+        return otherUserLastSeen.isAfter(lastMessageTime!) ||
+            otherUserLastSeen.isAtSameMomentAs(lastMessageTime!);
+      }
+    }
+    return false;
+  }
 }
