@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:real_time_chat_app/core/entities/friend_request_entity.dart';
 
 enum FriendRequestStatus { pending, accepted, rejected }
 
@@ -21,18 +22,6 @@ class FriendRequestModel {
     this.message,
   });
 
-  Map<String, dynamic> toMap() {
-    return {
-      "id": id,
-      "senderId": senderId,
-      "receiverId": receiverId,
-      "status": status.name,
-      "createdAt": createdAt,
-      "responsedAt": responsedAt,
-      "message": message,
-    };
-  }
-
   factory FriendRequestModel.fromMap(Map<String, dynamic> map) {
     return FriendRequestModel(
       id: map["id"],
@@ -46,5 +35,28 @@ class FriendRequestModel {
         orElse: () => FriendRequestStatus.pending,
       ),
     );
+  }
+
+  factory FriendRequestModel.fromEntity({
+    required FriendRequestEntity friendRequestEntity,
+  }) {
+    return FriendRequestModel(
+      id: friendRequestEntity.id,
+      senderId: friendRequestEntity.senderId,
+      receiverId: friendRequestEntity.receiverId,
+      createdAt: friendRequestEntity.createdAt,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      "id": id,
+      "senderId": senderId,
+      "receiverId": receiverId,
+      "status": status.name,
+      "createdAt": createdAt,
+      "responsedAt": responsedAt,
+      "message": message,
+    };
   }
 }
