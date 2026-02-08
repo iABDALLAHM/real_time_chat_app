@@ -73,7 +73,7 @@ class FirestoreService implements DataBaseService {
   }
 
   @override
-  Stream getUserStream({required String uId, required String path}) async* {
+  Stream getDataStream({required String uId, required String path}) async* {
     var data = firestore.collection(path).doc(uId);
     await for (var result in data.snapshots()) {
       yield result.data();
@@ -81,7 +81,7 @@ class FirestoreService implements DataBaseService {
   }
 
   @override
-  Stream<List<dynamic>> getAllUsersStream({required String path}) {
+  Stream<List<dynamic>> getAllDataStream({required String path}) {
     var data = firestore
         .collection(path)
         .snapshots()

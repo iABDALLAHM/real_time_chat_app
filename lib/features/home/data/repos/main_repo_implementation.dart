@@ -11,7 +11,7 @@ class MainRepoImplementation implements MainRepo {
   @override
   Stream<List<UserEntity>> getAllUsers() async* {
     List<UserEntity> usersList = [];
-    var usersSnapshots = dataBaseService.getAllUsersStream(
+    var usersSnapshots = dataBaseService.getAllDataStream(
       path: BackendEndPoints.getUsers,
     );
     for (var user in (usersSnapshots as List<Map<String, dynamic>>)) {
