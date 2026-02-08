@@ -6,7 +6,7 @@ enum NotificationType {
   friendRemoved,
 }
 
-class NotificationModel {
+class NotificationEntity {
   final String id;
   final String userId;
   final String title;
@@ -16,7 +16,7 @@ class NotificationModel {
   final bool isRead;
   final DateTime createdAt;
 
-  NotificationModel({
+  NotificationEntity({
     required this.id,
     required this.userId,
     required this.title,

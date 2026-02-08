@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:real_time_chat_app/core/entities/message_entity.dart';
 
 enum MessageType { text }
 
@@ -39,6 +40,20 @@ class MessageModel {
       isEdited: map["isEdited"],
       editedAt: (map["isEdited"] as Timestamp).toDate(),
     );
+  }
+
+  factory MessageModel.formEntity({required MessageEntity messageEntity}) {
+    return MessageModel(
+      id: messageEntity.id,
+      senderId: messageEntity.senderId,
+      receiverId: messageEntity.receiverId,
+      content: messageEntity.content,
+      timeStamp: messageEntity.timeStamp,
+    );
+  }
+
+  MessageEntity toEntity(){
+   return MessageEntity(id: id, senderId: senderId, receiverId: receiverId, content: content, timeStamp: timeStamp);
   }
 
   Map<String, dynamic> toMap() {

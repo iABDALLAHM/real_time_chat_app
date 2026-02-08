@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:real_time_chat_app/core/entities/friend_request_entity.dart';
 
-enum FriendRequestStatus { pending, accepted, rejected }
+
 
 class FriendRequestModel {
   final String id;
@@ -58,5 +58,17 @@ class FriendRequestModel {
       "responsedAt": responsedAt,
       "message": message,
     };
+  }
+
+  FriendRequestEntity toEntity() {
+    return FriendRequestEntity(
+      id: id,
+      senderId: senderId,
+      receiverId: receiverId,
+      createdAt: createdAt,
+      status: status,
+      responsedAt: responsedAt,
+      message: message,
+    );
   }
 }

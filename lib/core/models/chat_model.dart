@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:real_time_chat_app/core/entities/chat_entity.dart';
 
 class ChatModel {
   final String id;
@@ -43,6 +44,32 @@ class ChatModel {
     };
   }
 
+  ChatEntity toEntity() {
+    return ChatEntity(
+      id: id,
+      lastMessage: lastMessage,
+      deletedBy: deletedBy,
+      participants: participants,
+      lastMessageTime: lastMessageTime,
+      // deletedAt: ,
+      // lastSeenBy: ,
+      lastMessageSenderId: lastMessageSenderId,
+      unreadCount: unreadCount,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+    );
+  }
+
+  factory ChatModel.fromEntity({required ChatEntity chatEntity}) {
+    return ChatModel(
+      id: chatEntity.id,
+      participants: chatEntity.participants,
+      unreadCount: chatEntity.unreadCount,
+      createdAt: chatEntity.createdAt,
+      updatedAt: chatEntity.updatedAt,
+    );
+  }
+
   factory ChatModel.fromMap(Map<String, dynamic> map) {
     Map<String, DateTime?> lastSeenMap = {};
     if (map["lastSeenBy"] != null) {
@@ -84,40 +111,4 @@ class ChatModel {
     );
   }
 
-  String getOtherParticipant({required String currentUserId}) {
-    return participants.firstWhere(
-      (id) => id != currentUserId,
-      orElse: () => "",
-    );
-  }
-
-  int getUnreadCount({required String userId}) {
-    return unreadCount[userId] ?? 0;
-  }
-
-  bool isDeletedBy({required String userId}) {
-    return deletedBy[userId] ?? false;
-  }
-
-  DateTime? getDeletedAt({required String userId}) {
-    return deletedAt[userId];
-  }
-
-  DateTime? getLastSeenBy({required String userId}) {
-    return lastSeenBy[userId];
-  }
-
-  bool isMessageSeen({
-    required String currentUserId,
-    required String otherUserId,
-  }) {
-    if (lastMessageSenderId == currentUserId) {
-      final otherUserLastSeen = getLastSeenBy(userId: otherUserId);
-      if (otherUserLastSeen != null && lastMessageTime != null) {
-        return otherUserLastSeen.isAfter(lastMessageTime!) ||
-            otherUserLastSeen.isAtSameMomentAs(lastMessageTime!);
-      }
-    }
-    return false;
-  }
 }

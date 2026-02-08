@@ -81,11 +81,40 @@ class FirestoreService implements DataBaseService {
   }
 
   @override
-  Stream<List<dynamic>> getAllDataStream({required String path}) {
-    var data = firestore
-        .collection(path)
-        .snapshots()
-        .map((snapShots) => snapShots.docs.map((doc) => doc.data()).toList());
-    return data;
+  Stream<List<dynamic>> getAllDataStream({
+    required String path,
+    bool isQuery = false,
+    String? documentId,
+    Map<String, dynamic>? query,
+  }) {
+    if (isQuery == false) {
+      var data = firestore
+          .collection(path)
+          .snapshots()
+          .map((snapShots) => snapShots.docs.map((doc) => doc.data()).toList());
+      return data;
+    } else {
+      Query<Map<String, dynamic>> data = firestore.collection(path);
+      if (query != null) {
+        if (query["receiverId"] != null) {
+          var receiverId = query["receiverId"];
+          data.where("receiverId", isEqualTo: documentId);
+        }
+
+        if (query["status"] != null) {
+          var status = query["status"];
+          data.where("status", isEqualTo: "pending");
+        }
+
+        if (query["createdAt"] != null) {
+          var createdAt = query["createdAt"];
+          data = data.orderBy("createdAt", descending: true);
+        }
+      }
+      var result = data.snapshots().map(
+        (snapShots) => snapShots.docs.map((doc) => doc.data()).toList(),
+      );
+      return result;
+    }
   }
 }

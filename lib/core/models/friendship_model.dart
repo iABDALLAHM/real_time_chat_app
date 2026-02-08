@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:real_time_chat_app/core/entities/friendship_entity.dart';
 
 class FriendshipModel {
   final String id;
@@ -27,6 +28,19 @@ class FriendshipModel {
     );
   }
 
+  factory FriendshipModel.fromEntity({
+    required FriendshipEntity friendshipEntity,
+  }) {
+    return FriendshipModel(
+      id: friendshipEntity.id,
+      user1Id: friendshipEntity.user1Id,
+      user2Id: friendshipEntity.user2Id,
+      createdAt: (friendshipEntity.createdAt as Timestamp).toDate(),
+      isBlocked: friendshipEntity.isBlocked,
+      blockedBy: friendshipEntity.blockedBy,
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return {
       "id": id,
@@ -36,6 +50,17 @@ class FriendshipModel {
       "isBlocked": isBlocked,
       "blockedBy": blockedBy,
     };
+  }
+
+  FriendshipEntity toEntity() {
+    return FriendshipEntity(
+      id: id,
+      user1Id: user1Id,
+      user2Id: user2Id,
+      createdAt: createdAt,
+      isBlocked: isBlocked,
+      blockedBy: blockedBy,
+    );
   }
 
   String getOtherUserId({required String currentUserId}) {
