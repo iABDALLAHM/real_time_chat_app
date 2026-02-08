@@ -16,5 +16,5 @@ abstract class DataBaseService {
     String? documentId,
   });
   Stream getUserStream({required String uId, required String path});
-  Stream<void> getAllUsersStream({required String uId, required String path});
+  Stream<List<dynamic>> getAllUsersStream({required String path});
 }
