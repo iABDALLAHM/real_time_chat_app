@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/chat_body.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/custom_bottom_navigation_bar.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/find_people_body.dart';
+import 'package:real_time_chat_app/features/home/presentation/views/widgets/friends_body.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/main_view_multi_bloc_provider.dart';
 import 'package:real_time_chat_app/features/profile/presentation/views/profile_view.dart';
 
@@ -32,7 +33,7 @@ class _MainViewState extends State<MainView> {
           children: [
             ProfileView(),
             FindPeopleBody(),
-            Placeholder(),
+            FriendsBody(),
             ChatBody(),
           ],
         ),

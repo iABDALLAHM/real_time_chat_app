@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
 
 class CustomSearchBar extends StatelessWidget {
-  const CustomSearchBar({super.key});
-
+  const CustomSearchBar({super.key, required this.hintText});
+  final String hintText;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,7 +19,7 @@ class CustomSearchBar extends StatelessWidget {
       ),
       child: TextField(
         decoration: InputDecoration(
-          hintText: "Search People",
+          hintText: hintText,
           prefixIcon: Icon(Icons.search),
           suffixIcon: Icon(Icons.clear),
           border: OutlineInputBorder(

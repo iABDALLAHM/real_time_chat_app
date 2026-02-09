@@ -13,7 +13,7 @@ class FindPeopleBody extends StatelessWidget {
       appBar: AppBar(leading: SizedBox(), title: Text("Find People")),
       body: Column(
         children: [
-          CustomSearchBar(),
+          CustomSearchBar(hintText: "Search People"),
           Expanded(
             child: ListView.separated(
               itemBuilder: (context, index) {
