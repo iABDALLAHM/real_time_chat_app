@@ -15,9 +15,9 @@ GetIt getIt = GetIt.instance;
 void setupGetIt() {
   getIt.registerSingleton<AuthService>(FirebaseAuthService());
   getIt.registerSingleton<DataBaseService>(FirestoreService());
-  // getIt.registerSingleton<MainRepo>(
-  //   MainRepoImplementation(dataBaseService: getIt<DataBaseService>()),
-  // );
+  getIt.registerSingleton<MainRepo>(
+    MainRepoImplementation(dataBaseService: getIt<DataBaseService>()),
+  );
   getIt.registerSingleton<ProfileRepo>(
     ProfileRepoImplementation(
       authService: getIt<AuthService>(),
