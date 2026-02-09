@@ -1,13 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:real_time_chat_app/core/entities/friend_request_entity.dart';
+import 'package:real_time_chat_app/core/entities/user_entity.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
 import 'package:real_time_chat_app/core/widgets/custom_button.dart';
+import 'package:real_time_chat_app/features/friend_requests/presentation/views/widgets/friend_request_item.dart';
 
 class ReceviedRequestTap extends StatelessWidget {
   const ReceviedRequestTap({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ReceviedEmptyStateWidget();
+    return Column(
+      children: [
+        FriendRequestItem(
+          userEntity: UserEntity(
+            photoUrl: null,
+            uId: "uId",
+            email: "email",
+            displayName: "displayName",
+            lastSeen: DateTime.now(),
+            createdAt: DateTime.now(),
+          ),
+          friendRequestEntity: FriendRequestEntity(
+            id: "id",
+            senderId: "senderId",
+            receiverId: "receiverId",
+            createdAt: DateTime.now(),
+          ),
+          timeText: DateTime.now().toString().split(" ").toString(),
+          isReceived: true,
+        ),
+      ],
+    );
+
+    // ReceviedEmptyStateWidget();
   }
 }
 
@@ -69,4 +95,3 @@ class ReceviedEmptyStateWidget extends StatelessWidget {
     );
   }
 }
-
