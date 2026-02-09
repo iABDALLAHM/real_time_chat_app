@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
-// import 'package:real_time_chat_app/core/entities/user_entity.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:real_time_chat_app/features/home/presentation/manager/get_all_users_stream_cubit/get_all_users_stream_cubit.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/custom_search_bar.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/users_item_list_view.dart';
 
-class FindPeopleBody extends StatelessWidget {
+class FindPeopleBody extends StatefulWidget {
   const FindPeopleBody({super.key});
+
+  @override
+  State<FindPeopleBody> createState() => _FindPeopleBodyState();
+}
+
+class _FindPeopleBodyState extends State<FindPeopleBody> {
+  @override
+  void initState() {
+    context.read<GetAllUsersStreamCubit>().getAllUsers();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,15 +27,7 @@ class FindPeopleBody extends StatelessWidget {
           CustomSearchBar(hintText: "Search People"),
           Expanded(
             child: UsersItemListView(
-              usersList: [
-                // UserEntity(
-                //   uId: "uId",
-                //   email: "email",
-                //   displayName: "DisplayName",
-                //   lastSeen: DateTime.now(),
-                //   createdAt: DateTime.now(),
-                // ),
-              ],
+              usersList: context.watch<GetAllUsersStreamCubit>().usersList,
             ),
           ),
         ],
