@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
 import 'package:real_time_chat_app/features/friend_requests/presentation/views/widgets/custom_tap_button.dart';
+import 'package:real_time_chat_app/features/friend_requests/presentation/views/widgets/recevied_request_tap.dart';
+import 'package:real_time_chat_app/features/friend_requests/presentation/views/widgets/sent_request_tap.dart';
 
 class FriendRequestViewBody extends StatefulWidget {
   const FriendRequestViewBody({super.key});
@@ -49,7 +51,23 @@ class _FriendRequestViewBodyState extends State<FriendRequestViewBody> {
             ],
           ),
         ),
+
+        Expanded(
+          child: IndexedStack(
+            index: selectedIndex,
+            children: [
+              ReceviedRequestTap(),
+              SentRequestTap(),
+            ],
+          ),
+        ),
       ],
     );
   }
 }
+
+
+
+
+
+
