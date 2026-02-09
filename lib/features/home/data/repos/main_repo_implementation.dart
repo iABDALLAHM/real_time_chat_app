@@ -184,7 +184,7 @@ class MainRepoImplementation implements MainRepo {
     );
 
     await dataBaseService.addData(
-      path: BackendEndPoints.addFriendShips,
+      path: BackendEndPoints.getFriendShips,
       data: friendshipModel.toMap(),
       documentId: friendShipId,
     );
@@ -250,7 +250,7 @@ class MainRepoImplementation implements MainRepo {
   }
 
   @override
-  Stream<List<FriendshipEntity>> getFriendsStream(String userId) {
+  Stream<List<FriendshipEntity>> getFriendsStream({required String userId}) {
     // TODO: implement getFriendsStream
     throw UnimplementedError();
   }
@@ -342,11 +342,11 @@ class MainRepoImplementation implements MainRepo {
       ChatEntity existingChat = ChatModel.fromMap(chatRefernce).toEntity();
 
       if (existingChat.isDeletedBy(userId: user1Id)) {
-        await restoreChatForUser(chatId, user1Id);
+        await restoreChatForUser(chatId: chatId, userId: user1Id);
       }
 
       if (existingChat.isDeletedBy(userId: user2Id)) {
-        await restoreChatForUser(chatId, user2Id);
+        await restoreChatForUser(chatId: chatId, userId: user2Id);
       }
     }
     return chatId;

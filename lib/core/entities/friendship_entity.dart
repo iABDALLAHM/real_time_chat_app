@@ -14,4 +14,12 @@ class FriendshipEntity {
     this.isBlocked = false,
     this.blockedBy,
   });
+
+  String getOtherUserId({required String currentUserId}) {
+    return currentUserId == user1Id ? user2Id : user1Id;
+  }
+
+  bool isBlockedBy({required String userId}) {
+    return isBlocked && blockedBy == userId;
+  }
 }
