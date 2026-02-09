@@ -4,8 +4,8 @@ import 'package:real_time_chat_app/core/entities/user_entity.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
 import 'package:real_time_chat_app/core/widgets/custom_button.dart';
 
-class UsersListItem extends StatelessWidget {
-  const UsersListItem({
+class UserItem extends StatelessWidget {
+  const UserItem({
     super.key,
     required this.userEntity,
     required this.onTap,
@@ -56,11 +56,10 @@ class UsersListItem extends StatelessWidget {
                 ],
               ),
             ),
-
             Column(
               children: [
                 buildActionButton(
-                  relationshipStatus: UserRelationshipStatus.blocked,
+                  relationshipStatus: UserRelationshipStatus.none,
                 ),
               ],
             ),
