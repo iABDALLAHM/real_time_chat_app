@@ -7,8 +7,9 @@ import 'package:real_time_chat_app/features/home/presentation/views/widgets/cust
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/separated_sections_item.dart';
 
 class ChatBody extends StatelessWidget {
-  const ChatBody({super.key});
-
+  const ChatBody({
+    super.key,
+  });
   @override
   Widget build(BuildContext context) {
     return Scaffold(
