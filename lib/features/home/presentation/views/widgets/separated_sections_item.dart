@@ -7,43 +7,49 @@ class SeparatedSectionsItem extends StatelessWidget {
     required this.title,
     this.count,
     required this.isSelected,
+    required this.onPressed,
   });
   final String title;
   final int? count;
   final bool isSelected;
+  final Function() onPressed;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10),
-      decoration: BoxDecoration(
-        color: isSelected ? AppTheme.primaryColor : Colors.grey[200],
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          count != null
-              ? Text(
-                  "$title ($count)",
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
-                    color: isSelected
-                        ? Colors.white
-                        : AppTheme.textsecondaryColor,
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        margin: EdgeInsets.only(right: 8),
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: isSelected ? AppTheme.primaryColor : Colors.grey[200],
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            count != null
+                ? Text(
+                    "$title ($count)",
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                      color: isSelected
+                          ? Colors.white
+                          : AppTheme.textsecondaryColor,
+                    ),
+                  )
+                : Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                      color: isSelected
+                          ? Colors.white
+                          : AppTheme.textsecondaryColor,
+                    ),
                   ),
-                )
-              : Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
-                    color: isSelected
-                        ? Colors.white
-                        : AppTheme.textsecondaryColor,
-                  ),
-                ),
-        ],
+          ],
+        ),
       ),
     );
   }

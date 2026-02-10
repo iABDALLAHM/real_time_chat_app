@@ -55,19 +55,10 @@ class _FriendRequestViewBodyState extends State<FriendRequestViewBody> {
         Expanded(
           child: IndexedStack(
             index: selectedIndex,
-            children: [
-              ReceviedRequestTap(),
-              SentRequestTap(),
-            ],
+            children: [ReceviedRequestTap(), SentRequestTap()],
           ),
         ),
       ],
     );
   }
 }
-
-
-
-
-
-
