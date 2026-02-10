@@ -6,8 +6,7 @@ class CustomFloatingActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
-      onPressed: () {
-      },
+      onPressed: () {},
       label: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

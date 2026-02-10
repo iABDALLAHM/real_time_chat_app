@@ -4,6 +4,7 @@ import 'package:real_time_chat_app/features/auth/presentation/views/login_view.d
 import 'package:real_time_chat_app/features/auth/presentation/views/register_view.dart';
 import 'package:real_time_chat_app/features/friend_requests/presentation/views/friend_request_view.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/main_view.dart';
+import 'package:real_time_chat_app/features/home/presentation/views/notification_view.dart';
 import 'package:real_time_chat_app/features/profile/presentation/views/change_password_view.dart';
 import 'package:real_time_chat_app/features/profile/presentation/views/profile_view.dart';
 import 'package:real_time_chat_app/features/splash/presentation/views/splash_view.dart';
@@ -26,6 +27,8 @@ Route onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => MainView());
     case FriendRequestView.routeName:
       return MaterialPageRoute(builder: (context) => FriendRequestView());
+    case NotificationView.routeName:
+      return MaterialPageRoute(builder: (context) => NotificationView());
     default:
       return MaterialPageRoute(builder: (context) => Scaffold());
   }
