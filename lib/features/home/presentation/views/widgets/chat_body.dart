@@ -7,6 +7,7 @@ import 'package:real_time_chat_app/features/home/presentation/views/widgets/no_c
 
 class ChatBody extends StatelessWidget {
   const ChatBody({super.key});
+  static const String routeName = "Chat";
   @override
   Widget build(BuildContext context) {
     return Scaffold(

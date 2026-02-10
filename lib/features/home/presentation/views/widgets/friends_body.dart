@@ -5,7 +5,7 @@ import 'package:real_time_chat_app/features/home/presentation/views/widgets/empt
 
 class FriendsBody extends StatelessWidget {
   const FriendsBody({super.key});
-  
+  static const String routeName = "friends";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
