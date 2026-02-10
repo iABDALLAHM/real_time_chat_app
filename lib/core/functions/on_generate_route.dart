@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:real_time_chat_app/features/auth/presentation/views/forget_password_view.dart';
 import 'package:real_time_chat_app/features/auth/presentation/views/login_view.dart';
 import 'package:real_time_chat_app/features/auth/presentation/views/register_view.dart';
+import 'package:real_time_chat_app/features/chat/presentation/views/chat_view.dart';
 import 'package:real_time_chat_app/features/friend_requests/presentation/views/friend_request_view.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/main_view.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/notification_view.dart';
@@ -29,6 +30,8 @@ Route onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => FriendRequestView());
     case NotificationView.routeName:
       return MaterialPageRoute(builder: (context) => NotificationView());
+    case ChatView.routeName:
+      return MaterialPageRoute(builder: (context) => ChatView());
     default:
       return MaterialPageRoute(builder: (context) => Scaffold());
   }
