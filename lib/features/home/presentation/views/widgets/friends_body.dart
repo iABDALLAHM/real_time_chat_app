@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:real_time_chat_app/features/friend_requests/presentation/views/friend_request_view.dart';
+import 'package:real_time_chat_app/core/entities/user_entity.dart';
+import 'package:real_time_chat_app/features/home/presentation/function/build_friends_body_app_bar.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/custom_search_bar.dart';
-import 'package:real_time_chat_app/features/home/presentation/views/widgets/empty_search_widget.dart';
+import 'package:real_time_chat_app/features/home/presentation/views/widgets/friend_item.dart';
 
 class FriendsBody extends StatelessWidget {
   const FriendsBody({super.key});
@@ -9,22 +10,24 @@ class FriendsBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: SizedBox(),
-        title: Text("Friends"),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed(FriendRequestView.routeName);
-            },
-            icon: Icon(Icons.person_add_alt_1),
-          ),
-        ],
-      ),
+      appBar: buildFriendsBodyAppBar(context),
       body: Column(
         children: [
           CustomSearchBar(hintText: "Search Friends"),
-          Expanded(child: EmptySearchWidget()),
+          FriendItem(
+            friend: UserEntity(
+              uId: "uId",
+              email: "email",
+              displayName: "displayName",
+              lastSeen: DateTime.now(),
+              createdAt: DateTime.now(),
+            ),
+            lastSeenText: '',
+            onTap: () {},
+            onRemove: () {},
+            onBlock: () {},
+          ),
+          // EmptySearchWidget(),
         ],
       ),
     );
