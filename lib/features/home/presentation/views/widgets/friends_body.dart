@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:real_time_chat_app/core/entities/user_entity.dart';
+import 'package:real_time_chat_app/features/chat/presentation/views/chat_view.dart';
 import 'package:real_time_chat_app/features/home/presentation/function/build_friends_body_app_bar.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/custom_search_bar.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/friend_item.dart';
@@ -11,24 +12,29 @@ class FriendsBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildFriendsBodyAppBar(context),
-      body: Column(
-        children: [
-          CustomSearchBar(hintText: "Search Friends"),
-          FriendItem(
-            friend: UserEntity(
-              uId: "uId",
-              email: "email",
-              displayName: "displayName",
-              lastSeen: DateTime.now(),
-              createdAt: DateTime.now(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Column(
+          children: [
+            CustomSearchBar(hintText: "Search Friends"),
+            FriendItem(
+              friend: UserEntity(
+                uId: "uId",
+                email: "email",
+                displayName: "displayName",
+                lastSeen: DateTime.now(),
+                createdAt: DateTime.now(),
+              ),
+              lastSeenText: '',
+              onTap: () {
+                Navigator.of(context).pushNamed(ChatView.routeName);
+              },
+              onRemove: () {},
+              onBlock: () {},
             ),
-            lastSeenText: '',
-            onTap: () {},
-            onRemove: () {},
-            onBlock: () {},
-          ),
-          // EmptySearchWidget(),
-        ],
+            // EmptySearchWidget(),
+          ],
+        ),
       ),
     );
   }
