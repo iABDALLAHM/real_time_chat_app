@@ -52,13 +52,9 @@ class UserItem extends StatelessWidget {
                 ],
               ),
             ),
-            Column(
-              children: [
-                userItemButtonStatus(
-                  onTap: onTap,
-                  relationshipStatus: UserRelationshipStatus.none,
-                ),
-              ],
+            userItemButtonStatus(
+              onTap: onTap,
+              relationshipStatus: UserRelationshipStatus.none,
             ),
           ],
         ),
