@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:real_time_chat_app/core/entities/user_entity.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
+import 'package:real_time_chat_app/features/home/presentation/views/widgets/custom_popup_menu_button.dart';
 
 import '../../../../../core/functions/build_default_avatar.dart';
 
@@ -94,56 +95,10 @@ class FriendItem extends StatelessWidget {
                   ],
                 ),
               ),
-
-              PopupMenuButton<String>(
-                icon: Icon(Icons.more_vert),
-                itemBuilder: (context) => [
-                  PopupMenuItem(
-                    value: "message",
-                    child: ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      title: Text("Message"),
-                      leading: Icon(
-                        Icons.chat_bubble_outline,
-                        color: AppTheme.primaryColor,
-                      ),
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: "Remove",
-                    child: ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      title: Text("Remove Friend"),
-                      leading: Icon(
-                        Icons.person_remove_outlined,
-                        color: AppTheme.errorColor,
-                      ),
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: "block",
-                    child: ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      title: Text("Block User"),
-                      leading: Icon(Icons.block, color: AppTheme.errorColor),
-                    ),
-                  ),
-                ],
-                onSelected: (value) {
-                  switch (value) {
-                    case "Remove":
-                      onRemove();
-                      break;
-                    case "block":
-                      onBlock();
-                      break;
-                    case "message":
-                      onTap();
-                      break;
-                    default:
-                      onTap();
-                  }
-                },
+              CustomPopupMenuButton(
+                onRemove: onRemove,
+                onBlock: onBlock,
+                onTap: onTap,
               ),
             ],
           ),
