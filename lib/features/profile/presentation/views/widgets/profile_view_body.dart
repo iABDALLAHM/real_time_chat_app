@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/cubits/user_stream_cubit/user_stream_cubit.dart';
 import 'package:real_time_chat_app/core/entities/user_entity.dart';
 import 'package:real_time_chat_app/core/functions/get_user_data.dart';
-import 'package:real_time_chat_app/core/utils/app_theme.dart';
 import 'package:real_time_chat_app/core/widgets/custom_button.dart';
 import 'package:real_time_chat_app/core/widgets/custom_text_field.dart';
 import 'package:real_time_chat_app/core/widgets/custom_text_form_field.dart';
@@ -11,6 +10,7 @@ import 'package:real_time_chat_app/features/profile/controllers/profile_controll
 import 'package:real_time_chat_app/features/profile/presentation/manager/update_user_data_cubit/update_user_data_cubit.dart';
 import 'package:real_time_chat_app/features/profile/presentation/views/widgets/custom_profile_image.dart';
 import 'package:real_time_chat_app/features/profile/presentation/views/widgets/online_or_offline_status.dart';
+import 'package:real_time_chat_app/features/profile/presentation/views/widgets/personal_user_info.dart';
 import 'package:real_time_chat_app/features/profile/presentation/views/widgets/profile_body_footer.dart';
 import 'package:real_time_chat_app/features/profile/presentation/views/widgets/profile_body_footer_bloc_listener.dart';
 import 'package:real_time_chat_app/features/profile/presentation/views/widgets/update_personal_information_bloc_listener.dart';
@@ -58,19 +58,7 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                 children: [
                   CustomProfileImage(),
                   const SizedBox(height: 16),
-                  Text(
-                    getUserData().displayName,
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    getUserData().email,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: AppTheme.textsecondaryColor,
-                    ),
-                  ),
+                  PersonalUserInfo(),
                   const SizedBox(height: 8),
                   OnlineOrOfflineStatus(),
                   const SizedBox(height: 8),
