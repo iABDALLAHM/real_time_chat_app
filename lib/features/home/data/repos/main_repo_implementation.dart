@@ -19,14 +19,15 @@ class MainRepoImplementation implements MainRepo {
 
   @override
   Stream<List<UserEntity>> getAllUsersStream() async* {
-    List<UserEntity> usersList = [];
-    var usersSnapshots = dataBaseService.getAllDataStream(
+    await for (var userMaps in dataBaseService.getAllDataStream(
+      isQuery: false,
       path: BackendEndPoints.getUsers,
-    );
-    // for (var user in (usersSnapshots as List<Map<String, dynamic>>)) {
-    //   usersList.add(UserModel.fromMap(user).toEntity());
-    // }
-    yield usersList;
+    )) {
+      final usersList = userMaps
+          .map((user) => UserModel.fromMap(user).toEntity())
+          .toList();
+      yield usersList;
+    }
   }
 
   @override
@@ -110,27 +111,27 @@ class MainRepoImplementation implements MainRepo {
       //   ),
       // );
 
-    //   await removeNotificationFromCancelledRequest(
-    //     friendRequestEntity.receiverId,
-    //     friendRequestEntity.senderId,
-    //   );
-    // } else if (status == FriendRequestStatus.rejected) {
-    //   await createNotification(
-    //     NotificationEntity(
-    //       id: DateTime.now().toString(),
-    //       userId: friendRequestEntity.senderId,
-    //       data: {"userId": friendRequestEntity.receiverId},
-    //       title: "Friend Request declined",
-    //       body: "Your friend request has been declined",
-    //       type: NotificationType.friendRequestDecliend,
-    //       createdAt: DateTime.now(),
-    //     ),
-    //   );
+      //   await removeNotificationFromCancelledRequest(
+      //     friendRequestEntity.receiverId,
+      //     friendRequestEntity.senderId,
+      //   );
+      // } else if (status == FriendRequestStatus.rejected) {
+      //   await createNotification(
+      //     NotificationEntity(
+      //       id: DateTime.now().toString(),
+      //       userId: friendRequestEntity.senderId,
+      //       data: {"userId": friendRequestEntity.receiverId},
+      //       title: "Friend Request declined",
+      //       body: "Your friend request has been declined",
+      //       type: NotificationType.friendRequestDecliend,
+      //       createdAt: DateTime.now(),
+      //     ),
+      //   );
 
-    //   await removeNotificationFromCancelledRequest(
-    //     friendRequestEntity.receiverId,
-    //     friendRequestEntity.senderId,
-    //   );
+      //   await removeNotificationFromCancelledRequest(
+      //     friendRequestEntity.receiverId,
+      //     friendRequestEntity.senderId,
+      //   );
     }
   }
 

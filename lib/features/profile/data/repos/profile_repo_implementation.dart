@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:real_time_chat_app/constants.dart';
 import 'package:real_time_chat_app/core/entities/user_entity.dart';
-import 'package:real_time_chat_app/core/errors/custom_exception.dart';
 import 'package:real_time_chat_app/core/models/user_model.dart';
 import 'package:real_time_chat_app/core/services/auth_service.dart';
 import 'package:real_time_chat_app/core/services/data_base_service.dart';
@@ -73,16 +72,10 @@ class ProfileRepoImplementation implements ProfileRepo {
     required String userId,
     required bool isOnline,
   }) async {
-    try {
-      await dataBaseService.updateData(
-        path: BackendEndPoints.getUsers,
-        data: {"isOnline": isOnline, "lastSeen": DateTime.now()},
-      );
-    } catch (e) {
-      throw CustomException(
-        exceptionMeassge:
-            "Failed to update user online status :${e.toString()}",
-      );
-    }
+    await dataBaseService.updateData(
+      documentId: userId,
+      path: BackendEndPoints.getUsers,
+      data: {"isOnline": isOnline, "lastSeen": DateTime.now()},
+    );
   }
 }

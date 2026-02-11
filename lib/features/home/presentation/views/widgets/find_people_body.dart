@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:real_time_chat_app/features/home/presentation/function/build_find_people_body_app_bar.dart';
 import 'package:real_time_chat_app/features/home/presentation/manager/get_all_users_stream_cubit/get_all_users_stream_cubit.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/custom_search_bar.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/users_item_list_view.dart';
@@ -21,7 +22,7 @@ class _FindPeopleBodyState extends State<FindPeopleBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(leading: SizedBox(), title: Text("Find People")),
+      appBar: buildFindPeopleBodyAppBar(),
       body: Column(
         children: [
           CustomSearchBar(hintText: "Search People"),

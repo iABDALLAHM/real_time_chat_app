@@ -61,13 +61,12 @@ class FirestoreService implements DataBaseService {
     bool isQuery = false,
     String? documentId,
     Map<String, dynamic>? query,
-  }) {
+  }) async* {
     if (isQuery == false) {
-      var data = firestore
+      yield* firestore
           .collection(path)
           .snapshots()
           .map((snapShots) => snapShots.docs.map((doc) => doc.data()).toList());
-      return data;
     } else {
       Query<Map<String, dynamic>> data = firestore.collection(path);
       if (query != null) {
@@ -89,7 +88,7 @@ class FirestoreService implements DataBaseService {
       var result = data.snapshots().map(
         (snapShots) => snapShots.docs.map((doc) => doc.data()).toList(),
       );
-      return result;
+      // yield result;
     }
   }
 }
