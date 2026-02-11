@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:real_time_chat_app/constants.dart';
 import 'package:real_time_chat_app/core/entities/user_entity.dart';
 import 'package:real_time_chat_app/core/models/user_model.dart';
@@ -17,6 +16,7 @@ class ProfileRepoImplementation implements ProfileRepo {
     required this.authService,
     required this.dataBaseService,
   });
+
   @override
   Future<void> signOut({required String userId}) async {
     await authService.signOut();

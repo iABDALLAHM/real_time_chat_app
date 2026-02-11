@@ -49,7 +49,6 @@ class ProfileBodyFooter extends StatelessWidget {
             ],
           ),
         ),
-
         const SizedBox(height: 20),
         ProfileBadge(),
         const SizedBox(height: 20),
