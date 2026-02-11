@@ -31,14 +31,18 @@ class MainRepoImplementation implements MainRepo {
   }
 
   @override
-  Future<void> sendFriendRequest({required FriendRequestEntity request}) async {
+  Future<void> sendFriendRequest({
+    required FriendRequestEntity friendRequest,
+  }) async {
     dataBaseService.addData(
-      path: BackendEndPoints.addFriendRequests,
-      documentId: request.id,
-      data: FriendRequestModel.fromEntity(friendRequestEntity: request).toMap(),
+      path: BackendEndPoints.friendRequests,
+      documentId: friendRequest.id,
+      data: FriendRequestModel.fromEntity(
+        friendRequestEntity: friendRequest,
+      ).toMap(),
     );
-    String notificationId =
-        "friend_request_${request.senderId}_${request.receiverId}_${DateTime.now()}";
+    // String notificationId =
+    //     "friend_request_${request.senderId}_${request.receiverId}_${DateTime.now()}";
     // await createNotification(
     //   NotificationEntity(
     //     id: notificationId,
@@ -55,7 +59,7 @@ class MainRepoImplementation implements MainRepo {
   @override
   Future<void> cancelFriendRequest({required String requestId}) async {
     var requestDoc = await dataBaseService.getData(
-      path: BackendEndPoints.getFriendRequests,
+      path: BackendEndPoints.friendRequests,
       documentId: requestId,
     );
     FriendRequestEntity friendRequestEntity = FriendRequestModel.fromMap(
@@ -63,7 +67,7 @@ class MainRepoImplementation implements MainRepo {
     ).toEntity();
 
     await dataBaseService.deleteData(
-      path: BackendEndPoints.deleteRequests,
+      path: BackendEndPoints.friendRequests,
       documentId: requestId,
     );
 
@@ -80,12 +84,12 @@ class MainRepoImplementation implements MainRepo {
     required FriendRequestStatus status,
   }) async {
     await dataBaseService.updateData(
-      path: BackendEndPoints.updateRequests,
+      path: BackendEndPoints.friendRequests,
       data: {"status": status.name, "responsedAt": DateTime.now()},
     );
 
     var requestDoc = await dataBaseService.getData(
-      path: BackendEndPoints.getFriendRequests,
+      path: BackendEndPoints.friendRequests,
       documentId: requestId,
     );
 

@@ -7,7 +7,7 @@ import 'package:real_time_chat_app/core/entities/user_entity.dart';
 abstract class MainRepo {
   
   Stream<List<UserEntity>> getAllUsersStream();
-  Future<void> sendFriendRequest({required FriendRequestEntity request});
+  Future<void> sendFriendRequest({required FriendRequestEntity friendRequest});
   Future<void> cancelFriendRequest({required String requestId});
   Future<void> respondToFriendRequest({
     required String requestId,
