@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:real_time_chat_app/core/utils/app_theme.dart';
 import 'package:real_time_chat_app/features/profile/controllers/profile_controller.dart';
+import 'package:real_time_chat_app/features/profile/presentation/function/build_profile_body_app_bar.dart';
 import 'package:real_time_chat_app/features/profile/presentation/views/widgets/profile_view_body.dart';
 import 'package:real_time_chat_app/features/profile/presentation/views/widgets/profile_multi_bloc_provider.dart';
 
@@ -16,35 +16,12 @@ class ProfileView extends StatelessWidget {
         child: Builder(
           builder: (context) {
             return Scaffold(
-              appBar: buildProfileViewAppBar(context),
+              appBar: buildProfileBodyAppBar(context),
               body: ProfileViewBody(),
             );
           },
         ),
       ),
-    );
-  }
-
-  AppBar buildProfileViewAppBar(BuildContext context) {
-    final controller = context.watch<ProfileController>();
-    return AppBar(
-      title: Text("Profile"),
-      leading: SizedBox(),
-      actions: [
-        TextButton(
-          onPressed: () {
-            controller.toggleEdit();
-          },
-          child: Text(
-            controller.isEditing ? 'Cancel' : 'Edit',
-            style: TextStyle(
-              color: controller.isEditing
-                  ? AppTheme.errorColor
-                  : AppTheme.primaryColor,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }
