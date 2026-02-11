@@ -110,5 +110,4 @@ class ChatModel {
       updatedAt: (map["updatedAt"] as Timestamp).toDate(),
     );
   }
-
 }

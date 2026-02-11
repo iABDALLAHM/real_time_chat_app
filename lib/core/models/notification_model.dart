@@ -1,12 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-enum NotificationType {
-  friendRequest,
-  friendRequestAccepted,
-  friendRequestDecliend,
-  newMessage,
-  friendRemoved,
-}
+import 'package:real_time_chat_app/core/entities/notification_entity.dart';
 
 class NotificationModel {
   final String id;

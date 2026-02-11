@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:real_time_chat_app/core/entities/friend_request_entity.dart';
 
-
-
 class FriendRequestModel {
   final String id;
   final String senderId;

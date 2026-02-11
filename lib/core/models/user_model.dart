@@ -57,22 +57,10 @@ class UserModel {
     );
   }
 
-  UserEntity toEntity() {
-    return UserEntity(
-      isOnline: isOnline,
-      uId: uId,
-      email: email,
-      displayName: displayName,
-      lastSeen: lastSeen,
-      photoUrl: photoUrl,
-      createdAt: createdAt,
-    );
-  }
-
   // This is a specific to the case of the save data in adevice localy
   Map<String, dynamic> toJson() {
     return {
-      "isOnline":isOnline,
+      "isOnline": isOnline,
       "uId": uId,
       "email": email,
       "displayName": displayName,
@@ -91,5 +79,17 @@ class UserModel {
       "createdAt": createdAt,
       "photoUrl": photoUrl,
     };
+  }
+
+  UserEntity toEntity() {
+    return UserEntity(
+      isOnline: isOnline,
+      uId: uId,
+      email: email,
+      displayName: displayName,
+      lastSeen: lastSeen,
+      photoUrl: photoUrl,
+      createdAt: createdAt,
+    );
   }
 }
