@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/entities/friend_request_entity.dart';
+import 'package:real_time_chat_app/core/entities/user_entity.dart';
 import 'package:real_time_chat_app/core/enums/user_relationship_status.dart';
 import 'package:real_time_chat_app/core/functions/show_top_overlay_message.dart';
 import 'package:real_time_chat_app/features/home/presentation/function/user_item_button_status.dart';
@@ -9,22 +10,28 @@ import 'package:real_time_chat_app/features/home/presentation/manager/send_frien
 class SendFriendRequestBlocBuilder extends StatelessWidget {
   const SendFriendRequestBlocBuilder({
     super.key,
-    required this.friendRequestEntity, required this.userName,
+    required this.friendRequestEntity,
+    required this.userEntity,
   });
   final FriendRequestEntity friendRequestEntity;
-  final String userName;
+  final UserEntity userEntity;
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SendFriendRequestCubit, UserRelationshipStatus>(
       listener: (context, state) {
         switch (state) {
           case UserRelationshipStatus.none:
-            
-          case UserRelationshipStatus.friendRequestSent:
-          return showTopOverlayMessage(
+            return showTopOverlayMessage(
               context,
-              message: "Success, Friend Request Sent to   : $userName",
+              message: "cancel Request Sent to:${userEntity.displayName}",
             );
+          case UserRelationshipStatus.friendRequestSent:
+            return showTopOverlayMessage(
+              context,
+              message:
+                  "Success, Friend Request Sent to   : ${userEntity.displayName}",
+            );
+
           case UserRelationshipStatus.friendRequestReceived:
           case UserRelationshipStatus.friends:
           case UserRelationshipStatus.blocked:
@@ -44,9 +51,14 @@ class SendFriendRequestBlocBuilder extends StatelessWidget {
 
           case UserRelationshipStatus.friendRequestSent:
             return userItemButtonStatus(
-              onTap: () {},
+              onTap: () {
+                context.read<SendFriendRequestCubit>().cancelFriend(
+                  userEntity: userEntity,
+                );
+              },
               relationshipStatus: UserRelationshipStatus.friendRequestSent,
             );
+
           case UserRelationshipStatus.friendRequestReceived:
             return userItemButtonStatus(
               onTap: () {},

@@ -22,10 +22,12 @@ Widget userItemButtonStatus({
           ],
         ),
       );
-
     case UserRelationshipStatus.friendRequestSent:
       return Column(
-        children: [CustomRequestSentButton(), CustomCancelButton()],
+        children: [
+          CustomRequestSentButton(),
+          CustomCancelButton(onTap: onTap),
+        ],
       );
 
     case UserRelationshipStatus.friendRequestReceived:

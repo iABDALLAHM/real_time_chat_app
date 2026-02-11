@@ -4,7 +4,6 @@ import 'package:real_time_chat_app/core/entities/user_entity.dart';
 import 'package:real_time_chat_app/core/functions/get_user_data.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/send_friend_request_bloc_builder.dart';
-import 'package:uuid/uuid.dart';
 
 class UserItem extends StatelessWidget {
   const UserItem({super.key, required this.userEntity, required this.onTap});
@@ -56,9 +55,9 @@ class UserItem extends StatelessWidget {
               ),
             ),
             SendFriendRequestBlocBuilder(
-              userName: userEntity.displayName,
+              userEntity: userEntity,
               friendRequestEntity: FriendRequestEntity(
-                id: Uuid().v4(),
+                id: getUserData().uId,
                 senderId: getUserData().uId,
                 receiverId: userEntity.uId,
                 createdAt: DateTime.now(),
