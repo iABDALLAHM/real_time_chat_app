@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:real_time_chat_app/constants.dart';
 import 'package:real_time_chat_app/core/entities/user_entity.dart';
+import 'package:real_time_chat_app/core/errors/custom_exception.dart';
 import 'package:real_time_chat_app/core/models/user_model.dart';
 import 'package:real_time_chat_app/core/services/auth_service.dart';
 import 'package:real_time_chat_app/core/services/data_base_service.dart';
@@ -21,10 +22,7 @@ class ProfileRepoImplementation implements ProfileRepo {
   Future<void> signOut({required String userId}) async {
     await authService.signOut();
     SharedPrefsService.setBool(key: kUserLogin, value: false);
-    await dataBaseService.updateUserOnlineStatus(
-      userId: userId,
-      isOnline: false,
-    );
+    await updateUserOnlineStatus(userId: userId, isOnline: false);
   }
 
   @override
@@ -67,6 +65,24 @@ class ProfileRepoImplementation implements ProfileRepo {
       final map = result as Map<String, dynamic>;
       var data = UserModel.fromMap(map).toEntity();
       yield data;
+    }
+  }
+
+  @override
+  Future<void> updateUserOnlineStatus({
+    required String userId,
+    required bool isOnline,
+  }) async {
+    try {
+      await dataBaseService.updateData(
+        path: BackendEndPoints.getUsers,
+        data: {"isOnline": isOnline, "lastSeen": DateTime.now()},
+      );
+    } catch (e) {
+      throw CustomException(
+        exceptionMeassge:
+            "Failed to update user online status :${e.toString()}",
+      );
     }
   }
 }

@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:real_time_chat_app/constants.dart';
@@ -77,10 +76,7 @@ class AuthRepoImplementation implements AuthRepo {
                 email: email,
               )
               as User;
-      await dataBaseService.updateUserOnlineStatus(
-        isOnline: true,
-        userId: user.uid,
-      );
+      await updateUserOnlineStatus(isOnline: true, userId: user.uid);
       UserEntity userEntity = await getUserData(uId: user.uid);
       SharedPrefsService.setBool(key: kUserLogin, value: true);
       saveUserData(userEntity: userEntity);
@@ -123,5 +119,23 @@ class AuthRepoImplementation implements AuthRepo {
   void saveUserData({required UserEntity userEntity}) {
     var value = jsonEncode(UserModel.fromEntity(userEntity).toJson());
     SharedPrefsService.setData(key: kUserLocalData, value: value);
+  }
+
+  @override
+  Future<void> updateUserOnlineStatus({
+    required String userId,
+    required bool isOnline,
+  }) async {
+    try {
+      await dataBaseService.updateData(
+        path: BackendEndPoints.getUsers,
+        data: {"isOnline": isOnline, "lastSeen": DateTime.now()},
+      );
+    } catch (e) {
+      throw CustomException(
+        exceptionMeassge:
+            "Failed to update user online status :${e.toString()}",
+      );
+    }
   }
 }

@@ -6,10 +6,6 @@ abstract class DataBaseService {
   });
   Future<dynamic> getData({required String path, String? documentId});
   Future<dynamic> deleteData({required String path, String? documentId});
-  Future<void> updateUserOnlineStatus({
-    required String userId,
-    required bool isOnline,
-  });
   Future<void> updateData({
     required String path,
     required Map<String, dynamic> data,
@@ -20,6 +16,6 @@ abstract class DataBaseService {
     required String path,
     bool isQuery = false,
     String? documentId,
-    Map<String,dynamic>? query,
+    Map<String, dynamic>? query,
   });
 }

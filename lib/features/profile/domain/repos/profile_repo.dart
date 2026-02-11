@@ -7,4 +7,8 @@ abstract class ProfileRepo {
   Future<void> updateUserPassword({required String newPassword});
   void updateUserData({required UserEntity userEntity});
   Stream<UserEntity> getUserStream({required String uId});
+    Future<void> updateUserOnlineStatus({
+    required String userId,
+    required bool isOnline,
+  });
 }
