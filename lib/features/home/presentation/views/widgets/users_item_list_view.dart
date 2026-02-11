@@ -12,10 +12,7 @@ class UsersItemListView extends StatelessWidget {
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: UserItem(
-            onTap: () {},
-            userEntity: usersList[index],
-          ),
+          child: UserItem(onTap: () {}, userEntity: usersList[index]),
         );
       },
       separatorBuilder: (context, index) => CustomDivider(),
