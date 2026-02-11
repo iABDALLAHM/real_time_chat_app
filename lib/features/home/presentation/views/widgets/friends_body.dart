@@ -12,29 +12,35 @@ class FriendsBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildFriendsBodyAppBar(context),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          children: [
-            CustomSearchBar(hintText: "Search Friends"),
-            FriendItem(
-              friend: UserEntity(
-                uId: "uId",
-                email: "email",
-                displayName: "displayName",
-                lastSeen: DateTime.now(),
-                createdAt: DateTime.now(),
+      body: Column(
+        children: [
+          CustomSearchBar(hintText: "Search Friends"),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  FriendItem(
+                    friend: UserEntity(
+                      uId: "uId",
+                      email: "email",
+                      displayName: "displayNamae",
+                      lastSeen: DateTime.now(),
+                      createdAt: DateTime.now(),
+                    ),
+                    lastSeenText: '',
+                    onTap: () {
+                      Navigator.of(context).pushNamed(ChatView.routeName);
+                    },
+                    onRemove: () {},
+                    onBlock: () {},
+                  ),
+                ],
               ),
-              lastSeenText: '',
-              onTap: () {
-                Navigator.of(context).pushNamed(ChatView.routeName);
-              },
-              onRemove: () {},
-              onBlock: () {},
             ),
-            // EmptySearchWidget(),
-          ],
-        ),
+          ),
+          // EmptySearchWidget(),
+        ],
       ),
     );
   }
