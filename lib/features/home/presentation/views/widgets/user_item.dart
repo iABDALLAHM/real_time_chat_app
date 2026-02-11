@@ -56,7 +56,7 @@ class UserItem extends StatelessWidget {
               children: [
                 userItemButtonStatus(
                   onTap: onTap,
-                  relationshipStatus: UserRelationshipStatus.blocked,
+                  relationshipStatus: UserRelationshipStatus.none,
                 ),
               ],
             ),
