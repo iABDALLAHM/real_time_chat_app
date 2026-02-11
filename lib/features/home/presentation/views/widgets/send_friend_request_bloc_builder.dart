@@ -2,31 +2,46 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/entities/friend_request_entity.dart';
 import 'package:real_time_chat_app/core/enums/user_relationship_status.dart';
+import 'package:real_time_chat_app/core/functions/show_top_overlay_message.dart';
 import 'package:real_time_chat_app/features/home/presentation/function/user_item_button_status.dart';
 import 'package:real_time_chat_app/features/home/presentation/manager/send_friend_request_cubit/send_friend_request_cubit.dart';
 
 class SendFriendRequestBlocBuilder extends StatelessWidget {
-  const SendFriendRequestBlocBuilder({super.key});
-
+  const SendFriendRequestBlocBuilder({
+    super.key,
+    required this.friendRequestEntity, required this.userName,
+  });
+  final FriendRequestEntity friendRequestEntity;
+  final String userName;
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SendFriendRequestCubit, UserRelationshipStatus>(
+    return BlocConsumer<SendFriendRequestCubit, UserRelationshipStatus>(
+      listener: (context, state) {
+        switch (state) {
+          case UserRelationshipStatus.none:
+            
+          case UserRelationshipStatus.friendRequestSent:
+          return showTopOverlayMessage(
+              context,
+              message: "Success, Friend Request Sent to   : $userName",
+            );
+          case UserRelationshipStatus.friendRequestReceived:
+          case UserRelationshipStatus.friends:
+          case UserRelationshipStatus.blocked:
+        }
+      },
       builder: (context, state) {
         switch (state) {
           case UserRelationshipStatus.none:
             return userItemButtonStatus(
               onTap: () {
                 context.read<SendFriendRequestCubit>().sendRequest(
-                  friendRequestEntity: FriendRequestEntity(
-                    id: "id",
-                    senderId: "senderId",
-                    receiverId: "receiverId",
-                    createdAt: DateTime.now(),
-                  ),
+                  friendRequestEntity: friendRequestEntity,
                 );
               },
               relationshipStatus: UserRelationshipStatus.none,
             );
+
           case UserRelationshipStatus.friendRequestSent:
             return userItemButtonStatus(
               onTap: () {},
