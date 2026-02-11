@@ -1,16 +1,22 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/entities/friend_request_entity.dart';
+import 'package:real_time_chat_app/core/enums/user_relationship_status.dart';
 import 'package:real_time_chat_app/features/home/domain/repos/main_repo.dart';
-import 'package:real_time_chat_app/features/home/presentation/manager/send_friend_request_cubit/send_friend_request_state.dart';
 
-class SendFriendRequestCubit extends Cubit<SendFriendRequestStates> {
+class SendFriendRequestCubit extends Cubit<UserRelationshipStatus> {
   SendFriendRequestCubit({required this.mainRepo})
-    : super(InitialSendFriendRequestState());
+    : super(UserRelationshipStatus.none);
   final MainRepo mainRepo;
 
   void sendRequest({required FriendRequestEntity friendRequestEntity}) async {
-    emit(LoadingSendFriendRequestState());
     await mainRepo.sendFriendRequest(friendRequest: friendRequestEntity);
-    emit(SuccessSendFriendRequestState());
+    emit(UserRelationshipStatus.friendRequestSent);
+  }
+
+  void sendCancelFriend({
+    required FriendRequestEntity friendRequestEntity,
+  }) async {
+    await mainRepo.sendFriendRequest(friendRequest: friendRequestEntity);
+    emit(UserRelationshipStatus.friendRequestSent);
   }
 }
