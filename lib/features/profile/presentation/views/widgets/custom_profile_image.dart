@@ -3,14 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/functions/get_user_data.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
 import 'package:real_time_chat_app/features/profile/controllers/profile_controller.dart';
-import 'package:real_time_chat_app/features/profile/presentation/function/build_default_avatar.dart';
+import 'package:real_time_chat_app/features/profile/presentation/function/build_default_avatar_bloc_builder.dart';
 
 class CustomProfileImage extends StatelessWidget {
   const CustomProfileImage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = context.watch<ProfileController>();
+    final profileController = context.watch<ProfileController>();
     return Stack(
       children: [
         SizedBox(
@@ -27,15 +27,14 @@ class CustomProfileImage extends StatelessWidget {
                       height: 120,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
-                        return buildDefaultAvatar(context: context);
+                        return buildDefaultAvatarBlocBuilder(context: context);
                       },
                     ),
                   )
-                : buildDefaultAvatar(context: context),
+                : buildDefaultAvatarBlocBuilder(context: context),
           ),
         ),
-
-        controller.isEditing
+        profileController.isEditing
             ? Positioned(
                 right: 0,
                 bottom: 0,
