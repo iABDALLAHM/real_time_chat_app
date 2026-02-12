@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/entities/friend_request_entity.dart';
-import 'package:real_time_chat_app/core/entities/user_entity.dart';
 import 'package:real_time_chat_app/core/enums/user_relationship_status.dart';
 import 'package:real_time_chat_app/features/home/domain/repos/main_repo.dart';
 
@@ -14,8 +13,8 @@ class SendFriendRequestCubit extends Cubit<UserRelationshipStatus> {
     emit(UserRelationshipStatus.friendRequestSent);
   }
 
-  void cancelFriend({required UserEntity userEntity}) async {
-    await mainRepo.cancelFriendRequest(requestId: userEntity.uId);
+  void cancelFriend({required  String requestId}) async {
+    await mainRepo.cancelFriendRequest(requestId: requestId);
     emit(UserRelationshipStatus.none);
   }
 }

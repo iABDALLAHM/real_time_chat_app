@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/entities/friend_request_entity.dart';
 import 'package:real_time_chat_app/core/entities/user_entity.dart';
 import 'package:real_time_chat_app/core/enums/user_relationship_status.dart';
+import 'package:real_time_chat_app/core/functions/get_user_data.dart';
 import 'package:real_time_chat_app/core/functions/show_top_overlay_message.dart';
 import 'package:real_time_chat_app/features/home/presentation/function/user_item_button_status.dart';
 import 'package:real_time_chat_app/features/home/presentation/manager/send_friend_request_cubit/send_friend_request_cubit.dart';
@@ -53,7 +54,7 @@ class SendFriendRequestBlocBuilder extends StatelessWidget {
             return userItemButtonStatus(
               onTap: () {
                 context.read<SendFriendRequestCubit>().cancelFriend(
-                  userEntity: userEntity,
+                  requestId: getUserData().uId,
                 );
               },
               relationshipStatus: UserRelationshipStatus.friendRequestSent,
