@@ -51,7 +51,6 @@ class _FriendRequestViewBodyState extends State<FriendRequestViewBody> {
             ],
           ),
         ),
-
         Expanded(
           child: IndexedStack(
             index: selectedIndex,
