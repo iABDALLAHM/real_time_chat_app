@@ -16,7 +16,7 @@ class NotificationEntity {
     required this.title,
     required this.body,
     required this.type,
-    this.data = const {},
+    required this.data,
     this.isRead = false,
     required this.createdAt,
   });

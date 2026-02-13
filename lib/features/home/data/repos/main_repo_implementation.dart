@@ -39,7 +39,7 @@ class MainRepoImplementation implements MainRepo {
   Future<void> sendFriendRequest({
     required FriendRequestEntity friendRequest,
   }) async {
-    dataBaseService.addSinleData(
+    await dataBaseService.addSinleData(
       path: BackendEndPoints.friendRequests,
       documentId: friendRequest.id,
       data: FriendRequestModel.fromEntity(
@@ -48,20 +48,17 @@ class MainRepoImplementation implements MainRepo {
     );
     String notificationId =
         "friend_request_${friendRequest.senderId}_${friendRequest.receiverId}_${DateTime.now()}";
-    await createNotification(
-      notificationEntity: NotificationEntity(
-        id: notificationId,
-        userId: friendRequest.receiverId,
-        title: "New Friend Request",
-        body: "You have recevied a new friend request",
-        data: {
-          "senderId": friendRequest.senderId,
-          "requestId": friendRequest.id,
-        },
-        type: NotificationType.friendRequest,
-        createdAt: DateTime.now(),
-      ),
+
+    NotificationEntity notificationEntity = NotificationEntity(
+      id: notificationId,
+      userId: friendRequest.receiverId,
+      title: "New Friend Request",
+      body: "You have recevied a new friend request",
+      data: {"senderId": friendRequest.senderId, "requestId": friendRequest.id},
+      type: NotificationType.friendRequest,
+      createdAt: DateTime.now(),
     );
+    await createNotification(notificationEntity: notificationEntity);
   }
 
   // done
@@ -221,6 +218,7 @@ class MainRepoImplementation implements MainRepo {
     return friendRequestEntityList.first;
   }
 
+  // *********************************************************************************************************** (13/2) !
   @override
   Future<void> createFriendShip({
     required String user1Id,
