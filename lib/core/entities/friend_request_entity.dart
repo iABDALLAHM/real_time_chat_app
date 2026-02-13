@@ -1,4 +1,5 @@
-enum FriendRequestStatus { pending, accepted, rejected }
+
+import 'package:real_time_chat_app/core/enums/friend_request_status.dart';
 
 class FriendRequestEntity {
   final String id;

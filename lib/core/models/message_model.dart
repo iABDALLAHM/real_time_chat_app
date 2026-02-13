@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:real_time_chat_app/core/entities/message_entity.dart';
+import 'package:real_time_chat_app/core/enums/message_type.dart';
 
 class MessageModel {
   final String id;

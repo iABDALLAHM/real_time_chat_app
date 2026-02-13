@@ -1,4 +1,4 @@
-enum MessageType { text }
+import 'package:real_time_chat_app/core/enums/message_type.dart';
 
 class MessageEntity {
   final String id;

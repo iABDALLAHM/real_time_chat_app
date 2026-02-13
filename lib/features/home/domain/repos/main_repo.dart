@@ -4,6 +4,7 @@ import 'package:real_time_chat_app/core/entities/friendship_entity.dart';
 import 'package:real_time_chat_app/core/entities/message_entity.dart';
 import 'package:real_time_chat_app/core/entities/notification_entity.dart';
 import 'package:real_time_chat_app/core/entities/user_entity.dart';
+import 'package:real_time_chat_app/core/enums/friend_request_status.dart';
 import 'package:real_time_chat_app/core/enums/notification_type.dart';
 
 abstract class MainRepo {
