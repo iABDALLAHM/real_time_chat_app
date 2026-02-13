@@ -57,7 +57,7 @@ class ProfileRepoImplementation implements ProfileRepo {
 
   @override
   Stream<UserEntity> getUserStream({required String uId}) async* {
-    await for (var (result) in dataBaseService.getDataStream(
+    await for (var (result) in dataBaseService.getSingleDataStream(
       uId: uId,
       path: BackendEndPoints.getUsers,
     )) {

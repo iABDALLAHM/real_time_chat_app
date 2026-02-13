@@ -1,10 +1,4 @@
-enum NotificationType {
-  friendRequest,
-  friendRequestAccepted,
-  friendRequestDecliend,
-  newMessage,
-  friendRemoved,
-}
+import 'package:real_time_chat_app/core/enums/notification_type.dart';
 
 class NotificationEntity {
   final String id;

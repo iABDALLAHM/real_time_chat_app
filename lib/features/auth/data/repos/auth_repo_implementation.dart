@@ -98,7 +98,7 @@ class AuthRepoImplementation implements AuthRepo {
 
   @override
   Future<void> addUserData({required UserEntity userEntity}) async {
-    await dataBaseService.addData(
+    await dataBaseService.addSinleData(
       documentId: userEntity.uId,
       path: BackendEndPoints.addUsers,
       data: UserModel.fromEntity(userEntity).toMap(),
@@ -107,7 +107,7 @@ class AuthRepoImplementation implements AuthRepo {
 
   @override
   Future<dynamic> getUserData({required String uId}) async {
-    var userMap = await dataBaseService.getData(
+    var userMap = await dataBaseService.getSingleData(
       path: BackendEndPoints.getUsers,
       documentId: uId,
     );

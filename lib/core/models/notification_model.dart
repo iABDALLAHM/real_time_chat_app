@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:real_time_chat_app/core/entities/notification_entity.dart';
+import 'package:real_time_chat_app/core/enums/notification_type.dart';
 
 class NotificationModel {
   final String id;
@@ -33,6 +34,19 @@ class NotificationModel {
       "isRead": isRead,
       "createdAt": createdAt,
     };
+  }
+
+  factory NotificationModel.fromEntity({
+    required NotificationEntity notificationEntity,
+  }) {
+    return NotificationModel(
+      id: notificationEntity.id,
+      userId: notificationEntity.userId,
+      title: notificationEntity.title,
+      body: notificationEntity.body,
+      type: notificationEntity.type,
+      createdAt: notificationEntity.createdAt,
+    );
   }
 
   factory NotificationModel.fromMap(Map<String, dynamic> map) {

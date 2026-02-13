@@ -2,10 +2,11 @@ import 'package:real_time_chat_app/core/entities/chat_entity.dart';
 import 'package:real_time_chat_app/core/entities/friend_request_entity.dart';
 import 'package:real_time_chat_app/core/entities/friendship_entity.dart';
 import 'package:real_time_chat_app/core/entities/message_entity.dart';
+import 'package:real_time_chat_app/core/entities/notification_entity.dart';
 import 'package:real_time_chat_app/core/entities/user_entity.dart';
+import 'package:real_time_chat_app/core/enums/notification_type.dart';
 
 abstract class MainRepo {
-  
   Stream<List<UserEntity>> getAllUsersStream();
   Future<void> sendFriendRequest({required FriendRequestEntity friendRequest});
   Future<void> cancelFriendRequest({required String requestId});
@@ -20,10 +21,9 @@ abstract class MainRepo {
     required String userId,
   });
   Future<FriendRequestEntity> getFriendRequest({
-    required String userId,
+    required String senderId,
     required String receiverId,
   });
-
 
   // friendship collections
   Future<void> createFriendShip({
@@ -85,7 +85,22 @@ abstract class MainRepo {
     required String userId,
   });
 
-
   /// message collection
   Future<void> sendMessage({required MessageEntity message});
+
+  /// notifications collection
+  Future<void> createNotification({
+    required NotificationEntity notificationEntity,
+  });
+
+  Future<void> removeNotificationForCancelledRequest({
+    required String senderId,
+    required String receiverId,
+  });
+
+  Future<void> deleteNotificationByTypeAndUser({
+    required String userId,
+    required NotificationType type,
+    required String relatedUserId,
+  });
 }
