@@ -71,6 +71,11 @@ class FirestoreService implements DataBaseService {
           data = data.where("status", isEqualTo: status);
         }
 
+        if (query["senderId"] != null) {
+          var senderId = query["senderId"];
+          data = data.where("senderId", isEqualTo: senderId);
+        }
+
         if (query["createdAt"] != null) {
           var createdAt = query["createdAt"];
           data = data.orderBy("createdAt", descending: createdAt);
@@ -81,10 +86,7 @@ class FirestoreService implements DataBaseService {
       var listOfMap = data.snapshots().map(
         (stream) => stream.docs.map((doc) => doc.data()).toList(),
       );
-
-      await for (var result in listOfMap) {
-        yield result;
-      }
+      yield* listOfMap;
     }
   }
 

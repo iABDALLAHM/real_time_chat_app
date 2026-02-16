@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/functions/get_user_data.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
 import 'package:real_time_chat_app/features/friend_requests/presentation/manager/get_friend_request_stream_cubit/get_friend_request_stream_cubit.dart';
+import 'package:real_time_chat_app/features/friend_requests/presentation/manager/get_sent_friend_request_stream_cubit/get_sent_friend_request_stream_cubit.dart';
 import 'package:real_time_chat_app/features/friend_requests/presentation/views/widgets/custom_tap_button.dart';
 import 'package:real_time_chat_app/features/friend_requests/presentation/views/widgets/recevied_request_tap.dart';
 import 'package:real_time_chat_app/features/friend_requests/presentation/views/widgets/sent_request_tap.dart';
@@ -18,6 +19,9 @@ class _FriendRequestViewBodyState extends State<FriendRequestViewBody> {
   @override
   void initState() {
     context.read<GetFriendRequestStreamCubit>().getFriendRequestStream(
+      userId: getUserData().uId,
+    );
+    context.read<GetSentFriendRequestStreamCubit>().getSentFriendRequestStream(
       userId: getUserData().uId,
     );
     super.initState();
@@ -51,7 +55,9 @@ class _FriendRequestViewBodyState extends State<FriendRequestViewBody> {
               ),
               Expanded(
                 child: CustomTapButton(
-                  length: 0,
+                  length: context
+                      .watch<GetSentFriendRequestStreamCubit>()
+                      .length,
                   icon: Icons.send,
                   text: "Sent",
                   isSelected: selectedIndex == 1 ? true : false,
