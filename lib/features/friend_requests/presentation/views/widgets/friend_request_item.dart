@@ -7,7 +7,7 @@ class FriendRequestItem extends StatelessWidget {
   const FriendRequestItem({
     super.key,
     required this.friendRequestEntity,
-    required this.userEntity,
+    // required this.userEntity,
     required this.timeText,
     required this.isReceived,
     this.onAccept,
@@ -16,7 +16,7 @@ class FriendRequestItem extends StatelessWidget {
     this.statusColor,
   });
   final FriendRequestEntity friendRequestEntity;
-  final UserEntity userEntity;
+  // final UserEntity userEntity;
   final String timeText;
   final bool isReceived;
   final VoidCallback? onAccept;
@@ -33,20 +33,20 @@ class FriendRequestItem extends StatelessWidget {
           children: [
             Row(
               children: [
-                CircleAvatar(
-                  radius: 24,
-                  backgroundColor: AppTheme.primaryColor,
-                  child: userEntity.photoUrl != null
-                      ? SizedBox()
-                      : Text(
-                          userEntity.displayName[0].toUpperCase(),
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                ),
+                // CircleAvatar(
+                //   radius: 24,
+                //   backgroundColor: AppTheme.primaryColor,
+                //   child: userEntity.photoUrl != null
+                //       ? SizedBox()
+                //       : Text(
+                //           userEntity.displayName[0].toUpperCase(),
+                //           style: TextStyle(
+                //             color: Colors.white,
+                //             fontWeight: FontWeight.bold,
+                //             fontSize: 16,
+                //           ),
+                //         ),
+                // ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
@@ -56,7 +56,7 @@ class FriendRequestItem extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              userEntity.displayName,
+                              "userEntity.displayName",
                               style: Theme.of(context).textTheme.bodyLarge
                                   ?.copyWith(fontWeight: FontWeight.bold),
                               overflow: TextOverflow.ellipsis,
@@ -71,7 +71,7 @@ class FriendRequestItem extends StatelessWidget {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        userEntity.email,
+                        "userEntity.email",
                         maxLines: 2,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: AppTheme.textsecondaryColor,

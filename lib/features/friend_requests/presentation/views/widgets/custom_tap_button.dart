@@ -7,9 +7,10 @@ class CustomTapButton extends StatelessWidget {
     required this.text,
     required this.icon,
     required this.isSelected,
-    required this.onPressed,
+    required this.onPressed, required this.length,
   });
   final String text;
+  final int length;
   final IconData icon;
   final bool isSelected;
   final Function() onPressed;
@@ -32,7 +33,7 @@ class CustomTapButton extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             Text(
-              "$text (0)",
+              "$text ($length)",
               style: TextStyle(
                 color: isSelected ? Colors.white : AppTheme.textsecondaryColor,
                 fontWeight: FontWeight.bold,
