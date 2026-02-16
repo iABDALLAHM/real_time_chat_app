@@ -7,11 +7,7 @@ import 'package:real_time_chat_app/core/services/data_base_service.dart';
 class FirestoreService implements DataBaseService {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  @override
-  Future<dynamic> getData({required String path}) async {
-    return await firestore.collection(path).get();
-  }
-
+  // delete Data
   @override
   Future<dynamic> deleteData({required String path, String? documentId}) async {
     try {
@@ -23,6 +19,7 @@ class FirestoreService implements DataBaseService {
     }
   }
 
+  // update Data
   @override
   Future<void> updateData({
     required String path,
@@ -30,6 +27,12 @@ class FirestoreService implements DataBaseService {
     String? documentId,
   }) async {
     await firestore.collection(path).doc(documentId).update(data);
+  }
+
+  // get Data
+  @override
+  Future<dynamic> getData({required String path}) async {
+    return await firestore.collection(path).get();
   }
 
   @override
@@ -127,6 +130,7 @@ class FirestoreService implements DataBaseService {
     return snapshot.docs.map((doc) => doc.data()).toList();
   }
 
+  // add Data
   @override
   Future<void> addSinleData({
     required String path,

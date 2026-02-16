@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:real_time_chat_app/core/entities/user_entity.dart';
-import 'package:real_time_chat_app/features/chat/presentation/views/chat_view.dart';
 import 'package:real_time_chat_app/features/home/presentation/function/build_friends_body_app_bar.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/custom_search_bar.dart';
-import 'package:real_time_chat_app/features/home/presentation/views/widgets/friend_item.dart';
+import 'package:real_time_chat_app/features/home/presentation/views/widgets/friends_chat_list_view.dart';
 
 class FriendsBody extends StatelessWidget {
   const FriendsBody({super.key});
@@ -15,28 +13,10 @@ class FriendsBody extends StatelessWidget {
       body: Column(
         children: [
           CustomSearchBar(hintText: "Search Friends"),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  FriendItem(
-                    friend: UserEntity(
-                      uId: "uId",
-                      email: "email",
-                      displayName: "displayNamae",
-                      lastSeen: DateTime.now(),
-                      createdAt: DateTime.now(),
-                    ),
-                    lastSeenText: '',
-                    onTap: () {
-                      Navigator.of(context).pushNamed(ChatView.routeName);
-                    },
-                    onRemove: () {},
-                    onBlock: () {},
-                  ),
-                ],
-              ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: FriendsChatListView(friendsList: []),
             ),
           ),
           // EmptySearchWidget(),
