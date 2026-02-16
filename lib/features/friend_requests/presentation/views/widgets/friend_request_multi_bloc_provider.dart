@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/services/get_it_service.dart';
 import 'package:real_time_chat_app/features/friend_requests/presentation/manager/get_friend_request_stream_cubit/get_friend_request_stream_cubit.dart';
 import 'package:real_time_chat_app/features/friend_requests/presentation/manager/get_sent_friend_request_stream_cubit/get_sent_friend_request_stream_cubit.dart';
+import 'package:real_time_chat_app/features/friend_requests/presentation/manager/respond_to_friend_request_cubit/respond_to_friend_request_cubit.dart';
 import 'package:real_time_chat_app/features/home/domain/repos/main_repo.dart';
 
 class FriendRequestMultiBlocProvider extends StatelessWidget {
@@ -19,6 +20,10 @@ class FriendRequestMultiBlocProvider extends StatelessWidget {
         BlocProvider(
           create: (context) =>
               GetSentFriendRequestStreamCubit(mainRepo: getIt.get<MainRepo>()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              RespondToFriendRequestCubit(mainRepo: getIt.get<MainRepo>()),
         ),
       ],
       child: child,

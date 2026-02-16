@@ -12,7 +12,6 @@ import 'package:real_time_chat_app/core/models/friend_request_model.dart';
 import 'package:real_time_chat_app/core/models/friendship_model.dart';
 import 'package:real_time_chat_app/core/models/message_model.dart';
 import 'package:real_time_chat_app/core/models/notification_model.dart';
-import 'package:real_time_chat_app/core/models/query_filter_model.dart';
 import 'package:real_time_chat_app/core/models/user_model.dart';
 import 'package:real_time_chat_app/core/services/data_base_service.dart';
 import 'package:real_time_chat_app/core/utils/backend_end_points.dart';
@@ -148,6 +147,7 @@ class MainRepoImplementation implements MainRepo {
     }
   }
 
+  // DONE
   @override
   Stream<List<FriendRequestEntity>> getFriendRequestStream({
     required String userId,
@@ -170,6 +170,7 @@ class MainRepoImplementation implements MainRepo {
     }
   }
 
+  // DONE
   @override
   Stream<List<FriendRequestEntity>> getSentFriendRequestStream({
     required String userId,

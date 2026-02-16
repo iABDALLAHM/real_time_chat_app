@@ -85,7 +85,6 @@ class FriendRequestItem extends StatelessWidget {
             ),
 
             const SizedBox(height: 19),
-
             Row(
               children: [
                 Expanded(
