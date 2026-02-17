@@ -20,6 +20,7 @@ import 'package:real_time_chat_app/features/home/domain/repos/main_repo.dart';
 class MainRepoImplementation implements MainRepo {
   final DataBaseService dataBaseService;
   MainRepoImplementation({required this.dataBaseService});
+
   // done
   @override
   Stream<List<UserEntity>> getAllUsersStream() async* {
@@ -68,9 +69,10 @@ class MainRepoImplementation implements MainRepo {
       path: BackendEndPoints.friendRequests,
       documentId: requestId,
     );
-    FriendRequestEntity friendRequestEntity = FriendRequestModel.fromMap(
+
+    FriendRequestModel friendRequestModel = FriendRequestModel.fromMap(
       requestDoc,
-    ).toEntity();
+    );
 
     await dataBaseService.deleteData(
       path: BackendEndPoints.friendRequests,
@@ -78,9 +80,9 @@ class MainRepoImplementation implements MainRepo {
     );
 
     await deleteNotificationByTypeAndUser(
-      userId: friendRequestEntity.receiverId,
+      userId: friendRequestModel.receiverId,
       type: NotificationType.friendRequest,
-      relatedUserId: friendRequestEntity.senderId,
+      relatedUserId: friendRequestModel.senderId,
     );
   }
 
@@ -123,10 +125,10 @@ class MainRepoImplementation implements MainRepo {
 
       await createNotification(notificationEntity: notificationEntity);
 
-      // await removeNotificationForCancelledRequest(
-      //   receiverId: friendRequestEntity.receiverId,
-      //   senderId: friendRequestEntity.senderId,
-      // );
+      await removeNotificationForCancelledRequest(
+        receiverId: friendRequestEntity.receiverId,
+        senderId: friendRequestEntity.senderId,
+      );
     } else if (status == FriendRequestStatus.rejected) {
       NotificationEntity notificationEntity = NotificationEntity(
         id: DateTime.now().toString(),
@@ -140,14 +142,14 @@ class MainRepoImplementation implements MainRepo {
 
       await createNotification(notificationEntity: notificationEntity);
 
-      // await removeNotificationForCancelledRequest(
-      //   receiverId: friendRequestEntity.receiverId,
-      //   senderId: friendRequestEntity.senderId,
-      // );
+      await removeNotificationForCancelledRequest(
+        receiverId: friendRequestEntity.receiverId,
+        senderId: friendRequestEntity.senderId,
+      );
     }
   }
 
-  // DONE
+  // done
   @override
   Stream<List<FriendRequestEntity>> getFriendRequestStream({
     required String userId,
@@ -170,7 +172,7 @@ class MainRepoImplementation implements MainRepo {
     }
   }
 
-  // DONE
+  // done
   @override
   Stream<List<FriendRequestEntity>> getSentFriendRequestStream({
     required String userId,
@@ -196,19 +198,21 @@ class MainRepoImplementation implements MainRepo {
   }) async {
     var data = await dataBaseService.getQueryData(
       path: BackendEndPoints.friendRequests,
-      filters: [
-        FirestoreQueryFilter(
-          field: "senderId",
-          value: senderId,
-          operator: "==",
-        ),
-        FirestoreQueryFilter(
-          field: "receiverId",
-          value: receiverId,
-          operator: "==",
-        ),
-        FirestoreQueryFilter(field: "status", value: "pending", operator: "=="),
-      ],
+      query: {},
+      isQuery: true,
+      // filters: [
+      //   FirestoreQueryFilter(
+      //     field: "senderId",
+      //     value: senderId,
+      //     operator: "==",
+      //   ),
+      //   FirestoreQueryFilter(
+      //     field: "receiverId",
+      //     value: receiverId,
+      //     operator: "==",
+      //   ),
+      //   FirestoreQueryFilter(field: "status", value: "pending", operator: "=="),
+      // ],
     );
 
     List<FriendRequestEntity> friendRequestEntityList = [];
@@ -545,10 +549,9 @@ class MainRepoImplementation implements MainRepo {
   }) async {
     dataBaseService.getQueryData(
       path: BackendEndPoints.notification,
-      filters: [
-        FirestoreQueryFilter(field: "userId", value: userId, operator: "=="),
-        FirestoreQueryFilter(field: "type", value: type.name, operator: "=="),
-      ],
+      relatedId: relatedUserId,
+      query: {"userId": userId, "type": type.name},
+      isQuery: true,
     );
   }
 }

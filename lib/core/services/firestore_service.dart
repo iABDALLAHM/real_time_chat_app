@@ -101,35 +101,39 @@ class FirestoreService implements DataBaseService {
 
   @override
   Future<dynamic> getQueryData({
-    required String path,
-    required List<QueryFilterModel> filters,
-  }) async {
-    Query query = firestore.collection(path);
+    Map<String, dynamic>? query,
+    bool isQuery = false,
+    String? relatedId,
 
-    for (var filter in filters) {
-      if (filter is FirestoreQueryFilter) {
-        switch (filter.operator) {
-          case "==":
-            query = query.where(filter.field, isEqualTo: filter.value);
-            break;
-        }
+    required String path,
+  }) async {
+    Query<Map<String, dynamic>> data = firestore.collection(path);
+
+    if (query != null) {
+      if (query["userId"] != null) {
+        var userId = query["userId"];
+        data = data.where("userId", isEqualTo: userId);
+      }
+
+      if (query["type"] != null) {
+        var type = query["type"];
+        data = data.where("type", isEqualTo: type);
       }
     }
 
-    final snapshot = await query.get();
+    final result = await data.get();
 
-    // WriteBatch batch = firestore.batch();
-    // for (var doc in snapshot.docs) {
-    //   Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    // a lot of operations Done Here !!
+    WriteBatch batch = firestore.batch();
+    for (var doc in result.docs) {
+      Map<String, dynamic> data = doc.data();
 
-    //   if (data["data"] != null &&
-    //       (data["data"]["senderId"] == relatedUserId ||
-    //           data["data"]["userId"] == relatedUserId)) {
-    //     batch.delete(doc.reference);
-    //   }
-    //   await batch.commit();
-    // }
-    return snapshot.docs.map((doc) => doc.data()).toList();
+      if ((data["data"]["senderId"] == relatedId ||
+          data["data"]["requestId"] == relatedId)) {
+        batch.delete(doc.reference);
+      }
+    }
+    await batch.commit();
   }
 
   // add Data

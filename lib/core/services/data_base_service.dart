@@ -38,10 +38,11 @@ abstract class DataBaseService {
   });
   Future<dynamic> getData({required String path});
 
-  
-  // قابلة للنقاش
+  // قابلة للنقاش والتعديل
   Future<dynamic> getQueryData({
     required String path,
-    required List<QueryFilterModel> filters,
+    String? relatedId,
+    Map<String, dynamic>? query,
+    bool isQuery = false,
   });
 }

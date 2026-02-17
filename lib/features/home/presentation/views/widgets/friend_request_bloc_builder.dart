@@ -6,7 +6,7 @@ import 'package:real_time_chat_app/core/enums/user_relationship_status.dart';
 import 'package:real_time_chat_app/core/functions/get_user_data.dart';
 import 'package:real_time_chat_app/core/functions/show_top_overlay_message.dart';
 import 'package:real_time_chat_app/features/home/presentation/function/user_item_button_status.dart';
-import 'package:real_time_chat_app/features/home/presentation/manager/send_friend_request_cubit/send_friend_request_cubit.dart';
+import 'package:real_time_chat_app/features/home/presentation/manager/friend_request_cubit/friend_request_cubit.dart';
 
 class SendFriendRequestBlocBuilder extends StatelessWidget {
   const SendFriendRequestBlocBuilder({
@@ -18,7 +18,7 @@ class SendFriendRequestBlocBuilder extends StatelessWidget {
   final UserEntity userEntity;
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SendFriendRequestCubit, UserRelationshipStatus>(
+    return BlocConsumer<FriendRequestCubit, UserRelationshipStatus>(
       listener: (context, state) {
         switch (state) {
           case UserRelationshipStatus.none:
@@ -43,7 +43,7 @@ class SendFriendRequestBlocBuilder extends StatelessWidget {
           case UserRelationshipStatus.none:
             return userItemButtonStatus(
               onTap: () {
-                context.read<SendFriendRequestCubit>().sendRequest(
+                context.read<FriendRequestCubit>().sendRequest(
                   friendRequestEntity: friendRequestEntity,
                 );
               },
@@ -53,7 +53,7 @@ class SendFriendRequestBlocBuilder extends StatelessWidget {
           case UserRelationshipStatus.friendRequestSent:
             return userItemButtonStatus(
               onTap: () {
-                context.read<SendFriendRequestCubit>().cancelFriend(
+                context.read<FriendRequestCubit>().cancelFriend(
                   requestId: getUserData().uId,
                 );
               },

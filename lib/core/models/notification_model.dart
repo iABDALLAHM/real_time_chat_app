@@ -18,7 +18,7 @@ class NotificationModel {
     required this.title,
     required this.body,
     required this.type,
-    this.data = const {},
+    required this.data,
     this.isRead = false,
     required this.createdAt,
   });
@@ -40,6 +40,7 @@ class NotificationModel {
     required NotificationEntity notificationEntity,
   }) {
     return NotificationModel(
+      data: notificationEntity.data,
       id: notificationEntity.id,
       userId: notificationEntity.userId,
       title: notificationEntity.title,
