@@ -7,7 +7,6 @@ import 'package:real_time_chat_app/core/entities/user_entity.dart';
 import 'package:real_time_chat_app/core/enums/friend_request_status.dart';
 import 'package:real_time_chat_app/core/enums/notification_type.dart';
 import 'package:real_time_chat_app/core/models/chat_model.dart';
-import 'package:real_time_chat_app/core/models/firestore_query_filter.dart';
 import 'package:real_time_chat_app/core/models/friend_request_model.dart';
 import 'package:real_time_chat_app/core/models/friendship_model.dart';
 import 'package:real_time_chat_app/core/models/message_model.dart';
@@ -103,20 +102,20 @@ class MainRepoImplementation implements MainRepo {
       documentId: requestId,
     );
 
-    FriendRequestEntity friendRequestEntity = FriendRequestModel.fromMap(
+    FriendRequestModel friendRequestModel = FriendRequestModel.fromMap(
       requestDoc,
-    ).toEntity();
+    );
 
     if (status == FriendRequestStatus.accepted) {
       await createFriendShip(
-        user1Id: friendRequestEntity.senderId,
-        user2Id: friendRequestEntity.receiverId,
+        user1Id: friendRequestModel.senderId,
+        user2Id: friendRequestModel.receiverId,
       );
 
       NotificationEntity notificationEntity = NotificationEntity(
         id: DateTime.now().toString(),
-        userId: friendRequestEntity.senderId,
-        data: {"userId": friendRequestEntity.receiverId},
+        userId: friendRequestModel.senderId,
+        data: {"userId": friendRequestModel.receiverId},
         title: "Friend Request Accepted",
         body: "Your friend request has been accepted",
         type: NotificationType.friendRequestAccepted,
@@ -126,14 +125,14 @@ class MainRepoImplementation implements MainRepo {
       await createNotification(notificationEntity: notificationEntity);
 
       await removeNotificationForCancelledRequest(
-        receiverId: friendRequestEntity.receiverId,
-        senderId: friendRequestEntity.senderId,
+        receiverId: friendRequestModel.receiverId,
+        senderId: friendRequestModel.senderId,
       );
     } else if (status == FriendRequestStatus.rejected) {
       NotificationEntity notificationEntity = NotificationEntity(
         id: DateTime.now().toString(),
-        userId: friendRequestEntity.senderId,
-        data: {"userId": friendRequestEntity.receiverId},
+        userId: friendRequestModel.senderId,
+        data: {"userId": friendRequestModel.receiverId},
         title: "Friend Request declined",
         body: "Your friend request has been declined",
         type: NotificationType.friendRequestDecliend,
@@ -143,8 +142,8 @@ class MainRepoImplementation implements MainRepo {
       await createNotification(notificationEntity: notificationEntity);
 
       await removeNotificationForCancelledRequest(
-        receiverId: friendRequestEntity.receiverId,
-        senderId: friendRequestEntity.senderId,
+        receiverId: friendRequestModel.receiverId,
+        senderId: friendRequestModel.senderId,
       );
     }
   }
@@ -191,6 +190,7 @@ class MainRepoImplementation implements MainRepo {
     }
   }
 
+  // done
   @override
   Future<FriendRequestEntity> getFriendRequest({
     required String senderId,
@@ -198,21 +198,12 @@ class MainRepoImplementation implements MainRepo {
   }) async {
     var data = await dataBaseService.getQueryData(
       path: BackendEndPoints.friendRequests,
-      query: {},
+      query: {
+        "senderId": senderId,
+        "receiverId": receiverId,
+        "status": "pending",
+      },
       isQuery: true,
-      // filters: [
-      //   FirestoreQueryFilter(
-      //     field: "senderId",
-      //     value: senderId,
-      //     operator: "==",
-      //   ),
-      //   FirestoreQueryFilter(
-      //     field: "receiverId",
-      //     value: receiverId,
-      //     operator: "==",
-      //   ),
-      //   FirestoreQueryFilter(field: "status", value: "pending", operator: "=="),
-      // ],
     );
 
     List<FriendRequestEntity> friendRequestEntityList = [];
@@ -309,7 +300,7 @@ class MainRepoImplementation implements MainRepo {
 
   @override
   Stream<List<FriendshipEntity>> getFriendsStream({required String userId}) {
-    // TODO: implement getFriendsStream
+    
     throw UnimplementedError();
   }
 
@@ -508,10 +499,10 @@ class MainRepoImplementation implements MainRepo {
     await updateChatLastMessage(chatId: chatId, message: message);
     await updateUserLastSeen(userId: message.senderId, chatId: chatId);
 
-    var chatDoc = await dataBaseService.getSingleData(
-      path: BackendEndPoints.chats,
-      documentId: chatId,
-    );
+    // var chatDoc = await dataBaseService.getSingleData(
+    //   path: BackendEndPoints.chats,
+    //   documentId: chatId,
+    // );
     // MessageEntity messageEntity = MessageModel.fromMap(chatDoc).toEntity();
     // int currentUnread = messageEntity.get
   }
@@ -547,7 +538,7 @@ class MainRepoImplementation implements MainRepo {
     required NotificationType type,
     required String relatedUserId,
   }) async {
-    dataBaseService.getQueryData(
+    await dataBaseService.getQueryData(
       path: BackendEndPoints.notification,
       relatedId: relatedUserId,
       query: {"userId": userId, "type": type.name},

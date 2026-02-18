@@ -1,5 +1,3 @@
-import 'package:real_time_chat_app/core/models/query_filter_model.dart';
-
 abstract class DataBaseService {
   // add Data
   Future<void> addData({

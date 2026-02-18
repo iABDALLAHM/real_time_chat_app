@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:real_time_chat_app/core/errors/custom_exception.dart';
-import 'package:real_time_chat_app/core/models/firestore_query_filter.dart';
-import 'package:real_time_chat_app/core/models/query_filter_model.dart';
 import 'package:real_time_chat_app/core/services/data_base_service.dart';
 
 class FirestoreService implements DataBaseService {
@@ -104,7 +102,6 @@ class FirestoreService implements DataBaseService {
     Map<String, dynamic>? query,
     bool isQuery = false,
     String? relatedId,
-
     required String path,
   }) async {
     Query<Map<String, dynamic>> data = firestore.collection(path);
@@ -118,6 +115,21 @@ class FirestoreService implements DataBaseService {
       if (query["type"] != null) {
         var type = query["type"];
         data = data.where("type", isEqualTo: type);
+      }
+
+      if (query["senderId"] != null) {
+        var senderId = query["senderId"];
+        data = data.where("senderId", isEqualTo: senderId);
+      }
+
+      if (query["receiverId"] != null) {
+        var receiverId = query["receiverId"];
+        data = data.where("receiverId", isEqualTo: receiverId);
+      }
+
+      if (query["status"] != null) {
+        var status = query["status"];
+        data = data.where("status", isEqualTo: status);
       }
     }
 
