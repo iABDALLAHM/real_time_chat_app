@@ -17,8 +17,7 @@ class ReceviedRequestTap extends StatelessWidget {
       builder: (context, state) {
         if (state is SuccessGetFriendRequestStreamState) {
           return FriendRequestItemListView(
-            // userEntityList: [],
-            friendRequestEntity: state.friendRequestList,
+            friendRequestWithUser: state.friendRequestWithUserList,
           );
         } else {
           return ReceviedEmptyStateWidget();

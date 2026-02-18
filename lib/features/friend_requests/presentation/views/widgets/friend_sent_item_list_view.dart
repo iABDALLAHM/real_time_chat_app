@@ -1,29 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:real_time_chat_app/core/entities/friend_request_entity.dart';
-import 'package:real_time_chat_app/core/entities/user_entity.dart';
+import 'package:real_time_chat_app/core/entities/friend_request_with_user.dart';
 import 'package:real_time_chat_app/features/friend_requests/presentation/views/widgets/friend_sent_item.dart';
 
 class FriendSentItemListView extends StatelessWidget {
   const FriendSentItemListView({
     super.key,
-    required this.sentFriendRequestList,
+    required this.friendRequestWithUser,
   });
-  final List<FriendRequestEntity> sentFriendRequestList;
+  final List<FriendRequestWithUser> friendRequestWithUser;
   @override
   Widget build(BuildContext context) {
     
     return ListView.builder(
-      itemCount: sentFriendRequestList.length,
+      itemCount: friendRequestWithUser.length,
       itemBuilder: (context, index) {
         return FriendSentItem(
-          friendRequestEntity: sentFriendRequestList[index],
-          userEntity: UserEntity(
-            uId: "uId",
-            email: "email",
-            displayName: "displayName",
-            lastSeen: DateTime.now(),
-            createdAt: DateTime.now(),
-          ),
+          friendRequestWithUser: friendRequestWithUser[index],
         );
       },
     );

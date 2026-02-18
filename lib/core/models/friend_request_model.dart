@@ -8,7 +8,7 @@ class FriendRequestModel {
   final String receiverId;
   final FriendRequestStatus status;
   final DateTime createdAt;
-  final DateTime? responsedAt;
+  DateTime? responsedAt;
   final String? message;
 
   FriendRequestModel({
@@ -26,8 +26,10 @@ class FriendRequestModel {
       id: map["id"],
       senderId: map["senderId"],
       receiverId: map["receiverId"],
-      createdAt: (map["createdAt"] as Timestamp).toDate(),
-      // responsedAt: (map["responsedAt"] as Timestamp).toDate() ? DateTime) ,
+      createdAt:(map["createdAt"] as Timestamp).toDate(),
+      responsedAt: map["responsedAt"] != null
+          ? (map["responsedAt"] as Timestamp).toDate()
+          : null,
       // message: map["message"],
       status: FriendRequestStatus.values.firstWhere(
         (e) => e.name == (map["status"]),
@@ -43,6 +45,7 @@ class FriendRequestModel {
       id: friendRequestEntity.id,
       senderId: friendRequestEntity.senderId,
       receiverId: friendRequestEntity.receiverId,
+      responsedAt: friendRequestEntity.responsedAt,
       createdAt: friendRequestEntity.createdAt,
     );
   }

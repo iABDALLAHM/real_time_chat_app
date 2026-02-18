@@ -7,7 +7,7 @@ class FriendRequestEntity {
   final String receiverId;
   final FriendRequestStatus status;
   final DateTime createdAt;
-  final DateTime? responsedAt;
+  DateTime? responsedAt;
   final String? message;
 
   FriendRequestEntity({

@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:real_time_chat_app/core/entities/friend_request_entity.dart';
-import 'package:real_time_chat_app/core/entities/user_entity.dart';
+import 'package:real_time_chat_app/core/entities/friend_request_with_user.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
 
 class FriendRequestItem extends StatelessWidget {
   const FriendRequestItem({
     super.key,
-    required this.friendRequestEntity,
-    // required this.userEntity,
+
     required this.timeText,
     required this.isReceived,
     this.onAccept,
     this.onDecline,
     this.statusText,
-    this.statusColor,
+    this.statusColor, required this.friendRequestWithUser,
   });
-  final FriendRequestEntity friendRequestEntity;
-  // final UserEntity userEntity;
+
+    final FriendRequestWithUser friendRequestWithUser;
+
   final String timeText;
   final bool isReceived;
   final VoidCallback? onAccept;
@@ -33,20 +32,20 @@ class FriendRequestItem extends StatelessWidget {
           children: [
             Row(
               children: [
-                // CircleAvatar(
-                //   radius: 24,
-                //   backgroundColor: AppTheme.primaryColor,
-                //   child: userEntity.photoUrl != null
-                //       ? SizedBox()
-                //       : Text(
-                //           userEntity.displayName[0].toUpperCase(),
-                //           style: TextStyle(
-                //             color: Colors.white,
-                //             fontWeight: FontWeight.bold,
-                //             fontSize: 16,
-                //           ),
-                //         ),
-                // ),
+                CircleAvatar(
+                  radius: 24,
+                  backgroundColor: AppTheme.primaryColor,
+                  child: friendRequestWithUser.userEntity.photoUrl != null
+                      ? Text(
+                          friendRequestWithUser.userEntity.displayName[0].toUpperCase(),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        )
+                      : SizedBox(),
+                ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
@@ -56,7 +55,7 @@ class FriendRequestItem extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              "userEntity.displayName",
+                              friendRequestWithUser.userEntity.displayName,
                               style: Theme.of(context).textTheme.bodyLarge
                                   ?.copyWith(fontWeight: FontWeight.bold),
                               overflow: TextOverflow.ellipsis,
@@ -71,7 +70,7 @@ class FriendRequestItem extends StatelessWidget {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        "userEntity.email",
+                        friendRequestWithUser.userEntity.email,
                         maxLines: 2,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: AppTheme.textsecondaryColor,
@@ -83,7 +82,6 @@ class FriendRequestItem extends StatelessWidget {
                 ),
               ],
             ),
-
             const SizedBox(height: 19),
             Row(
               children: [

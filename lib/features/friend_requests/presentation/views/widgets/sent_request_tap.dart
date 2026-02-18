@@ -17,7 +17,7 @@ class SentRequestTap extends StatelessWidget {
       builder: (context, state) {
         if (state is SuccessGetSentFriendRequestStreamState) {
           return FriendSentItemListView(
-            sentFriendRequestList: state.sentFriendRequestList,
+            friendRequestWithUser: state.friendRequestWithUserList,
           );
         } else {
           return SentRequestEmptyStateWidget();
