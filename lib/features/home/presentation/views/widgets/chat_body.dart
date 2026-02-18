@@ -6,8 +6,9 @@ import 'package:real_time_chat_app/features/home/presentation/views/widgets/cust
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/no_conversation_widget.dart';
 
 class ChatBody extends StatelessWidget {
-  const ChatBody({super.key});
+  const ChatBody({super.key, required this.onChange});
   static const String routeName = "Chat";
+  final Function(int) onChange;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +28,11 @@ class ChatBody extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               CustomSectionsTabs(onChange: (value) {}),
-              NoConversationsWidget(),
+              NoConversationsWidget(
+                onChange: (value) {
+                  onChange(value);
+                },
+              ),
             ],
           ),
         ),

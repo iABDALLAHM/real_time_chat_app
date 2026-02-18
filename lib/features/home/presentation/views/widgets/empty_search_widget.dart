@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
 import 'package:real_time_chat_app/core/widgets/custom_button.dart';
+import 'package:real_time_chat_app/features/friend_requests/presentation/views/friend_request_view.dart';
 
 class EmptySearchWidget extends StatelessWidget {
   const EmptySearchWidget({super.key});
@@ -44,7 +45,9 @@ class EmptySearchWidget extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             CustomButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, FriendRequestView.routeName);
+              },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

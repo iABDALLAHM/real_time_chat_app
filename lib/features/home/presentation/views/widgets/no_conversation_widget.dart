@@ -3,8 +3,8 @@ import 'package:real_time_chat_app/core/utils/app_theme.dart';
 import 'package:real_time_chat_app/core/widgets/custom_button.dart';
 
 class NoConversationsWidget extends StatelessWidget {
-  const NoConversationsWidget({super.key});
-
+  const NoConversationsWidget({super.key, required this.onChange});
+  final Function(int) onChange;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -43,7 +43,9 @@ class NoConversationsWidget extends StatelessWidget {
           ),
           const SizedBox(height: 22),
           CustomButton(
-            onPressed: () {},
+            onPressed: () {
+              onChange(1);
+            },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -56,7 +58,9 @@ class NoConversationsWidget extends StatelessWidget {
           const SizedBox(height: 12),
           CustomButton(
             isSecondButton: true,
-            onPressed: () {},
+            onPressed: () {
+              onChange(2);
+            },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

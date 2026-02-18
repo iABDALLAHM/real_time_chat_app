@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class PendingSentFriendShipState extends StatelessWidget {
-  const PendingSentFriendShipState({super.key});
+class PendingFriendShipState extends StatelessWidget {
+  const PendingFriendShipState({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/entities/friend_request_with_user.dart';
 import 'package:real_time_chat_app/core/enums/friend_request_status.dart';
+import 'package:real_time_chat_app/core/functions/get_month.dart';
 import 'package:real_time_chat_app/features/friend_requests/presentation/manager/respond_to_friend_request_cubit/respond_to_friend_request_cubit.dart';
 import 'package:real_time_chat_app/features/friend_requests/presentation/views/widgets/friend_request_item.dart';
 
@@ -30,7 +31,8 @@ class FriendRequestItemListView extends StatelessWidget {
             );
           },
           friendRequestWithUser: friendRequestWithUser[index],
-          timeText: DateTime.now().toString(),
+          timeText:
+              "${friendRequestWithUser[index].friendRequestEntity.createdAt.day.toString()} ${getMonth(month: friendRequestWithUser[index].friendRequestEntity.createdAt.month).toString()}",
           isReceived: true,
         );
       },

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:real_time_chat_app/core/entities/friend_request_with_user.dart';
 import 'package:real_time_chat_app/core/enums/friend_request_status.dart';
+import 'package:real_time_chat_app/core/functions/get_month.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
 import 'package:real_time_chat_app/features/friend_requests/presentation/views/widgets/accepted_friend_ship_state.dart';
 import 'package:real_time_chat_app/features/friend_requests/presentation/views/widgets/pending_friend_ship_state.dart';
@@ -13,7 +14,7 @@ class FriendSentItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.all(20),
         child: Column(
           children: [
             Row(
@@ -72,7 +73,7 @@ class FriendSentItem extends StatelessWidget {
             const SizedBox(height: 20),
             if (friendRequestWithUser.friendRequestEntity.status ==
                 FriendRequestStatus.pending)
-              PendingSentFriendShipState(),
+              PendingFriendShipState(),
             if (friendRequestWithUser.friendRequestEntity.status ==
                 FriendRequestStatus.accepted)
               AcceptedFriendShipState(),
@@ -87,9 +88,7 @@ class FriendSentItem extends StatelessWidget {
 
   String handleDateTime() {
     return friendRequestWithUser.friendRequestEntity.responsedAt == null
-        ? friendRequestWithUser.friendRequestEntity.createdAt.toString().split(
-            " ",
-          )[1]
-        : friendRequestWithUser.friendRequestEntity.responsedAt.toString();
+        ? "${friendRequestWithUser.friendRequestEntity.createdAt.day.toString()} ${getMonth(month: friendRequestWithUser.friendRequestEntity.createdAt.month).toString()} ${friendRequestWithUser.friendRequestEntity.createdAt.year.toString()}"
+        : "${friendRequestWithUser.friendRequestEntity.responsedAt!.day.toString()} ${getMonth(month: friendRequestWithUser.friendRequestEntity.responsedAt!.month).toString()} ${friendRequestWithUser.friendRequestEntity.responsedAt!.year.toString()}";
   }
 }

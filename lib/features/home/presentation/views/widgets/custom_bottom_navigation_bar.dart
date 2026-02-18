@@ -3,15 +3,20 @@ import 'package:real_time_chat_app/features/home/domain/entities/bottom_navigati
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/navigation_icon.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
-  const CustomBottomNavigationBar({super.key, required this.onChange});
+  const CustomBottomNavigationBar({
+    super.key,
+    required this.onChange,
+    required this.currentIndex,
+  });
   final ValueChanged<int> onChange;
+  final int currentIndex;
+
   @override
   State<CustomBottomNavigationBar> createState() =>
       _CustomBottomNavigationBarState();
 }
 
 class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
-  int currentIndex = 3;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,16 +36,13 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         children: bottomNAvigationList.asMap().entries.map((element) {
           var key = element.key;
           var value = element.value;
-          return GestureDetector(
+          return NavigationIcon(
             onTap: () {
-              currentIndex = key;
-              widget.onChange(currentIndex);
+              widget.onChange(key);
               setState(() {});
             },
-            child: NavigationIcon(
-              navigationItemEntity: value,
-              isActive: currentIndex == key ? true : false,
-            ),
+            navigationItemEntity: value,
+            isActive: widget.currentIndex == key ? true : false,
           );
         }).toList(),
       ),

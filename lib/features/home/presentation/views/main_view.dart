@@ -22,9 +22,11 @@ class _MainViewState extends State<MainView> {
     return MainViewMultiBlocProvider(
       child: Scaffold(
         bottomNavigationBar: CustomBottomNavigationBar(
+          currentIndex: currentIndex,
           onChange: (value) {
-            currentIndex = value;
-            setState(() {});
+            setState(() {
+              currentIndex = value;
+            });
           },
         ),
         body: IndexedStack(
@@ -33,7 +35,13 @@ class _MainViewState extends State<MainView> {
             ProfileView(),
             FindPeopleBody(),
             FriendsBody(),
-            ChatBody(),
+            ChatBody(
+              onChange: (value) {
+                setState(() {
+                  currentIndex = value;
+                });
+              },
+            ),
           ],
         ),
       ),

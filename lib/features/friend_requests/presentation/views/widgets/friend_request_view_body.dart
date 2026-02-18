@@ -16,18 +16,21 @@ class FriendRequestViewBody extends StatefulWidget {
 }
 
 class _FriendRequestViewBodyState extends State<FriendRequestViewBody> {
+  int selectedIndex = 0;
+
   @override
   void initState() {
     context.read<GetFriendRequestStreamCubit>().getFriendRequestStream(
       userId: getUserData().uId,
     );
+
     context.read<GetSentFriendRequestStreamCubit>().getSentFriendRequestStream(
       userId: getUserData().uId,
     );
+
     super.initState();
   }
 
-  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Column(
