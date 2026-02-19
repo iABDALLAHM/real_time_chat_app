@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:real_time_chat_app/core/entities/chat_entity.dart';
+import 'package:real_time_chat_app/core/entities/user_entity.dart';
 import 'package:real_time_chat_app/features/home/presentation/function/build_friends_body_app_bar.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/custom_search_bar.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/empty_search_widget.dart';
+import 'package:real_time_chat_app/features/home/presentation/views/widgets/friends_chat_list_view.dart';
 
 class FriendsBody extends StatelessWidget {
   const FriendsBody({super.key});
@@ -16,7 +19,27 @@ class FriendsBody extends StatelessWidget {
           // Expanded(
           //   child: Padding(
           //     padding: const EdgeInsets.symmetric(horizontal: 16),
-          //     child: FriendsChatListView(friendsList: []),
+          //     child: FriendsChatListView(
+          //       usersList: [
+          //         UserEntity(
+          //           isOnline: true,
+          //           uId: "uId",
+          //           email: "email",
+          //           displayName: "displayName",
+          //           lastSeen: DateTime.now(),
+          //           createdAt: DateTime.now(),
+          //         ),
+          //       ],
+          //       chat: [
+          //         ChatEntity(
+          //           id: "id",
+          //           participants: [],
+          //           unreadCount: {},
+          //           createdAt: DateTime.now(),
+          //           updatedAt: DateTime.now(),
+          //         ),
+          //       ],
+          //     ),
           //   ),
           // ),
           EmptySearchWidget(),

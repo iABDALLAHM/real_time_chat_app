@@ -215,7 +215,10 @@ class MainRepoImplementation implements MainRepo {
     return friendRequestEntityList.first;
   }
 
-  // *********************************************************************************************************** (13/2) !
+  // *********************************************************************************************************** (13/2)
+
+  // friendship collections
+
   @override
   Future<void> createFriendShip({
     required String user1Id,
@@ -246,24 +249,24 @@ class MainRepoImplementation implements MainRepo {
   }) async {
     List<String> userIds = [user1Id, user2Id];
     userIds.sort();
-    String friendShipId = "${userIds[0]}_ ${userIds[1]}";
+    String friendShipId = "${userIds[0]}_${userIds[1]}";
 
     await dataBaseService.deleteData(
       path: BackendEndPoints.friendShips,
       documentId: friendShipId,
     );
 
-    // await createNotification(
-    //   NotificationEntity(
-    //     id: DateTime.now().toString(),
-    //     userId: user2Id,
-    //     data: {"userId": user1Id},
-    //     title: "Friend Removed",
-    //     body: "Your are not longer friends",
-    //     type: NotificationType.friendRemoved,
-    //     createdAt: DateTime.now(),
-    //   ),
-    // );
+    await createNotification(
+      notificationEntity: NotificationEntity(
+        id: DateTime.now().toString(),
+        userId: user2Id,
+        data: {"userId": user1Id},
+        title: "Friend Removed",
+        body: "Your are not longer friends",
+        type: NotificationType.friendRemoved,
+        createdAt: DateTime.now(),
+      ),
+    );
   }
 
   @override
@@ -273,7 +276,7 @@ class MainRepoImplementation implements MainRepo {
   }) async {
     List<String> userIds = [blockerId, blockedId];
     userIds.sort();
-    String friendShipId = "${userIds[0]}_ ${userIds[1]}";
+    String friendShipId = "${userIds[0]}_${userIds[1]}";
 
     await dataBaseService.updateData(
       path: BackendEndPoints.friendShips,
@@ -289,7 +292,7 @@ class MainRepoImplementation implements MainRepo {
   }) async {
     List<String> userIds = [user1Id, user2Id];
     userIds.sort();
-    String friendShipId = "${userIds[0]}_ ${userIds[1]}";
+    String friendShipId = "${userIds[0]}_${userIds[1]}";
 
     await dataBaseService.updateData(
       path: BackendEndPoints.friendShips,
@@ -300,6 +303,7 @@ class MainRepoImplementation implements MainRepo {
 
   @override
   Stream<List<FriendshipEntity>> getFriendsStream({required String userId}) {
+    // still not implemented
     throw UnimplementedError();
   }
 
@@ -310,7 +314,7 @@ class MainRepoImplementation implements MainRepo {
   }) async {
     List<String> userIds = [user1Id, user2Id];
     userIds.sort();
-    String friendShipId = "${userIds[0]}_ ${userIds[1]}";
+    String friendShipId = "${userIds[0]}_${userIds[1]}";
 
     var doc = await dataBaseService.getSingleData(
       path: BackendEndPoints.friendShips,
@@ -327,7 +331,7 @@ class MainRepoImplementation implements MainRepo {
   }) async {
     List<String> userIds = [userId, otherUserId];
     userIds.sort();
-    String friendShipId = "${userIds[0]}_ ${userIds[1]}";
+    String friendShipId = "${userIds[0]}_${userIds[1]}";
 
     var doc = await dataBaseService.getSingleData(
       path: BackendEndPoints.friendShips,
@@ -345,20 +349,18 @@ class MainRepoImplementation implements MainRepo {
   }) async {
     List<String> userIds = [userId, otherUserId];
     userIds.sort();
-    String friendShipId = "${userIds[0]}_ ${userIds[1]}";
-
+    String friendShipId = "${userIds[0]}_${userIds[1]}";
     var doc = await dataBaseService.getSingleData(
       path: BackendEndPoints.friendShips,
       documentId: friendShipId,
     );
-
     if (doc != null) {
       return true;
     }
-
     return false;
   }
 
+  // ****************************************************************************************
   @override
   Future<String> createOrGetChat({
     required String user1Id,
