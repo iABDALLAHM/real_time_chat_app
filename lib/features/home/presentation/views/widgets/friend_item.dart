@@ -1,214 +1,109 @@
-// import 'package:flutter/material.dart';
-// import 'package:real_time_chat_app/core/entities/chat_entity.dart';
-// import 'package:real_time_chat_app/core/entities/user_entity.dart';
-// import 'package:real_time_chat_app/core/functions/get_user_data.dart';
-// import 'package:real_time_chat_app/core/utils/app_theme.dart';
-// import 'package:real_time_chat_app/features/home/presentation/views/widgets/custom_popup_menu_button.dart';
+import 'package:flutter/material.dart';
+import 'package:real_time_chat_app/core/entities/user_entity.dart';
+import 'package:real_time_chat_app/core/utils/app_theme.dart';
+import 'package:real_time_chat_app/features/home/presentation/views/widgets/custom_popup_menu_button.dart';
 
-// import '../../../../../core/functions/build_default_avatar.dart';
+import '../../../../../core/functions/build_default_avatar.dart';
 
-// class FriendItem extends StatelessWidget {
-//   const FriendItem({
-//     super.key,
-//     required this.otherUser,
-//     required this.lastMessageTime,
-//     required this.onTap,
-//     required this.onRemove,
-//     required this.onBlock,
-//     required this.chat,
-//   });
-//   final UserEntity otherUser;
-//   final ChatEntity chat;
-//   final String lastMessageTime;
-//   final VoidCallback onTap;
-//   final VoidCallback onRemove;
-//   final VoidCallback onBlock;
-//   @override
-//   Widget build(BuildContext context) {
-//     int unreadCount = 10;
-//     return Card(
-//       child: InkWell(
-//         onTap: onTap,
-//         borderRadius: BorderRadius.circular(16),
-//         child: Padding(
-//           padding: EdgeInsets.all(16),
-//           child: Row(
-//             children: [
-//               Stack(
-//                 children: [
-//                   CircleAvatar(
-//                     radius: 28,
-//                     backgroundColor: AppTheme.primaryColor,
-//                     child: otherUser.photoUrl != null
-//                         ? ClipRRect(
-//                             borderRadius: BorderRadius.circular(28),
-//                             child: Image.network(
-//                               otherUser.photoUrl!,
-//                               width: 56,
-//                               fit: BoxFit.cover,
-//                               height: 56,
-//                               errorBuilder: (context, error, stackTrace) {
-//                                 return buildDefaultAvatar(
-//                                   name: otherUser.displayName,
-//                                 );
-//                               },
-//                             ),
-//                           )
-//                         : buildDefaultAvatar(name: otherUser.displayName),
-//                   ),
-
-//                   if (otherUser.isOnline)
-//                     Positioned(
-//                       bottom: 0,
-//                       right: 0,
-//                       child: Container(
-//                         height: 16,
-//                         width: 16,
-//                         decoration: BoxDecoration(
-//                           color: AppTheme.successColor,
-//                           shape: BoxShape.circle,
-//                           border: Border.all(
-//                             color: Theme.of(context).scaffoldBackgroundColor,
-//                             width: 2,
-//                           ),
-//                         ),
-//                       ),
-//                     ),
-//                 ],
-//               ),
-//               const SizedBox(width: 16),
-//               Expanded(
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: [
-//                     Row(
-//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                       children: [
-//                         Text(
-//                           otherUser.displayName,
-//                           style: Theme.of(context).textTheme.bodyLarge
-//                               ?.copyWith(
-//                                 fontWeight: unreadCount > 0
-//                                     ? FontWeight.bold
-//                                     : FontWeight.normal,
-//                               ),
-//                           overflow: TextOverflow.ellipsis,
-//                         ),
-//                         if (lastMessageTime.isNotEmpty)
-//                           Text(
-//                             lastMessageTime,
-//                             style: Theme.of(context).textTheme.bodySmall
-//                                 ?.copyWith(
-//                                   fontWeight: unreadCount > 0
-//                                       ? FontWeight.bold
-//                                       : FontWeight.normal,
-//                                   color: unreadCount > 0
-//                                       ? AppTheme.primaryColor
-//                                       : AppTheme.textsecondaryColor,
-//                                 ),
-//                           ),
-//                       ],
-//                     ),
-
-//                     const SizedBox(height: 4),
-
-//                     Row(
-//                       children: [
-//                         Expanded(
-//                           child: Row(
-//                             children: [
-//                               if (chat.lastMessageSenderId ==
-//                                   getUserData().uId) ...[
-//                                 Icon(
-//                                   getSeenStatusIcon(),
-//                                   size: 14,
-//                                   color: getSeenStatusColor(),
-//                                 ),
-//                                 const SizedBox(width: 4),
-//                               ],
-//                               Expanded(
-//                                 child: Text(
-//                                   maxLines: 1,
-//                                   overflow: TextOverflow.ellipsis,
-//                                   chat.lastMessage ?? "No Message Yet",
-//                                   style: Theme.of(context).textTheme.bodyMedium
-//                                       ?.copyWith(
-//                                         color: unreadCount > 0
-//                                             ? AppTheme.primaryColor
-//                                             : AppTheme.textsecondaryColor,
-//                                         fontWeight: unreadCount > 0
-//                                             ? FontWeight.bold
-//                                             : FontWeight.normal,
-//                                       ),
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                         ),
-//                         if (unreadCount > 0) const SizedBox(width: 4 * 2),
-//                         Container(
-//                           padding: EdgeInsets.symmetric(
-//                             horizontal: 8,
-//                             vertical: 4,
-//                           ),
-//                           margin: EdgeInsets.only(left: 4),
-//                           decoration: BoxDecoration(
-//                             color: AppTheme.primaryColor,
-//                             borderRadius: BorderRadius.circular(12),
-//                           ),
-//                           child: Text(
-//                             unreadCount > 99 ? "+99" : unreadCount.toString(),
-//                             style: TextStyle(
-//                               color: Colors.white,
-//                               fontSize: 12,
-//                               fontWeight: FontWeight.bold,
-//                             ),
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                     if (chat.lastMessageSenderId == getUserData().uId) ...[
-//                       const SizedBox(height: 2),
-//                       Text(
-//                         getSeenStatusText(),
-//                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-//                           color: getSeenStatusColor(),
-//                           fontSize: 11,
-//                         ),
-//                       ),
-//                     ],
-//                   ],
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-
-
-
-//   IconData getSeenStatusIcon() {
-
-//   }
-// }
-
-
-//       // const SizedBox(height: 4),
-//       //               Text(
-//       //                 overflow: TextOverflow.ellipsis,
-//       //                 otherUser.email,
-//       //                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-//       //                   color: AppTheme.textsecondaryColor,
-//       //                 ),
-//       //               ),
-//       //               const SizedBox(height: 2),
-
-
-
-//          // CustomPopupMenuButton(
-//               //   onRemove: onRemove,
-//               //   onBlock: onBlock,
-//               //   onTap: onTap,
-//               // ),
+class FriendItem extends StatelessWidget {
+  const FriendItem({
+    super.key,
+    required this.friend,
+    required this.lastSeenText,
+    required this.onTap,
+    required this.onRemove,
+    required this.onBlock,
+  });
+  final UserEntity friend;
+  final String lastSeenText;
+  final VoidCallback onTap;
+  final VoidCallback onRemove;
+  final VoidCallback onBlock;
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(16),
+        child: Padding(
+          padding: EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Stack(
+                children: [
+                  CircleAvatar(
+                    radius: 28,
+                    backgroundColor: AppTheme.primaryColor,
+                    child: friend.photoUrl != null
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(28),
+                            child: Placeholder(),
+                          )
+                        : buildDefaultAvatar(name: friend.displayName),
+                  ),
+                  if (friend.isOnline)
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: Container(
+                        height: 16,
+                        width: 16,
+                        decoration: BoxDecoration(
+                          color: AppTheme.successColor,
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                            width: 2,
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      friend.displayName,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      overflow: TextOverflow.ellipsis,
+                      friend.email,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: AppTheme.textsecondaryColor,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      lastSeenText,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontWeight: friend.isOnline
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                        color: friend.isOnline
+                            ? AppTheme.successColor
+                            : AppTheme.textsecondaryColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              CustomPopupMenuButton(
+                onRemove: onRemove,
+                onBlock: onBlock,
+                onTap: onTap,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

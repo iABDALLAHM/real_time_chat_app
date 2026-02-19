@@ -230,8 +230,7 @@ class MainRepoImplementation implements MainRepo {
 
     FriendshipModel friendshipModel = FriendshipModel(
       id: friendShipId,
-      user1Id: userIds[0],
-      user2Id: userIds[1],
+      userIds: userIds,
       createdAt: DateTime.now(),
     );
 
@@ -302,9 +301,25 @@ class MainRepoImplementation implements MainRepo {
   }
 
   @override
-  Stream<List<FriendshipEntity>> getFriendsStream({required String userId}) {
-    // still not implemented
-    throw UnimplementedError();
+  Stream<List<FriendshipEntity>> getFriendsStream({
+    required String userId,
+  }) async* {
+    var data = dataBaseService.getAllDataStream(
+      path: BackendEndPoints.friendShips,
+      isQuery: true,
+      query: {"userIds": userId},
+    );
+    List<FriendshipEntity> friendshipEntityList = [];
+    await for (var friendshipMaps in data) {
+      friendshipEntityList = friendshipMaps
+          .map(
+            (friendshipMaps) =>
+                FriendshipModel.fromMap(friendshipMaps).toEntity(),
+          )
+          .where((f) => !f.isBlocked)
+          .toList();
+      yield friendshipEntityList;
+    }
   }
 
   @override

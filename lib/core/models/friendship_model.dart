@@ -3,25 +3,22 @@ import 'package:real_time_chat_app/core/entities/friendship_entity.dart';
 
 class FriendshipModel {
   final String id;
-  final String user1Id;
-  final String user2Id;
+  final List<String> userIds;
   final DateTime createdAt;
   final bool isBlocked;
   final String? blockedBy;
 
   FriendshipModel({
     required this.id,
-    required this.user1Id,
-    required this.user2Id,
+    required this.userIds,
     required this.createdAt,
     this.isBlocked = false,
     this.blockedBy,
   });
   factory FriendshipModel.fromMap(Map<String, dynamic> map) {
     return FriendshipModel(
+      userIds: List<String>.from(map["userIds"] ?? []),
       id: map["id"],
-      user1Id: map["user1Id"],
-      user2Id: map["user2Id"],
       createdAt: (map["createdAt"] as Timestamp).toDate(),
       isBlocked: map["isBlocked"],
       blockedBy: map["blockedBy"],
@@ -33,8 +30,7 @@ class FriendshipModel {
   }) {
     return FriendshipModel(
       id: friendshipEntity.id,
-      user1Id: friendshipEntity.user1Id,
-      user2Id: friendshipEntity.user2Id,
+      userIds: friendshipEntity.userIds,
       createdAt: (friendshipEntity.createdAt as Timestamp).toDate(),
       isBlocked: friendshipEntity.isBlocked,
       blockedBy: friendshipEntity.blockedBy,
@@ -44,8 +40,7 @@ class FriendshipModel {
   Map<String, dynamic> toMap() {
     return {
       "id": id,
-      "user1Id": user1Id,
-      "user2Id": user2Id,
+      "userIds": userIds,
       "createdAt": createdAt,
       "isBlocked": isBlocked,
       "blockedBy": blockedBy,
@@ -55,8 +50,7 @@ class FriendshipModel {
   FriendshipEntity toEntity() {
     return FriendshipEntity(
       id: id,
-      user1Id: user1Id,
-      user2Id: user2Id,
+      userIds: userIds,
       createdAt: createdAt,
       isBlocked: isBlocked,
       blockedBy: blockedBy,

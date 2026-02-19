@@ -78,6 +78,11 @@ class FirestoreService implements DataBaseService {
           var createdAt = query["createdAt"];
           data = data.orderBy("createdAt", descending: createdAt);
         }
+
+        if (query["userIds"] != null) {
+          var userIds = query["userIds"];
+          data = data.where("userIds", arrayContains: userIds);
+        }
       }
 
       // هنا أنت بتعمل transformation للـ Stream
