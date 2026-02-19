@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 class CustomFloatingActionButton extends StatelessWidget {
-  const CustomFloatingActionButton({super.key});
-
+  const CustomFloatingActionButton({super.key, required this.onChange});
+  final Function(int) onChange;
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
-      onPressed: () {},
+      onPressed: () {
+        onChange(2);
+      },
       label: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

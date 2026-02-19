@@ -12,7 +12,11 @@ class ChatBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: CustomFloatingActionButton(),
+      floatingActionButton: CustomFloatingActionButton(
+        onChange: (value) {
+          onChange(value);
+        },
+      ),
       appBar: buildChatBodyAppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),

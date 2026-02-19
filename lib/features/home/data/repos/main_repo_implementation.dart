@@ -73,15 +73,15 @@ class MainRepoImplementation implements MainRepo {
       requestDoc,
     );
 
-    await dataBaseService.deleteData(
-      path: BackendEndPoints.friendRequests,
-      documentId: requestId,
-    );
-
     await deleteNotificationByTypeAndUser(
       userId: friendRequestModel.receiverId,
       type: NotificationType.friendRequest,
       relatedUserId: friendRequestModel.senderId,
+    );
+
+    await dataBaseService.deleteData(
+      path: BackendEndPoints.friendRequests,
+      documentId: requestId,
     );
   }
 
@@ -300,7 +300,6 @@ class MainRepoImplementation implements MainRepo {
 
   @override
   Stream<List<FriendshipEntity>> getFriendsStream({required String userId}) {
-    
     throw UnimplementedError();
   }
 
