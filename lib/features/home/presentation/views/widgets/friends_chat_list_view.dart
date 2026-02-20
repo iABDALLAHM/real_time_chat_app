@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:real_time_chat_app/core/entities/friend_ship_with_user_entity.dart';
+import 'package:real_time_chat_app/features/chat/presentation/views/chat_view.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/friend_item.dart';
 
 class FriendsChatListView extends StatelessWidget {
@@ -14,7 +15,9 @@ class FriendsChatListView extends StatelessWidget {
       itemCount: friendShipWithUserEntityList.length,
       itemBuilder: (context, index) => FriendItem(
         friend: friendShipWithUserEntityList[index].userEntity,
-        onTap: () {},
+        onTap: () {
+          Navigator.pushNamed(context, ChatView.routeName,arguments: {});
+        },
         onRemove: () {},
         onBlock: () {},
         lastSeenText: friendShipWithUserEntityList[index]
