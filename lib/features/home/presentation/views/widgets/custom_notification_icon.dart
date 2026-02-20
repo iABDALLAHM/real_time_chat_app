@@ -7,6 +7,7 @@ class CustomNotificationIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int unreadNotifications = 10;
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pushNamed(NotificationView.routeName);
@@ -31,7 +32,6 @@ class CustomNotificationIcon extends StatelessWidget {
                 iconSize: 22,
               ),
             ),
-
             Positioned(
               top: 6,
               right: 6,
@@ -44,7 +44,9 @@ class CustomNotificationIcon extends StatelessWidget {
                 ),
                 constraints: BoxConstraints(minHeight: 16, minWidth: 16),
                 child: Text(
-                  "99+",
+                  unreadNotifications > 99
+                      ? "99+"
+                      : unreadNotifications.toString(),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 9,
