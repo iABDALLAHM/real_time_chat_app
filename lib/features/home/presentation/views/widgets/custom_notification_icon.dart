@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
+import 'package:real_time_chat_app/features/home/presentation/manager/get_notifications_stream_cubit/get_notifications_stream_cubit.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/notification_view.dart';
 
 class CustomNotificationIcon extends StatelessWidget {
@@ -7,7 +9,9 @@ class CustomNotificationIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int unreadNotifications = 10;
+    int unreadNotifications = context
+        .watch<GetNotificationsStreamCubit>()
+        .notificationLenght;
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pushNamed(NotificationView.routeName);
@@ -32,30 +36,32 @@ class CustomNotificationIcon extends StatelessWidget {
                 iconSize: 22,
               ),
             ),
-            Positioned(
-              top: 6,
-              right: 6,
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 2, horizontal: 4),
-                decoration: BoxDecoration(
-                  color: AppTheme.errorColor,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.white, width: 1.5),
-                ),
-                constraints: BoxConstraints(minHeight: 16, minWidth: 16),
-                child: Text(
-                  unreadNotifications > 99
-                      ? "99+"
-                      : unreadNotifications.toString(),
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 9,
-                    fontWeight: FontWeight.w600,
+            unreadNotifications == 0
+                ? SizedBox.shrink()
+                : Positioned(
+                    top: 6,
+                    right: 6,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 4),
+                      decoration: BoxDecoration(
+                        color: AppTheme.errorColor,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Colors.white, width: 1.5),
+                      ),
+                      constraints: BoxConstraints(minHeight: 16, minWidth: 16),
+                      child: Text(
+                        unreadNotifications > 99
+                            ? "99+"
+                            : unreadNotifications.toString(),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 9,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                   ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
           ],
         ),
       ),
