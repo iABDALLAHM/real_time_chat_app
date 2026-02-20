@@ -353,8 +353,8 @@ class MainRepoImplementation implements MainRepo {
       documentId: friendShipId,
     );
 
-    FriendshipEntity friendshipEntity = FriendshipModel.fromMap(doc).toEntity();
-    return friendshipEntity.isBlocked;
+    bool isUserBlocked = FriendshipModel.fromMap(doc).toEntity().isBlocked;
+    return isUserBlocked;
   }
 
   @override
@@ -384,10 +384,12 @@ class MainRepoImplementation implements MainRepo {
     List<String> participants = [user1Id, user2Id];
     participants.sort();
     String chatId = "${participants[0]}_${participants[1]}";
+
     var chatRefernce = await dataBaseService.getSingleData(
-      path: BackendEndPoints.getChats,
+      path: BackendEndPoints.chats,
       documentId: chatId,
     );
+
     if (chatRefernce == null) {
       ChatEntity newChat = ChatEntity(
         id: chatId,
@@ -399,8 +401,9 @@ class MainRepoImplementation implements MainRepo {
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );
+
       await dataBaseService.addData(
-        path: BackendEndPoints.addChats,
+        path: BackendEndPoints.chats,
         data: ChatModel.fromEntity(chatEntity: newChat).toMap(),
       );
     } else {
@@ -414,12 +417,24 @@ class MainRepoImplementation implements MainRepo {
         await restoreChatForUser(chatId: chatId, userId: user2Id);
       }
     }
+
     return chatId;
   }
 
   @override
   Stream<List<ChatEntity>> getUserChatsStream({required String userId}) async* {
-    // here is query
+    var data = dataBaseService.getAllDataStream(
+      path: BackendEndPoints.chats,
+      isQuery: true,
+      query: {"participants": userId, "updatedAt": true},
+    );
+    await for (var chatModel in data) {
+      var chatList = chatModel
+          .map((chat) => ChatModel.fromMap(chat).toEntity())
+          .where((chat) => !chat.isDeletedBy(userId: userId))
+          .toList();
+      yield chatList;
+    }
   }
 
   @override
@@ -428,7 +443,7 @@ class MainRepoImplementation implements MainRepo {
     required MessageEntity message,
   }) async {
     dataBaseService.updateData(
-      path: BackendEndPoints.updateChats,
+      path: BackendEndPoints.chats,
       data: {
         "lastMessage": message.content,
         "lastMessageTime": message,
@@ -445,7 +460,7 @@ class MainRepoImplementation implements MainRepo {
     required String userId,
   }) async {
     await dataBaseService.updateData(
-      path: BackendEndPoints.getChats,
+      path: BackendEndPoints.chats,
       data: {"lastSeenBy.$userId": DateTime.now()},
       documentId: chatId,
     );
@@ -457,7 +472,7 @@ class MainRepoImplementation implements MainRepo {
     required String userId,
   }) async {
     await dataBaseService.updateData(
-      path: BackendEndPoints.deleteChats,
+      path: BackendEndPoints.chats,
       data: {"deletedBy.$userId": true, "deletedAt.$userId": DateTime.now()},
       documentId: chatId,
     );
@@ -500,6 +515,8 @@ class MainRepoImplementation implements MainRepo {
     );
   }
 
+  /// message collection
+
   @override
   Future<void> sendMessage({required MessageEntity message}) async {
     await dataBaseService.addSinleData(
@@ -512,16 +529,78 @@ class MainRepoImplementation implements MainRepo {
       user1Id: message.senderId,
       user2Id: message.receiverId,
     );
+
     await updateChatLastMessage(chatId: chatId, message: message);
+
     await updateUserLastSeen(userId: message.senderId, chatId: chatId);
 
-    // var chatDoc = await dataBaseService.getSingleData(
-    //   path: BackendEndPoints.chats,
-    //   documentId: chatId,
-    // );
-    // MessageEntity messageEntity = MessageModel.fromMap(chatDoc).toEntity();
-    // int currentUnread = messageEntity.get
+    var chatDoc = await dataBaseService.getSingleData(
+      path: BackendEndPoints.chats,
+      documentId: chatId,
+    );
+
+    ChatEntity chat = ChatModel.fromMap(chatDoc).toEntity();
+
+    int currentUnread = chat.getUnreadCount(userId: message.receiverId);
+
+    await updateunReadCount(
+      chatId: chatId,
+      userId: message.receiverId,
+      count: currentUnread + 1,
+    );
   }
+
+  @override
+  Stream<List<MessageEntity>> getMessagesStream({
+    required String user1Id,
+    required String user2Id,
+  }) async* {
+    // فيه تعديل المفروض يتم هنا !!!!
+    var data = dataBaseService.getAllDataStream(
+      path: BackendEndPoints.messages,
+      isQuery: true,
+      query: {
+        "senderId": [user1Id, user2Id],
+      },
+    );
+
+    await for (var messageMap in data) {}
+  }
+
+  @override
+  Future<void> markMessagesAsRead({required String messageId}) async {
+    await dataBaseService.updateData(
+      path: BackendEndPoints.messages,
+      data: {"isRead": true},
+      documentId: messageId,
+    );
+  }
+
+  @override
+  Future<void> deleteMessage({required String messageId}) async {
+    await dataBaseService.deleteData(
+      path: BackendEndPoints.messages,
+      documentId: messageId,
+    );
+  }
+
+  @override
+  Future<void> editMessage({
+    required String messageId,
+    required String newContent,
+  }) async {
+    await dataBaseService.updateData(
+      path: BackendEndPoints.messages,
+      data: {
+        "content": newContent,
+        "isEdited": true,
+        "editedAt": DateTime.now(),
+      },
+      documentId: messageId,
+    );
+  }
+
+  /// notifications collection
 
   @override
   Future<void> createNotification({
@@ -561,6 +640,44 @@ class MainRepoImplementation implements MainRepo {
       isQuery: true,
     );
   }
-}
 
-// 58:00
+  @override
+  Stream<List<NotificationEntity>> getNotificationsStream({
+    required String userId,
+  }) async* {
+    var data = dataBaseService.getAllDataStream(
+      path: BackendEndPoints.notification,
+      isQuery: true,
+      query: {"userId": userId, "createdAt": true},
+    );
+    await for (var notificationMap in data) {
+      List<NotificationEntity> notificationList = notificationMap
+          .map((ele) => NotificationModel.fromMap(ele).toEntity())
+          .toList();
+
+      yield notificationList;
+    }
+  }
+
+  @override
+  Future<void> markNotificationAsRead({required String notificationId}) async {
+    await dataBaseService.updateData(
+      path: BackendEndPoints.notification,
+      data: {"isRead": true},
+      documentId: notificationId,
+    );
+  }
+
+  @override
+  Future<void> markAllNotificationAsRead({required String userId}) async {
+    await dataBaseService.getQueryData(path: BackendEndPoints.notification);
+  }
+
+  @override
+  Future<void> deleteNotification({required String notificationId}) async {
+    await dataBaseService.deleteData(
+      path: BackendEndPoints.notification,
+      documentId: notificationId,
+    );
+  }
+}

@@ -65,4 +65,16 @@ class NotificationModel {
       createdAt: (map["createdAt"] as Timestamp).toDate(),
     );
   }
+
+  NotificationEntity toEntity() {
+    return NotificationEntity(
+      id: id,
+      userId: userId,
+      title: title,
+      body: body,
+      type: type,
+      data: data,
+      createdAt: createdAt,
+    );
+  }
 }

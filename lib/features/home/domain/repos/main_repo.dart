@@ -96,10 +96,32 @@ abstract class MainRepo {
   /// message collection
   Future<void> sendMessage({required MessageEntity message});
 
+  Stream<List<MessageEntity>> getMessagesStream({
+    required String user1Id,
+    required String user2Id,
+  });
+
+  Future<void> markMessagesAsRead({required String messageId});
+  Future<void> deleteMessage({required String messageId});
+  Future<void> editMessage({
+    required String messageId,
+    required String newContent,
+  });
+
   /// notifications collection
   Future<void> createNotification({
     required NotificationEntity notificationEntity,
   });
+
+  Stream<List<NotificationEntity>> getNotificationsStream({
+    required String userId,
+  });
+
+  Future<void> markNotificationAsRead({required String notificationId});
+
+  Future<void> markAllNotificationAsRead({required String userId});
+
+  Future<void> deleteNotification({required String notificationId});
 
   Future<void> removeNotificationForCancelledRequest({
     required String senderId,
