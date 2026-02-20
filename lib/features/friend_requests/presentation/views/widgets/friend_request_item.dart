@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:real_time_chat_app/core/entities/friend_request_with_user.dart';
+import 'package:real_time_chat_app/core/entities/friend_request_with_user_entity.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
 
 class FriendRequestItem extends StatelessWidget {
@@ -11,10 +11,11 @@ class FriendRequestItem extends StatelessWidget {
     this.onAccept,
     this.onDecline,
     this.statusText,
-    this.statusColor, required this.friendRequestWithUser,
+    this.statusColor,
+    required this.friendRequestWithUser,
   });
 
-    final FriendRequestWithUser friendRequestWithUser;
+  final FriendRequestWithUserEntity friendRequestWithUser;
 
   final String timeText;
   final bool isReceived;
@@ -37,7 +38,8 @@ class FriendRequestItem extends StatelessWidget {
                   backgroundColor: AppTheme.primaryColor,
                   child: friendRequestWithUser.userEntity.photoUrl != null
                       ? Text(
-                          friendRequestWithUser.userEntity.displayName[0].toUpperCase(),
+                          friendRequestWithUser.userEntity.displayName[0]
+                              .toUpperCase(),
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

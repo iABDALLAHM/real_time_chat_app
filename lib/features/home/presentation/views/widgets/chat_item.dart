@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:real_time_chat_app/core/entities/chat_entity.dart';
-import 'package:real_time_chat_app/core/entities/user_entity.dart';
-import 'package:real_time_chat_app/core/functions/get_user_data.dart';
-import 'package:real_time_chat_app/core/utils/app_theme.dart';
-import 'package:real_time_chat_app/features/home/presentation/views/widgets/custom_popup_menu_button.dart';
+// import 'package:flutter/material.dart';
+// import 'package:real_time_chat_app/core/entities/chat_entity.dart';
+// import 'package:real_time_chat_app/core/entities/user_entity.dart';
+// import 'package:real_time_chat_app/core/functions/get_user_data.dart';
+// import 'package:real_time_chat_app/core/utils/app_theme.dart';
+// import 'package:real_time_chat_app/features/home/presentation/views/widgets/custom_popup_menu_button.dart';
 
-import '../../../../../core/functions/build_default_avatar.dart';
+// import '../../../../../core/functions/build_default_avatar.dart';
 
 
 // class FriendItem extends StatelessWidget {

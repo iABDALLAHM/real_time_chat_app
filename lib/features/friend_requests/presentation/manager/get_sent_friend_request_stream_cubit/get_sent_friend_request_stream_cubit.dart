@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:real_time_chat_app/core/entities/friend_request_with_user.dart';
+import 'package:real_time_chat_app/core/entities/friend_request_with_user_entity.dart';
 import 'package:real_time_chat_app/features/auth/domain/repos/auth_repo.dart';
 import 'package:real_time_chat_app/features/friend_requests/presentation/manager/get_sent_friend_request_stream_cubit/get_sent_friend_request_stream_state.dart';
 import 'package:real_time_chat_app/features/home/domain/repos/main_repo.dart';
@@ -20,11 +20,11 @@ class GetSentFriendRequestStreamCubit
         .getSentFriendRequestStream(userId: userId)
         .listen((result) async{
          length = result.length;
-         List<FriendRequestWithUser> friendRequestWithUserList = [];
+         List<FriendRequestWithUserEntity> friendRequestWithUserList = [];
 
           for(var request in result){
 var user = await authRepo.getUserData(uId: request.receiverId);
-          friendRequestWithUserList.add(FriendRequestWithUser(friendRequestEntity: request, userEntity:user ));
+          friendRequestWithUserList.add(FriendRequestWithUserEntity(friendRequestEntity: request, userEntity:user ));
             emit(
               SuccessGetSentFriendRequestStreamState(
                 friendRequestWithUserList: friendRequestWithUserList,

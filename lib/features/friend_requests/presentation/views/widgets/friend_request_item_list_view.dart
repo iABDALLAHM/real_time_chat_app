@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:real_time_chat_app/core/entities/friend_request_with_user.dart';
+import 'package:real_time_chat_app/core/entities/friend_request_with_user_entity.dart';
 import 'package:real_time_chat_app/core/enums/friend_request_status.dart';
 import 'package:real_time_chat_app/core/functions/get_month.dart';
 import 'package:real_time_chat_app/features/friend_requests/presentation/manager/respond_to_friend_request_cubit/respond_to_friend_request_cubit.dart';
@@ -11,7 +11,7 @@ class FriendRequestItemListView extends StatelessWidget {
     super.key,
     required this.friendRequestWithUser,
   });
-  final List<FriendRequestWithUser> friendRequestWithUser;
+  final List<FriendRequestWithUserEntity> friendRequestWithUser;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(

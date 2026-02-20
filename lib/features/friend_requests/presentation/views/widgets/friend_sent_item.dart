@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:real_time_chat_app/core/entities/friend_request_with_user.dart';
+import 'package:real_time_chat_app/core/entities/friend_request_with_user_entity.dart';
 import 'package:real_time_chat_app/core/enums/friend_request_status.dart';
 import 'package:real_time_chat_app/core/functions/get_month.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
@@ -9,7 +9,7 @@ import 'package:real_time_chat_app/features/friend_requests/presentation/views/w
 
 class FriendSentItem extends StatelessWidget {
   const FriendSentItem({super.key, required this.friendRequestWithUser});
-  final FriendRequestWithUser friendRequestWithUser;
+  final FriendRequestWithUserEntity friendRequestWithUser;
   @override
   Widget build(BuildContext context) {
     return Card(

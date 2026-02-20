@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:real_time_chat_app/core/entities/user_entity.dart';
+import 'package:real_time_chat_app/core/entities/friend_ship_with_user_entity.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/friend_item.dart';
 
 class FriendsChatListView extends StatelessWidget {
-  const FriendsChatListView({super.key, required this.usersList});
-  final List<UserEntity> usersList;
+  const FriendsChatListView({
+    super.key,
+    required this.friendShipWithUserEntityList,
+  });
+  final List<FriendShipWithUserEntity> friendShipWithUserEntityList;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: usersList.length,
+      itemCount: friendShipWithUserEntityList.length,
       itemBuilder: (context, index) => FriendItem(
-        friend: usersList[index],
+        friend: friendShipWithUserEntityList[index].userEntity,
         onTap: () {},
         onRemove: () {},
         onBlock: () {},
-        lastSeenText: '',
+        lastSeenText: friendShipWithUserEntityList[index]
+            .friendshipEntity
+            .createdAt
+            .toString(),
       ),
     );
   }

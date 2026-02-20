@@ -34,10 +34,14 @@ class FriendItem extends StatelessWidget {
                   CircleAvatar(
                     radius: 28,
                     backgroundColor: AppTheme.primaryColor,
-                    child: friend.photoUrl != null
+                    child: friend.photoUrl == null
                         ? ClipRRect(
                             borderRadius: BorderRadius.circular(28),
-                            child: Placeholder(),
+                            child: Image.network(
+                              friend.photoUrl ?? "",
+                              width: 56,
+                              height: 56,
+                            ),
                           )
                         : buildDefaultAvatar(name: friend.displayName),
                   ),

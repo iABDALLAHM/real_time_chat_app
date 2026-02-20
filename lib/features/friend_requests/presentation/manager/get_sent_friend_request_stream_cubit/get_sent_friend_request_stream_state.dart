@@ -1,4 +1,4 @@
-import 'package:real_time_chat_app/core/entities/friend_request_with_user.dart';
+import 'package:real_time_chat_app/core/entities/friend_request_with_user_entity.dart';
 
 abstract class GetSentFriendRequestStreamStates {}
 
@@ -10,6 +10,6 @@ final class LoadingGetSentFriendRequestStreamState
 
 final class SuccessGetSentFriendRequestStreamState
     extends GetSentFriendRequestStreamStates {
-  final List<FriendRequestWithUser> friendRequestWithUserList;
+  final List<FriendRequestWithUserEntity> friendRequestWithUserList;
   SuccessGetSentFriendRequestStreamState({required this.friendRequestWithUserList});
 }
