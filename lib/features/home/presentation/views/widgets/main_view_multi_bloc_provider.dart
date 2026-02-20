@@ -7,7 +7,6 @@ import 'package:real_time_chat_app/features/home/domain/repos/main_repo.dart';
 import 'package:real_time_chat_app/features/home/presentation/manager/get_all_users_stream_cubit/get_all_users_stream_cubit.dart';
 import 'package:real_time_chat_app/features/home/presentation/manager/friend_request_cubit/friend_request_cubit.dart';
 import 'package:real_time_chat_app/features/home/presentation/manager/get_my_friends_stream_cubit.dart/get_my_friends_stream_cubit.dart';
-import 'package:real_time_chat_app/features/home/presentation/manager/get_notifications_stream_cubit/get_notifications_stream_cubit.dart';
 import 'package:real_time_chat_app/features/profile/domain/repos/profile_repo.dart';
 
 class MainViewMultiBlocProvider extends StatelessWidget {
@@ -34,10 +33,6 @@ class MainViewMultiBlocProvider extends StatelessWidget {
             mainRepo: getIt.get<MainRepo>(),
             authRepo: getIt.get<AuthRepo>(),
           ),
-        ),
-        BlocProvider(
-          create: (context) =>
-              GetNotificationsStreamCubit(mainRepo: getIt.get<MainRepo>()),
         ),
       ],
       child: child,

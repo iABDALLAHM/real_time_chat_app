@@ -14,7 +14,10 @@ class CustomNotificationIcon extends StatelessWidget {
         .notificationLenght;
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(NotificationView.routeName);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const NotificationView()),
+        );
       },
       child: Container(
         margin: EdgeInsets.only(right: 8),
