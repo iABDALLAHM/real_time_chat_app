@@ -16,14 +16,12 @@ class FriendsChatListView extends StatelessWidget {
       itemBuilder: (context, index) => FriendItem(
         friend: friendShipWithUserEntityList[index].userEntity,
         onTap: () {
-          Navigator.pushNamed(context, ChatView.routeName,arguments: {});
+          Navigator.pushNamed(context, ChatView.routeName, arguments: {});
         },
         onRemove: () {},
         onBlock: () {},
-        lastSeenText: friendShipWithUserEntityList[index]
-            .friendshipEntity
-            .createdAt
-            .toString(),
+        lastSeenText:
+            "${friendShipWithUserEntityList[index].friendshipEntity.createdAt.day.toString()}-${friendShipWithUserEntityList[index].friendshipEntity.createdAt.month.toString()}-${friendShipWithUserEntityList[index].friendshipEntity.createdAt.year.toString()}",
       ),
     );
   }
