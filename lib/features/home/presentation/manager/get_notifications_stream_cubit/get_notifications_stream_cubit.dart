@@ -15,7 +15,11 @@ class GetNotificationsStreamCubit extends Cubit<GetNotificationsStreamStates> {
         .getNotificationsStream(userId: userId)
         .listen((result) {
           notificationLenght = result.length;
-          emit(SuccessGetNotificationsStreamState(notificationsList: result));
+          if (result.isEmpty) {
+            emit(EmptyNotificationsStreamState());
+          } else {
+            emit(SuccessGetNotificationsStreamState(notificationsList: result));
+          }
         });
   }
 

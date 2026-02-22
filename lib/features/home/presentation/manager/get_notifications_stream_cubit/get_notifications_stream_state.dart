@@ -8,12 +8,15 @@ final class InitialGetNotificationsStreamState
 final class LoadingGetNotificationsStreamState
     extends GetNotificationsStreamStates {}
 
+final class EmptyNotificationsStreamState
+    extends GetNotificationsStreamStates {}
+
 final class SuccessGetNotificationsStreamState
     extends GetNotificationsStreamStates {
-      final List<NotificationEntity> notificationsList;
+  final List<NotificationEntity> notificationsList;
 
   SuccessGetNotificationsStreamState({required this.notificationsList});
-    }
+}
 
 final class FailureGetNotificationsStreamState
     extends GetNotificationsStreamStates {}

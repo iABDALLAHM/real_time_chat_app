@@ -16,19 +16,26 @@ class GetMyFriendsStreamCubit extends Cubit<GetMyFriendsStreamStates> {
     _streamSubscription = mainRepo.getFriendsStream(userId: userId).listen((
       result,
     ) async {
-      List<FriendShipWithUserEntity> friendShipWithUserList = [];
-      for (var element in result) {
-        String friendId = element.userIds.firstWhere((id) => id != userId);
-        var data = await authRepo.getUserData(uId: friendId);
-        friendShipWithUserList.add(
-          FriendShipWithUserEntity(userEntity: data, friendshipEntity: element),
+      if (result.isEmpty) {
+        emit(EmptyFriendsStreamState());
+      } else {
+        List<FriendShipWithUserEntity> friendShipWithUserList = [];
+        for (var element in result) {
+          String friendId = element.userIds.firstWhere((id) => id != userId);
+          var data = await authRepo.getUserData(uId: friendId);
+          friendShipWithUserList.add(
+            FriendShipWithUserEntity(
+              userEntity: data,
+              friendshipEntity: element,
+            ),
+          );
+        }
+        emit(
+          SuccessGetMyFriendsStreamState(
+            friendShipWithUserList: friendShipWithUserList,
+          ),
         );
       }
-      emit(
-        SuccessGetMyFriendsStreamState(
-          friendShipWithUserList: friendShipWithUserList,
-        ),
-      );
     });
   }
 

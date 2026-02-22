@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:real_time_chat_app/core/entities/chat_entity.dart';
-import 'package:real_time_chat_app/core/entities/user_entity.dart';
 import 'package:real_time_chat_app/core/functions/get_user_data.dart';
 import 'package:real_time_chat_app/core/widgets/custom_text_form_field.dart';
-import 'package:real_time_chat_app/features/chat/presentation/views/chat_view.dart';
 import 'package:real_time_chat_app/features/home/presentation/function/build_chat_body_app_bar.dart';
 import 'package:real_time_chat_app/features/home/presentation/manager/get_notifications_stream_cubit/get_notifications_stream_cubit.dart';
-import 'package:real_time_chat_app/features/home/presentation/views/widgets/chat_item.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/custom_floating_action_button.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/custom_sections_tabs.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/custom_tabs_body.dart';
@@ -62,33 +58,14 @@ class _ChatBodyState extends State<ChatBody> {
                 },
               ),
               const SizedBox(height: 10),
-              CustomSectionsTabsBody(currentIndex: currentIndex),
-              // ChatItem(
-              //   otherUser: UserEntity(
-              //     uId: "uId",
-              //     email: "email",
-              //     displayName: "displayName",
-              //     lastSeen: DateTime.now(),
-              //     createdAt: DateTime.now(),
-              //   ),
-              //   lastMessageTime: '',
-              //   onTap: () {
-              //     Navigator.pushNamed(
-              //       context,
-              //       ChatView.routeName,
-              //       arguments: {},
-              //     );
-              //   },
-              //   chat: ChatEntity(
-              //     id: "id",
-              //     participants: [],
-              //     unreadCount: {},
-              //     lastMessageTime: DateTime.now(),
-              //     createdAt: DateTime.now(),
-              //     updatedAt: DateTime.now(),
-              //   ),
-              // ),
-              // NoConversationsWidget(onChange: (value) {}),
+              // CustomSectionsTabsBody(currentIndex: currentIndex),
+              
+              // this is the intial state of ui before exist any chat or any body tap!!!!!
+              NoConversationsWidget(
+                onChange: (value) {
+                  widget.onChange(value);
+                },
+              ),
             ],
           ),
         ),

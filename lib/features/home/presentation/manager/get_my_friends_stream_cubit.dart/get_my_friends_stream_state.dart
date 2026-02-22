@@ -13,3 +13,5 @@ final class SuccessGetMyFriendsStreamState extends GetMyFriendsStreamStates {
 final class LoadingGetMyFriendsStreamState extends GetMyFriendsStreamStates {}
 
 final class FailureGetMyFriendsStreamState extends GetMyFriendsStreamStates {}
+
+final class EmptyFriendsStreamState extends GetMyFriendsStreamStates {}
