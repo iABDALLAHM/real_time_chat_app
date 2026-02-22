@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:real_time_chat_app/core/entities/friend_request_with_user_entity.dart';
-import 'package:real_time_chat_app/core/enums/friend_request_status.dart';
 import 'package:real_time_chat_app/core/functions/get_month.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
-import 'package:real_time_chat_app/features/friend_requests/presentation/views/widgets/accepted_friend_ship_state.dart';
-import 'package:real_time_chat_app/features/friend_requests/presentation/views/widgets/pending_friend_ship_state.dart';
-import 'package:real_time_chat_app/features/friend_requests/presentation/views/widgets/rejected_friend_ship_state.dart';
+import 'package:real_time_chat_app/features/friend_requests/presentation/views/widgets/friend_request_status_widget.dart';
 
 class FriendSentItem extends StatelessWidget {
   const FriendSentItem({super.key, required this.friendRequestWithUser});
@@ -70,16 +67,9 @@ class FriendSentItem extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 20),
-            if (friendRequestWithUser.friendRequestEntity.status ==
-                FriendRequestStatus.pending)
-              PendingFriendShipState(),
-            if (friendRequestWithUser.friendRequestEntity.status ==
-                FriendRequestStatus.accepted)
-              AcceptedFriendShipState(),
-            if (friendRequestWithUser.friendRequestEntity.status ==
-                FriendRequestStatus.rejected)
-              RejectedFriendShipState(),
+            FriendRequestStatusWidget(
+              status: friendRequestWithUser.friendRequestEntity.status,
+            ),
           ],
         ),
       ),
