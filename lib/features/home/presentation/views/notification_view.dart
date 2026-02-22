@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
+import 'package:real_time_chat_app/features/home/presentation/views/widgets/notification_view_bloc_provider.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/notification_view_body.dart';
 
 class NotificationView extends StatelessWidget {
@@ -7,9 +8,11 @@ class NotificationView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: buildNotificationViewAppBar(context),
-      body: NotificationViewBody(),
+    return NotificationViewBlocProvider(
+      child: Scaffold(
+        appBar: buildNotificationViewAppBar(context),
+        body: NotificationViewBody(),
+      ),
     );
   }
 

@@ -1,32 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/entities/notification_entity.dart';
 import 'package:real_time_chat_app/core/enums/notification_type.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
+import 'package:real_time_chat_app/features/home/presentation/manager/notification_cubit/notification_cubit.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/accept_friend_request_icon.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/new_friend_request_icon.dart';
 
-class NotificationItem extends StatelessWidget {
+class NotificationItem extends StatefulWidget {
   const NotificationItem({super.key, required this.notificationEntity});
   final NotificationEntity notificationEntity;
 
   @override
+  State<NotificationItem> createState() => _NotificationItemState();
+}
+
+class _NotificationItemState extends State<NotificationItem> {
+  @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppTheme.primaryColor.withOpacity(0.1),
+        color: widget.notificationEntity.isRead == true
+            ? AppTheme.cardColor
+            : AppTheme.primaryColor.withOpacity(0.1),
         borderRadius: BorderRadius.circular(20),
       ),
       child: InkWell(
         onTap: () {
+          setState(() {});
+          context.read<NotificationCubit>().markNotificationAsRead(
+            notificationId: widget.notificationEntity.id,
+          );
           // here when i pressed on it the color of the card must changed to express about i see the notification and also the icon must me disappeared that is behind a notification title;
         },
         child: ListTile(
           trailing: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              context.read<NotificationCubit>().deleteNotification(
+                notificationId: widget.notificationEntity.id,
+              );
+            },
             icon: Icon(Icons.close, size: 20),
           ),
           leading: getNotificationTypeIcon(
-            notificationType: notificationEntity.type,
+            notificationType: widget.notificationEntity.type,
           ),
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,27 +51,26 @@ class NotificationItem extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    notificationEntity.title,
+                    widget.notificationEntity.title,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(width: 8),
-                  notificationEntity.isRead == false
-                      ? Container(
-                          decoration: ShapeDecoration(
-                            color: AppTheme.primaryColor,
-                            shape: OvalBorder(),
-                          ),
-                          width: 10,
-                          height: 10,
-                        )
-                      : SizedBox.shrink(),
+                  if (widget.notificationEntity.isRead == false)
+                    Container(
+                      decoration: ShapeDecoration(
+                        color: AppTheme.primaryColor,
+                        shape: OvalBorder(),
+                      ),
+                      width: 10,
+                      height: 10,
+                    ),
                 ],
               ),
               const SizedBox(height: 5),
               Text(
-                notificationEntity.body,
+                widget.notificationEntity.body,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: AppTheme.textsecondaryColor,
                 ),
@@ -64,7 +80,7 @@ class NotificationItem extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: AppTheme.textsecondaryColor,
                 ),
-                "${notificationEntity.createdAt.day.toString()}-${notificationEntity.createdAt.month.toString()}-${notificationEntity.createdAt.year.toString()}",
+                "${widget.notificationEntity.createdAt.day.toString()}-${widget.notificationEntity.createdAt.month.toString()}-${widget.notificationEntity.createdAt.year.toString()}",
               ),
             ],
           ),

@@ -68,6 +68,7 @@ class NotificationModel {
 
   NotificationEntity toEntity() {
     return NotificationEntity(
+      isRead: isRead,
       id: id,
       userId: userId,
       title: title,

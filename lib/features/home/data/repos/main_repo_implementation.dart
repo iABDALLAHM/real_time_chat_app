@@ -50,6 +50,7 @@ class MainRepoImplementation implements MainRepo {
         "friend_request_${friendRequest.senderId}_${friendRequest.receiverId}_${DateTime.now()}";
 
     NotificationEntity notificationEntity = NotificationEntity(
+      isRead: false,
       id: notificationId,
       userId: friendRequest.receiverId,
       title: "New Friend Request",
@@ -113,6 +114,7 @@ class MainRepoImplementation implements MainRepo {
       );
 
       NotificationEntity notificationEntity = NotificationEntity(
+        isRead: false,
         id: DateTime.now().toString(),
         userId: friendRequestModel.senderId,
         data: {"userId": friendRequestModel.receiverId},
@@ -130,6 +132,7 @@ class MainRepoImplementation implements MainRepo {
       );
     } else if (status == FriendRequestStatus.rejected) {
       NotificationEntity notificationEntity = NotificationEntity(
+        isRead: false,
         id: DateTime.now().toString(),
         userId: friendRequestModel.senderId,
         data: {"userId": friendRequestModel.receiverId},
@@ -257,6 +260,7 @@ class MainRepoImplementation implements MainRepo {
 
     await createNotification(
       notificationEntity: NotificationEntity(
+        isRead: false,
         id: DateTime.now().toString(),
         userId: user2Id,
         data: {"userId": user1Id},
