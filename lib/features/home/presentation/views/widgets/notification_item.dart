@@ -77,11 +77,11 @@ class NotificationItem extends StatelessWidget {
       case NotificationType.friendRequestAccepted:
         return AcceptedFriendRequestIcon();
       case NotificationType.friendRequestDecliend:
-        throw UnimplementedError();
+        return SizedBox.shrink();
       case NotificationType.newMessage:
-        throw UnimplementedError();
+        return SizedBox.shrink();
       case NotificationType.friendRemoved:
-        throw UnimplementedError();
+        return SizedBox.shrink();
     }
   }
 }
