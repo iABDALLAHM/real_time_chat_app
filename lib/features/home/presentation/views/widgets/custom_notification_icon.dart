@@ -12,61 +12,60 @@ class CustomNotificationIcon extends StatelessWidget {
     int unreadNotifications = context
         .watch<GetNotificationsStreamCubit>()
         .notificationLenght;
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const NotificationView()),
-        );
-      },
-      child: Container(
-        margin: EdgeInsets.only(right: 8),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          color: Theme.of(context).cardTheme.color,
-        ),
-        child: Stack(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.grey[100],
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.notifications_none),
-                splashRadius: 20,
-                iconSize: 22,
-              ),
+    return Container(
+      margin: EdgeInsets.only(right: 8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        color: Theme.of(context).cardTheme.color,
+      ),
+      child: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.grey[100],
+              borderRadius: BorderRadius.circular(12),
             ),
-            unreadNotifications == 0
-                ? SizedBox.shrink()
-                : Positioned(
-                    top: 6,
-                    right: 6,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 4),
-                      decoration: BoxDecoration(
-                        color: AppTheme.errorColor,
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: Colors.white, width: 1.5),
+            child: IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const NotificationView(),
+                  ),
+                );
+              },
+              icon: Icon(Icons.notifications_none),
+              splashRadius: 20,
+              iconSize: 22,
+            ),
+          ),
+          unreadNotifications == 0
+              ? SizedBox.shrink()
+              : Positioned(
+                  top: 6,
+                  right: 6,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 2, horizontal: 4),
+                    decoration: BoxDecoration(
+                      color: AppTheme.errorColor,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Colors.white, width: 1.5),
+                    ),
+                    constraints: BoxConstraints(minHeight: 16, minWidth: 16),
+                    child: Text(
+                      unreadNotifications > 99
+                          ? "99+"
+                          : unreadNotifications.toString(),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 9,
+                        fontWeight: FontWeight.w600,
                       ),
-                      constraints: BoxConstraints(minHeight: 16, minWidth: 16),
-                      child: Text(
-                        unreadNotifications > 99
-                            ? "99+"
-                            : unreadNotifications.toString(),
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 9,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
-          ],
-        ),
+                ),
+        ],
       ),
     );
   }
