@@ -8,6 +8,7 @@ import 'package:real_time_chat_app/features/home/presentation/views/widgets/new_
 class NotificationItem extends StatelessWidget {
   const NotificationItem({super.key, required this.notificationEntity});
   final NotificationEntity notificationEntity;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -16,7 +17,9 @@ class NotificationItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          // here when i pressed on it the color of the card must changed to express about i see the notification and also the icon must me disappeared that is behind a notification title;
+        },
         child: ListTile(
           trailing: IconButton(
             onPressed: () {},
