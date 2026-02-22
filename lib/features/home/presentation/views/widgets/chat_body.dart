@@ -10,6 +10,8 @@ import 'package:real_time_chat_app/features/home/presentation/manager/get_notifi
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/chat_item.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/custom_floating_action_button.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/custom_sections_tabs.dart';
+import 'package:real_time_chat_app/features/home/presentation/views/widgets/custom_tabs_body.dart';
+import 'package:real_time_chat_app/features/home/presentation/views/widgets/no_conversation_widget.dart';
 
 class ChatBody extends StatefulWidget {
   const ChatBody({super.key, required this.onChange});
@@ -21,6 +23,7 @@ class ChatBody extends StatefulWidget {
 }
 
 class _ChatBodyState extends State<ChatBody> {
+  int currentIndex = 0;
   @override
   void initState() {
     context.read<GetNotificationsStreamCubit>().getNotifications(
@@ -42,6 +45,7 @@ class _ChatBodyState extends State<ChatBody> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 16),
               CustomTextFormField(
@@ -51,37 +55,40 @@ class _ChatBodyState extends State<ChatBody> {
                 prefixIcon: Icon(Icons.search),
               ),
               const SizedBox(height: 8),
-              CustomSectionsTabs(onChange: (value) {}),
-              ChatItem(
-                otherUser: UserEntity(
-                  uId: "uId",
-                  email: "email",
-                  displayName: "displayName",
-                  lastSeen: DateTime.now(),
-                  createdAt: DateTime.now(),
-                ),
-                lastMessageTime: '',
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    ChatView.routeName,
-                    arguments: {},
-                  );
+              CustomSectionsTabs(
+                onChange: (value) {
+                  currentIndex = value;
+                  setState(() {});
                 },
-                chat: ChatEntity(
-                  id: "id",
-                  participants: [],
-                  unreadCount: {},
-                  lastMessageTime: DateTime.now(),
-                  createdAt: DateTime.now(),
-                  updatedAt: DateTime.now(),
-                ),
               ),
-              // NoConversationsWidget(
-              //   onChange: (value) {
-              //     onChange(value);
+              const SizedBox(height: 10),
+              CustomSectionsTabsBody(currentIndex: currentIndex),
+              // ChatItem(
+              //   otherUser: UserEntity(
+              //     uId: "uId",
+              //     email: "email",
+              //     displayName: "displayName",
+              //     lastSeen: DateTime.now(),
+              //     createdAt: DateTime.now(),
+              //   ),
+              //   lastMessageTime: '',
+              //   onTap: () {
+              //     Navigator.pushNamed(
+              //       context,
+              //       ChatView.routeName,
+              //       arguments: {},
+              //     );
               //   },
+              //   chat: ChatEntity(
+              //     id: "id",
+              //     participants: [],
+              //     unreadCount: {},
+              //     lastMessageTime: DateTime.now(),
+              //     createdAt: DateTime.now(),
+              //     updatedAt: DateTime.now(),
+              //   ),
               // ),
+              // NoConversationsWidget(onChange: (value) {}),
             ],
           ),
         ),
