@@ -48,6 +48,7 @@ class ActiveConversationsSection extends StatelessWidget {
             ),
           ],
         ),
+        const SizedBox(height: 10),
       ],
     );
   }
@@ -80,6 +81,7 @@ class RecentChatsSection extends StatelessWidget {
             ),
           ],
         ),
+        const SizedBox(height: 10),
       ],
     );
   }
@@ -112,6 +114,7 @@ class UnreadChatsSection extends StatelessWidget {
             ),
           ],
         ),
+        const SizedBox(height: 10),
       ],
     );
   }
@@ -130,6 +133,7 @@ class AllChatsSection extends StatelessWidget {
             context,
           ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
+        const SizedBox(height: 10),
       ],
     );
   }

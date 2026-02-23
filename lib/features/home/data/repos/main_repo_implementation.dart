@@ -46,6 +46,7 @@ class MainRepoImplementation implements MainRepo {
         friendRequestEntity: friendRequest,
       ).toMap(),
     );
+
     String notificationId =
         "friend_request_${friendRequest.senderId}_${friendRequest.receiverId}_${DateTime.now()}";
 
@@ -277,7 +278,7 @@ class MainRepoImplementation implements MainRepo {
     required String blockerId,
     required String blockedId,
   }) async {
-    List<String> userIds = [blockerId,blockedId];
+    List<String> userIds = [blockerId, blockedId];
     userIds.sort();
     String friendShipId = "${userIds[0]}_${userIds[1]}";
 
@@ -380,6 +381,7 @@ class MainRepoImplementation implements MainRepo {
   }
 
   // ****************************************************************************************
+
   @override
   Future<String> createOrGetChat({
     required String user1Id,
@@ -406,7 +408,8 @@ class MainRepoImplementation implements MainRepo {
         updatedAt: DateTime.now(),
       );
 
-      await dataBaseService.addData(
+      await dataBaseService.addSinleData(
+        documentId: chatId,
         path: BackendEndPoints.chats,
         data: ChatModel.fromEntity(chatEntity: newChat).toMap(),
       );
@@ -518,7 +521,7 @@ class MainRepoImplementation implements MainRepo {
       documentId: chatId,
     );
   }
-
+  // ***********************************************************************************************************
   /// message collection
 
   @override
@@ -603,7 +606,7 @@ class MainRepoImplementation implements MainRepo {
       documentId: messageId,
     );
   }
-
+  // ***********************************************************************************************************
   /// notifications collection
 
   @override

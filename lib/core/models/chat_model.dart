@@ -100,7 +100,9 @@ class ChatModel {
       id: map["id"] ?? "",
       participants: List<String>.from(map["participants"] ?? []),
       lastMessage: map["lastMessage"],
-      lastMessageTime: (map["lastMessageTime"] as Timestamp).toDate(),
+      lastMessageTime: map["lastMessageTime"] != null
+          ? (map["lastMessageTime"] as Timestamp).toDate()
+          : null,
       lastMessageSenderId: map["lastMessageSenderId"],
       unreadCount: Map<String, int>.from(map["unreadCount"]),
       deletedBy: Map<String, bool>.from(map["deletedBy"]),

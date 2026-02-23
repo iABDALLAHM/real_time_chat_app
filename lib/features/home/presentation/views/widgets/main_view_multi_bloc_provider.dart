@@ -8,6 +8,8 @@ import 'package:real_time_chat_app/features/home/presentation/manager/friend_shi
 import 'package:real_time_chat_app/features/home/presentation/manager/get_all_users_stream_cubit/get_all_users_stream_cubit.dart';
 import 'package:real_time_chat_app/features/home/presentation/manager/friend_request_cubit/friend_request_cubit.dart';
 import 'package:real_time_chat_app/features/home/presentation/manager/get_my_friends_stream_cubit.dart/get_my_friends_stream_cubit.dart';
+import 'package:real_time_chat_app/features/home/presentation/manager/chat_cubit/get_or_create_chat_cubit.dart';
+import 'package:real_time_chat_app/features/home/presentation/manager/get_user_chats_stream_cubit/get_user_chats_cubit.dart';
 import 'package:real_time_chat_app/features/profile/domain/repos/profile_repo.dart';
 
 class MainViewMultiBlocProvider extends StatelessWidget {
@@ -37,6 +39,14 @@ class MainViewMultiBlocProvider extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => FriendShipCubit(mainRepo: getIt.get<MainRepo>()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              GetOrCreateChatCubit(mainRepo: getIt.get<MainRepo>()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              GetUserChatsCubit(mainRepo: getIt.get<MainRepo>()),
         ),
       ],
       child: child,
