@@ -277,7 +277,7 @@ class MainRepoImplementation implements MainRepo {
     required String blockerId,
     required String blockedId,
   }) async {
-    List<String> userIds = [blockedId,blockerId];
+    List<String> userIds = [blockerId,blockedId];
     userIds.sort();
     String friendShipId = "${userIds[0]}_${userIds[1]}";
 

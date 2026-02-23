@@ -19,17 +19,26 @@ class FriendsChatListView extends StatelessWidget {
       itemBuilder: (context, index) => FriendItem(
         friend: friendShipWithUserEntityList[index].userEntity,
         onTap: () {
-          Navigator.pushNamed(context, ChatView.routeName, arguments: {});
+          Navigator.pushNamed(
+            context,
+            ChatView.routeName,
+            arguments: {
+              friendShipWithUserEntityList[index].userEntity,
+              friendShipWithUserEntityList[index].friendshipEntity,
+            },
+          );
         },
         onRemove: () {
           context.read<FriendShipCubit>().removeFriendShip(
-            user1Id: friendShipWithUserEntityList[index].friendshipEntity.id,
+            user1Id:
+                friendShipWithUserEntityList[index].friendshipEntity.userIds[1],
             user2Id: getUserData().uId,
           );
         },
         onBlock: () {
           context.read<FriendShipCubit>().blockFriendShip(
-            blockedId: friendShipWithUserEntityList[index].friendshipEntity.id,
+            blockedId:
+                friendShipWithUserEntityList[index].friendshipEntity.userIds[0],
             blockerId: getUserData().uId,
           );
         },

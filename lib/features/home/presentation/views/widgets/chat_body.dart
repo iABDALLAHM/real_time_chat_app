@@ -6,7 +6,7 @@ import 'package:real_time_chat_app/features/home/presentation/function/build_cha
 import 'package:real_time_chat_app/features/home/presentation/manager/get_notifications_stream_cubit/get_notifications_stream_cubit.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/custom_floating_action_button.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/custom_sections_tabs.dart';
-import 'package:real_time_chat_app/features/home/presentation/views/widgets/custom_tabs_body.dart';
+// import 'package:real_time_chat_app/features/home/presentation/views/widgets/custom_tabs_body.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/no_conversation_widget.dart';
 
 class ChatBody extends StatefulWidget {
