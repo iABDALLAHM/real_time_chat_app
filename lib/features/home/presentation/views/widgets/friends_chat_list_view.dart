@@ -22,10 +22,7 @@ class FriendsChatListView extends StatelessWidget {
           Navigator.pushNamed(
             context,
             ChatView.routeName,
-            arguments: {
-              friendShipWithUserEntityList[index].userEntity,
-              friendShipWithUserEntityList[index].friendshipEntity,
-            },
+            arguments: friendShipWithUserEntityList[index].userEntity,
           );
         },
         onRemove: () {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:real_time_chat_app/core/entities/user_entity.dart';
 import 'package:real_time_chat_app/features/auth/presentation/views/forget_password_view.dart';
 import 'package:real_time_chat_app/features/auth/presentation/views/login_view.dart';
 import 'package:real_time_chat_app/features/auth/presentation/views/register_view.dart';
@@ -28,7 +29,12 @@ Route onGenerateRoute(RouteSettings settings) {
     case FriendRequestView.routeName:
       return MaterialPageRoute(builder: (context) => FriendRequestView());
     case ChatView.routeName:
-      return MaterialPageRoute(builder: (context) => ChatView());
+      return MaterialPageRoute(
+        builder: (context) {
+          final user = settings.arguments;
+          return ChatView(userEntity: user as UserEntity);
+        },
+      );
     default:
       return MaterialPageRoute(builder: (context) => Scaffold());
   }
