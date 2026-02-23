@@ -13,7 +13,7 @@ class _ChatViewBodyState extends State<ChatViewBody> {
   List<String> messages = [];
   String currentMessage = "";
   TextEditingController textController = TextEditingController();
-
+  
   @override
   Widget build(BuildContext context) {
     return Column(

@@ -537,24 +537,24 @@ class MainRepoImplementation implements MainRepo {
       user2Id: message.receiverId,
     );
 
-    await updateChatLastMessage(chatId: chatId, message: message);
+    // await updateChatLastMessage(chatId: chatId, message: message);
 
-    await updateUserLastSeen(userId: message.senderId, chatId: chatId);
+    // await updateUserLastSeen(userId: message.senderId, chatId: chatId);
 
     var chatDoc = await dataBaseService.getSingleData(
       path: BackendEndPoints.chats,
       documentId: chatId,
     );
 
-    ChatEntity chat = ChatModel.fromMap(chatDoc).toEntity();
+    // ChatEntity chat = ChatModel.fromMap(chatDoc).toEntity();
 
-    int currentUnread = chat.getUnreadCount(userId: message.receiverId);
+    // int currentUnread = chat.getUnreadCount(userId: message.receiverId);
 
-    await updateunReadCount(
-      chatId: chatId,
-      userId: message.receiverId,
-      count: currentUnread + 1,
-    );
+    // await updateunReadCount(
+    //   chatId: chatId,
+    //   userId: message.receiverId,
+    //   count: currentUnread + 1,
+    // );
   }
 
   @override
