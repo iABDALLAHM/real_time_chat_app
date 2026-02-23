@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:real_time_chat_app/core/entities/user_entity.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
-
 import '../../../../core/functions/build_default_avatar.dart';
 
 AppBar buildChatViewAppBar(BuildContext context, {required UserEntity user}) {
@@ -26,10 +25,12 @@ AppBar buildChatViewAppBar(BuildContext context, {required UserEntity user}) {
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
-                "Online",
-                style: Theme.of(
-                  context,
-                ).textTheme.bodySmall?.copyWith(color: AppTheme.successColor),
+                user.isOnline ? "Online" : "offline",
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: user.isOnline
+                      ? AppTheme.successColor
+                      : AppTheme.textsecondaryColor,
+                ),
                 overflow: TextOverflow.ellipsis,
               ),
             ],
@@ -37,7 +38,6 @@ AppBar buildChatViewAppBar(BuildContext context, {required UserEntity user}) {
         ),
       ],
     ),
-
     actions: [
       PopupMenuButton<String>(
         icon: Icon(Icons.more_vert),
