@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
 
 class MessageInput extends StatelessWidget {
-  const MessageInput({super.key});
-
+  const MessageInput({
+    super.key,
+    required this.textController,
+    required this.onPressed,
+  });
+  final TextEditingController textController;
+  final VoidCallback onPressed;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,7 +37,7 @@ class MessageInput extends StatelessWidget {
                     Expanded(
                       child: TextField(
                         maxLines: null,
-                        onSubmitted: (value) {},
+                        controller: textController,
                         textCapitalization: TextCapitalization.sentences,
                         decoration: InputDecoration(
                           hintText: "Type a message",
@@ -51,7 +56,7 @@ class MessageInput extends StatelessWidget {
                         borderRadius: BorderRadius.circular(24),
                       ),
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: onPressed,
                         icon: Icon(Icons.send_rounded, color: Colors.white),
                       ),
                     ),
