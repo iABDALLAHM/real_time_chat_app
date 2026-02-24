@@ -13,7 +13,7 @@ class ChatItem extends StatelessWidget {
     required this.onTap,
     required this.chat,
   });
-  
+
   final UserEntity otherUser;
   final ChatEntity chat;
   final String lastMessageTime;
@@ -21,7 +21,7 @@ class ChatItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int unreadCount = 10;
+    final unreadCount = chat.getUnreadCount(userId: getUserData().uId);
     return Card(
       child: InkWell(
         onTap: onTap,
@@ -36,8 +36,7 @@ class ChatItem extends StatelessWidget {
                     radius: 28,
                     backgroundColor: AppTheme.primaryColor,
                     child: otherUser.photoUrl != null
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(28),
+                        ? ClipOval(
                             child: Image.network(
                               otherUser.photoUrl!,
                               width: 56,
@@ -52,6 +51,7 @@ class ChatItem extends StatelessWidget {
                           )
                         : buildDefaultAvatar(name: otherUser.displayName),
                   ),
+
                   if (otherUser.isOnline)
                     Positioned(
                       bottom: 0,
@@ -84,22 +84,29 @@ class ChatItem extends StatelessWidget {
                             otherUser.displayName,
                             style: Theme.of(context).textTheme.bodyLarge
                                 ?.copyWith(
-                                  fontWeight: unreadCount > 0
+                                  fontWeight:
+                                      unreadCount >
+                                          0 //
                                       ? FontWeight.bold
                                       : FontWeight.normal,
                                 ),
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
+
                         if (lastMessageTime.isNotEmpty)
                           Text(
                             lastMessageTime,
                             style: Theme.of(context).textTheme.bodySmall
                                 ?.copyWith(
-                                  fontWeight: unreadCount > 0
+                                  fontWeight:
+                                      unreadCount >
+                                          0 //
                                       ? FontWeight.bold
                                       : FontWeight.normal,
-                                  color: unreadCount > 0
+                                  color:
+                                      unreadCount >
+                                          0 //
                                       ? AppTheme.primaryColor
                                       : AppTheme.textsecondaryColor,
                                 ),
@@ -107,6 +114,7 @@ class ChatItem extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 4),
+
                     Row(
                       children: [
                         Expanded(
@@ -115,12 +123,13 @@ class ChatItem extends StatelessWidget {
                               if (chat.lastMessageSenderId ==
                                   getUserData().uId) ...[
                                 Icon(
-                                  Icons.search,
+                                  getSeenStatusIcon(),
                                   size: 14,
-                                  // color: getSeenStatusColor(),
+                                  color: getSeenStatusColor(),
                                 ),
                                 const SizedBox(width: 4),
                               ],
+
                               Expanded(
                                 child: Text(
                                   maxLines: 1,
@@ -128,10 +137,14 @@ class ChatItem extends StatelessWidget {
                                   chat.lastMessage ?? "No Message Yet",
                                   style: Theme.of(context).textTheme.bodyMedium
                                       ?.copyWith(
-                                        color: unreadCount > 0
+                                        color:
+                                            unreadCount >
+                                                0 //
                                             ? AppTheme.primaryColor
                                             : AppTheme.textsecondaryColor,
-                                        fontWeight: unreadCount > 0
+                                        fontWeight:
+                                            unreadCount >
+                                                0 //
                                             ? FontWeight.bold
                                             : FontWeight.normal,
                                       ),
@@ -140,34 +153,39 @@ class ChatItem extends StatelessWidget {
                             ],
                           ),
                         ),
-                        if (unreadCount > 0) const SizedBox(width: 4 * 2),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
-                          ),
-                          margin: EdgeInsets.only(left: 4),
-                          decoration: BoxDecoration(
-                            color: AppTheme.primaryColor,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Text(
-                            unreadCount > 99 ? "+99" : unreadCount.toString(),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
+
+                        if (unreadCount > 0) ...[
+                          const SizedBox(width: 4 * 2),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
+                            margin: EdgeInsets.only(left: 4),
+                            decoration: BoxDecoration(
+                              color: AppTheme.primaryColor,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              unreadCount > 99
+                                  ? "+99"
+                                  : unreadCount.toString(), //
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ),
+                        ],
                       ],
                     ),
                     if (chat.lastMessageSenderId == getUserData().uId) ...[
                       const SizedBox(height: 2),
                       Text(
-                        "getSeenStatusText()",
+                        getSeenStatusText(),
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          // color: getSeenStatusColor(),
+                          color: getSeenStatusColor(),
                           fontSize: 11,
                         ),
                       ),
@@ -182,7 +200,20 @@ class ChatItem extends StatelessWidget {
     );
   }
 
-  // IconData getSeenStatusIcon() {
+  IconData getSeenStatusIcon() {
+    return Icons.search;
+  }
 
-  // }
+  String getSeenStatusText() {
+    return "";
+  }
+
+  Color getSeenStatusColor() {
+    return Colors.red;
+  }
+
+  void showChatOptions() {}
 }
+
+
+// video 16
