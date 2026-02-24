@@ -4,8 +4,8 @@ import 'package:real_time_chat_app/core/services/get_it_service.dart';
 import 'package:real_time_chat_app/features/profile/domain/repos/profile_repo.dart';
 import 'package:real_time_chat_app/features/profile/presentation/manager/sign_out_cubit/sign_out_cubit.dart';
 
-class SignOutBlocProvider extends StatelessWidget {
-  const SignOutBlocProvider({super.key, required this.child});
+class SignOutViewBlocProvider extends StatelessWidget {
+  const SignOutViewBlocProvider({super.key, required this.child});
   final Widget child;
   @override
   Widget build(BuildContext context) {
