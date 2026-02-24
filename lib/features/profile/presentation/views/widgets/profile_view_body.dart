@@ -12,7 +12,6 @@ import 'package:real_time_chat_app/features/profile/presentation/views/widgets/c
 import 'package:real_time_chat_app/features/profile/presentation/views/widgets/online_or_offline_status.dart';
 import 'package:real_time_chat_app/features/profile/presentation/views/widgets/personal_user_info.dart';
 import 'package:real_time_chat_app/features/profile/presentation/views/widgets/profile_body_footer.dart';
-import 'package:real_time_chat_app/features/profile/presentation/views/widgets/profile_body_footer_bloc_listener.dart';
 import 'package:real_time_chat_app/features/profile/presentation/views/widgets/update_personal_information_bloc_listener.dart';
 import 'package:real_time_chat_app/features/profile/presentation/views/widgets/user_joined_date.dart';
 
@@ -142,7 +141,7 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                     ),
                   ),
                   const SizedBox(height: 32),
-                  ProfileBodyFooterBlocListener(child: ProfileBodyFooter()),
+                  ProfileBodyFooter(),
                 ],
               ),
             ),

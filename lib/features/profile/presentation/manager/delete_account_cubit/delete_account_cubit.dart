@@ -7,7 +7,7 @@ class DeleteAccountCubit extends Cubit<DeleteAccountStates> {
     : super(InitialDeleteAccountState());
   final ProfileRepo profileRepo;
 
-  Future deleteAccount({required String userId}) async {
+  Future<void> deleteAccount({required String userId}) async {
     emit(LoadingDeleteAccountState());
     await profileRepo.deleteUser(userId: userId);
     emit(SuccessDeleteAccountState());
