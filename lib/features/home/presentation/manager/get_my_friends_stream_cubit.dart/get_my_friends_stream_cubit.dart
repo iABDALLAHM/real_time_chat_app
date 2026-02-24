@@ -4,7 +4,7 @@ import 'package:real_time_chat_app/core/entities/friend_ship_with_user_entity.da
 import 'package:real_time_chat_app/core/entities/user_entity.dart';
 import 'package:real_time_chat_app/features/auth/domain/repos/auth_repo.dart';
 import 'package:real_time_chat_app/features/home/domain/repos/main_repo.dart';
-import 'package:real_time_chat_app/features/home/presentation/manager/get_my_friends_stream_cubit.dart/get_my_friends_stream_state.dart';
+import 'package:real_time_chat_app/features/home/presentation/manager/get_my_friends_stream_cubit.dart/get_my_friends_stream_states.dart';
 
 class GetMyFriendsStreamCubit extends Cubit<GetMyFriendsStreamStates> {
   GetMyFriendsStreamCubit({required this.mainRepo, required this.authRepo})
@@ -21,13 +21,15 @@ class GetMyFriendsStreamCubit extends Cubit<GetMyFriendsStreamStates> {
         emit(EmptyFriendsStreamState());
       } else {
         List<FriendShipWithUserEntity> friendShipWithUserList = [];
-        for (var element in result) {
-          String friendId = element.userIds.firstWhere((id) => id != userId);
+        for (var friendShip in result) {
+          String friendId = friendShip.userIds.firstWhere(
+            (ids) => ids != userId,
+          );
           UserEntity myFriendData = await authRepo.getUserData(uId: friendId);
           friendShipWithUserList.add(
             FriendShipWithUserEntity(
               userEntity: myFriendData,
-              friendshipEntity: element,
+              friendshipEntity: friendShip,
             ),
           );
         }

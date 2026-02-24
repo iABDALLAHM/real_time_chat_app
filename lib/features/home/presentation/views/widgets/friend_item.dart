@@ -23,7 +23,7 @@ class FriendItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: InkWell(
-        onTap: onTap,
+        onTap: () {},
         borderRadius: BorderRadius.circular(16),
         child: Padding(
           padding: EdgeInsets.all(16),
