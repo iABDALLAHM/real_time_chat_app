@@ -4,8 +4,8 @@ import 'package:real_time_chat_app/core/services/get_it_service.dart';
 import 'package:real_time_chat_app/features/profile/domain/repos/profile_repo.dart';
 import 'package:real_time_chat_app/features/profile/presentation/manager/update_user_data_cubit/update_user_data_cubit.dart';
 
-class ProfileMultiBlocProvider extends StatelessWidget {
-  const ProfileMultiBlocProvider({super.key, required this.child});
+class ProfileViewBlocProvider extends StatelessWidget {
+  const ProfileViewBlocProvider({super.key, required this.child});
   final Widget child;
   @override
   Widget build(BuildContext context) {

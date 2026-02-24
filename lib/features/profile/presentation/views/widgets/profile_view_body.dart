@@ -23,16 +23,10 @@ class ProfileViewBody extends StatefulWidget {
 }
 
 class _ProfileViewBodyState extends State<ProfileViewBody> {
-  late TextEditingController nameController;
+  late TextEditingController nameController = TextEditingController();
   late String name, email;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
-
-  @override
-  void initState() {
-    nameController = TextEditingController();
-    super.initState();
-  }
 
   @override
   void dispose() {
@@ -120,11 +114,10 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                                               .getUserStream(
                                                 userId: getUserData().uId,
                                               );
-                                          context
-                                              .read<UpdateUserDataCubit>()
-                                              .updateUserInfo(
-                                                userEntity: userEntity,
-                                              );
+                                          triggerUpdateUserDataCubit(
+                                            context,
+                                            userEntity: userEntity,
+                                          );
                                           nameController.clear();
                                         } else {
                                           autovalidateMode =
@@ -149,5 +142,12 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
         ),
       ),
     );
+  }
+
+  void triggerUpdateUserDataCubit(
+    BuildContext context, {
+    required UserEntity userEntity,
+  }) {
+    context.read<UpdateUserDataCubit>().updateUserInfo(userEntity: userEntity);
   }
 }

@@ -7,7 +7,7 @@ class UpdateUserDataCubit extends Cubit<UpdateUserDataStates> {
   UpdateUserDataCubit({required this.profileRepo})
     : super(InitialUpdateUserDataState());
   final ProfileRepo profileRepo;
-  Future updateUserInfo({required UserEntity userEntity}) async {
+  Future<void> updateUserInfo({required UserEntity userEntity}) async {
     emit(LoadingUpdateUserDataState());
     await profileRepo.updateUserInfo(userEntity: userEntity);
     emit(SuccessUpdateUserDataState());
