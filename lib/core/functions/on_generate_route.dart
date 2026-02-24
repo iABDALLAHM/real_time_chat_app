@@ -8,6 +8,7 @@ import 'package:real_time_chat_app/features/friend_requests/presentation/views/f
 import 'package:real_time_chat_app/features/home/presentation/views/main_view.dart';
 import 'package:real_time_chat_app/features/profile/presentation/views/change_password_view.dart';
 import 'package:real_time_chat_app/features/profile/presentation/views/profile_view.dart';
+import 'package:real_time_chat_app/features/profile/presentation/views/signout_view.dart';
 import 'package:real_time_chat_app/features/splash/presentation/views/splash_view.dart';
 
 Route onGenerateRoute(RouteSettings settings) {
@@ -28,6 +29,8 @@ Route onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => MainView());
     case FriendRequestView.routeName:
       return MaterialPageRoute(builder: (context) => FriendRequestView());
+    case SignoutView.routeName:
+      return MaterialPageRoute(builder: (context) => SignoutView());
     case ChatView.routeName:
       return MaterialPageRoute(
         builder: (context) {
