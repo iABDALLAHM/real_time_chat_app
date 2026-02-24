@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:real_time_chat_app/core/cubits/user_stream_cubit/user_stream_cubit.dart';
-import 'package:real_time_chat_app/core/cubits/user_stream_cubit/user_stream_state.dart';
+import 'package:real_time_chat_app/core/cubits/user_stream_cubit/user_data_stream_cubit.dart';
+import 'package:real_time_chat_app/core/cubits/user_stream_cubit/user_data_stream_state.dart';
 import 'package:real_time_chat_app/core/functions/get_user_data.dart';
 
 Widget buildDefaultAvatarBlocBuilder({required BuildContext context}) {
-  return BlocBuilder<UserStreamCubit, UserStreamStates>(
+  return BlocBuilder<UserDataStreamCubit, UserStreamStates>(
     builder: (context, state) {
       if (state is SuccessUserStreamState) {
         return Text(
