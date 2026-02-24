@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/features/home/domain/repos/main_repo.dart';
-import 'package:real_time_chat_app/features/home/presentation/manager/notification_cubit/notification_states.dart';
+import 'package:real_time_chat_app/features/home/presentation/manager/notifications_cubit/notifications_states.dart';
 
-class NotificationCubit extends Cubit<NotificationStates> {
-  NotificationCubit({required this.mainRepo})
+class NotificationsCubit extends Cubit<NotificationStates> {
+  NotificationsCubit({required this.mainRepo})
     : super(InitialNotificationState());
   final MainRepo mainRepo;
 

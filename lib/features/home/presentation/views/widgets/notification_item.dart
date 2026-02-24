@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/entities/notification_entity.dart';
 import 'package:real_time_chat_app/core/enums/notification_type.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
-import 'package:real_time_chat_app/features/home/presentation/manager/notification_cubit/notification_cubit.dart';
+import 'package:real_time_chat_app/features/home/presentation/manager/notifications_cubit/notifications_cubit.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/accept_friend_request_icon.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/new_friend_request_icon.dart';
 
@@ -28,19 +28,19 @@ class _NotificationItemState extends State<NotificationItem> {
       child: InkWell(
         onTap: () {
           setState(() {});
-          context.read<NotificationCubit>().markNotificationAsRead(
+          context.read<NotificationsCubit>().markNotificationAsRead(
             notificationId: widget.notificationEntity.id,
           );
           // here when i pressed on it the color of the card must changed to express about i see the notification and also the icon must me disappeared that is behind a notification title;
         },
         child: ListTile(
-          trailing: IconButton(
-            onPressed: () {
-              context.read<NotificationCubit>().deleteNotification(
+          trailing: GestureDetector(
+            onTap: () {
+              context.read<NotificationsCubit>().deleteNotification(
                 notificationId: widget.notificationEntity.id,
               );
             },
-            icon: Icon(Icons.close, size: 20),
+            child: Icon(Icons.close, size: 20),
           ),
           leading: getNotificationTypeIcon(
             notificationType: widget.notificationEntity.type,

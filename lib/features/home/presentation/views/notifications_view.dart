@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/notification_view_bloc_provider.dart';
-import 'package:real_time_chat_app/features/home/presentation/views/widgets/notification_view_body.dart';
+import 'package:real_time_chat_app/features/home/presentation/views/widgets/notifications_view_body.dart';
 
-class NotificationView extends StatelessWidget {
-  const NotificationView({super.key});
+class NotificationsView extends StatelessWidget {
+  const NotificationsView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return NotificationViewBlocProvider(
       child: Scaffold(
         appBar: buildNotificationViewAppBar(context),
-        body: NotificationViewBody(),
+        body: NotificationsViewBody(),
       ),
     );
   }

@@ -5,8 +5,8 @@ import 'package:real_time_chat_app/features/home/presentation/manager/get_notifi
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/no_notification_widget.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/notification_item_list_view.dart';
 
-class NotificationViewBody extends StatelessWidget {
-  const NotificationViewBody({super.key});
+class NotificationsViewBody extends StatelessWidget {
+  const NotificationsViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +16,15 @@ class NotificationViewBody extends StatelessWidget {
     >(
       builder: (context, state) {
         if (state is SuccessGetNotificationsStreamState) {
-          return NotificationItemListView(
-            notificationsList: state.notificationsList,
+          return Column(
+            children: [
+              const SizedBox(height: 20),
+              Expanded(
+                child: NotificationItemListView(
+                  notificationsList: state.notificationsList,
+                ),
+              ),
+            ],
           );
         }
         return NoNotificationWidget();

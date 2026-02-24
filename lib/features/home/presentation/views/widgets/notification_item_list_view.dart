@@ -10,7 +10,10 @@ class NotificationItemListView extends StatelessWidget {
     return ListView.builder(
       itemCount: notificationsList.length,
       itemBuilder: (context, index) {
-        return NotificationItem(notificationEntity: notificationsList[index]);
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: NotificationItem(notificationEntity: notificationsList[index]),
+        );
       },
     );
   }
