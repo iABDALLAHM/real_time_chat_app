@@ -8,12 +8,13 @@ class ChatView extends StatelessWidget {
   const ChatView({super.key, required this.userEntity});
   static const String routeName = "chat";
   final UserEntity userEntity;
+
   @override
   Widget build(BuildContext context) {
     return ChatViewBlocProvider(
       child: Scaffold(
         appBar: buildChatViewAppBar(context, user: userEntity),
-        body: ChatViewBody(),
+        body: ChatViewBody(userEntity: userEntity),
       ),
     );
   }

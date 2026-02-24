@@ -37,7 +37,9 @@ class MessageModel {
       timeStamp: (map["timeStamp"] as Timestamp).toDate(),
       isRead: map["isRead"],
       isEdited: map["isEdited"],
-      editedAt: (map["isEdited"] as Timestamp).toDate(),
+      editedAt: map["editedAt"] != null
+          ? (map["editedAt"] as Timestamp).toDate()
+          : null,
     );
   }
 

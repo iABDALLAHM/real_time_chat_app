@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
 
 class MyFriendMessage extends StatelessWidget {

@@ -532,19 +532,19 @@ class MainRepoImplementation implements MainRepo {
       documentId: message.id,
     );
 
-    String chatId = await createOrGetChat(
-      user1Id: message.senderId,
-      user2Id: message.receiverId,
-    );
+    // String chatId = await createOrGetChat(
+    //   user1Id: message.senderId,
+    //   user2Id: message.receiverId,
+    // );
 
     // await updateChatLastMessage(chatId: chatId, message: message);
 
     // await updateUserLastSeen(userId: message.senderId, chatId: chatId);
 
-    var chatDoc = await dataBaseService.getSingleData(
-      path: BackendEndPoints.chats,
-      documentId: chatId,
-    );
+    // var chatDoc = await dataBaseService.getSingleData(
+    //   path: BackendEndPoints.chats,
+    //   documentId: chatId,
+    // );
 
     // ChatEntity chat = ChatModel.fromMap(chatDoc).toEntity();
 
@@ -562,7 +562,6 @@ class MainRepoImplementation implements MainRepo {
     required String user1Id,
     required String user2Id,
   }) async* {
-    // فيه تعديل المفروض يتم هنا !!!!
     var data = dataBaseService.getAllDataStream(
       path: BackendEndPoints.messages,
       isQuery: true,
@@ -570,8 +569,14 @@ class MainRepoImplementation implements MainRepo {
         "senderId": [user1Id, user2Id],
       },
     );
-
-    await for (var messageMap in data) {}
+    
+    List<MessageEntity> messagesList = [];
+    await for (var messageMap in data) {
+      messagesList = messageMap
+          .map((element) => MessageModel.fromMap(element).toEntity())
+          .toList();
+      yield messagesList;
+    }
   }
 
   @override

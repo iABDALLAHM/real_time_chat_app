@@ -83,11 +83,16 @@ class FirestoreService implements DataBaseService {
           var userIds = query["userIds"];
           data = data.where("userIds", arrayContains: userIds);
         }
-        
+
         if (query["userId"] != null) {
           var userId = query["userId"];
           data = data.where("userId", isEqualTo: userId);
         }
+
+        // if (query["senderId"] != null) {
+        //   var senderId = query["senderId"];
+        //   data = data.where("senderId", whereIn: senderId);
+        // }
       }
 
       // هنا أنت بتعمل transformation للـ Stream
