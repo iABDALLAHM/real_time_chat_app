@@ -11,9 +11,9 @@ class ChatItem extends StatelessWidget {
     required this.otherUser,
     required this.lastMessageTime,
     required this.onTap,
-
     required this.chat,
   });
+  
   final UserEntity otherUser;
   final ChatEntity chat;
   final String lastMessageTime;

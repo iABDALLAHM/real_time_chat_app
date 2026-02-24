@@ -70,7 +70,9 @@ class _ChatBodyState extends State<ChatBody> {
             BlocBuilder<GetUserChatsCubit, GetUserChatsStates>(
               builder: (context, state) {
                 if (state is SuccessGetUserChatsState) {
-                  return Expanded(child: ChatItemListView(chats: state.chats));
+                  return Expanded(
+                    child: ChatItemListView(chats: state.userWithChatList),
+                  );
                 } else if (state is EmptyGetUserChatsState) {
                   return NoConversationsWidget(
                     onChange: (value) {

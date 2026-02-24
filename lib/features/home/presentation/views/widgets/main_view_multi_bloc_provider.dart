@@ -45,8 +45,10 @@ class MainViewMultiBlocProvider extends StatelessWidget {
               GetOrCreateChatCubit(mainRepo: getIt.get<MainRepo>()),
         ),
         BlocProvider(
-          create: (context) =>
-              GetUserChatsCubit(mainRepo: getIt.get<MainRepo>()),
+          create: (context) => GetUserChatsCubit(
+            mainRepo: getIt.get<MainRepo>(),
+            authRepo: getIt.get<AuthRepo>(),
+          ),
         ),
       ],
       child: child,
