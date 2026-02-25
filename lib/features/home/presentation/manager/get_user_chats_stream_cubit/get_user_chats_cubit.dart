@@ -27,7 +27,8 @@ class GetUserChatsCubit extends Cubit<GetUserChatsStates> {
       } else {
         chats = result;
         for (var user in result) {
-          var userData = await authRepo.getUserData(uId: user.participants[0]);
+          var otherUserId = user.participants.firstWhere((id) => id != userId);
+          var userData = await authRepo.getUserData(uId: otherUserId);
           userWithChatList.add(
             UserWithChatEntity(chatEntity: user, userEntity: userData),
           );
