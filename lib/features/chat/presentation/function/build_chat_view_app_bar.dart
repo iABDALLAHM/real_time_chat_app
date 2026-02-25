@@ -10,7 +10,7 @@ AppBar buildChatViewAppBar(BuildContext context, {required UserEntity user}) {
         CircleAvatar(
           radius: 20,
           backgroundColor: AppTheme.primaryColor,
-          child: ClipOval(child: buildDefaultAvatar(name: "A")),
+          child: ClipOval(child: buildDefaultAvatar(name: user.displayName)),
         ),
         const SizedBox(width: 12),
         Expanded(
@@ -18,7 +18,7 @@ AppBar buildChatViewAppBar(BuildContext context, {required UserEntity user}) {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Abdallah",
+                user.displayName,
                 style: Theme.of(
                   context,
                 ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
