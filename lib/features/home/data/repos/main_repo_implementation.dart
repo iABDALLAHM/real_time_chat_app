@@ -81,7 +81,7 @@ class MainRepoImplementation implements MainRepo {
       relatedUserId: friendRequestModel.senderId,
     );
 
-    await dataBaseService.deleteData(
+    await dataBaseService.deleteSingleData(
       path: BackendEndPoints.friendRequests,
       documentId: requestId,
     );
@@ -254,7 +254,7 @@ class MainRepoImplementation implements MainRepo {
     userIds.sort();
     String friendShipId = "${userIds[0]}_${userIds[1]}";
 
-    await dataBaseService.deleteData(
+    await dataBaseService.deleteSingleData(
       path: BackendEndPoints.friendShips,
       documentId: friendShipId,
     );
@@ -590,7 +590,7 @@ class MainRepoImplementation implements MainRepo {
 
   @override
   Future<void> deleteMessage({required String messageId}) async {
-    await dataBaseService.deleteData(
+    await dataBaseService.deleteSingleData(
       path: BackendEndPoints.messages,
       documentId: messageId,
     );
@@ -687,7 +687,7 @@ class MainRepoImplementation implements MainRepo {
 
   @override
   Future<void> deleteNotification({required String notificationId}) async {
-    await dataBaseService.deleteData(
+    await dataBaseService.deleteSingleData(
       path: BackendEndPoints.notification,
       documentId: notificationId,
     );

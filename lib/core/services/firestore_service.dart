@@ -7,7 +7,10 @@ class FirestoreService implements DataBaseService {
 
   // delete Data
   @override
-  Future<dynamic> deleteData({required String path, String? documentId}) async {
+  Future<dynamic> deleteSingleData({
+    required String path,
+    required String documentId,
+  }) async {
     try {
       await firestore.collection(path).doc(documentId).delete();
     } catch (e) {

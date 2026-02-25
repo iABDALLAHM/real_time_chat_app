@@ -9,9 +9,10 @@ abstract class DataBaseService {
     required Map<String, dynamic> data,
     required String documentId,
   });
-  // delete data
-  Future<dynamic> deleteData({required String path, String? documentId});
 
+  // delete data
+  Future<dynamic> deleteSingleData({required String path,required String documentId});
+  
   // update data
   Future<void> updateData({
     required String path,

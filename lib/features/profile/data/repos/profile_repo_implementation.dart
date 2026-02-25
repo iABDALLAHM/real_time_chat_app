@@ -27,7 +27,7 @@ class ProfileRepoImplementation implements ProfileRepo {
   @override
   Future<void> deleteUser({required String userId}) async {
     await authService.deleteAccount();
-    await dataBaseService.deleteData(
+    await dataBaseService.deleteSingleData(
       path: BackendEndPoints.deleteUser,
       documentId: userId,
     );
