@@ -54,7 +54,7 @@ class _ChatViewBodyState extends State<ChatViewBody> {
                       ),
                       child:
                           getUserData().uId ==
-                              state.messagesList[index].senderId
+                              state.messagesList[index].messageSenderId
                           ? MyMessage(
                               message: state.messagesList[index].content,
                             )
@@ -80,8 +80,8 @@ class _ChatViewBodyState extends State<ChatViewBody> {
             textController.clear();
             MessageEntity messageEntity = MessageEntity(
               id: Uuid().v4(),
-              senderId: getUserData().uId,
-              receiverId: widget.userEntity.uId,
+              messageSenderId: getUserData().uId,
+              messageReceiverId: widget.userEntity.uId,
               content: currentMessage,
               timeStamp: DateTime.now(),
             );

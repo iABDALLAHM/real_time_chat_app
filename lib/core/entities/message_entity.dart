@@ -2,8 +2,8 @@ import 'package:real_time_chat_app/core/enums/message_type.dart';
 
 class MessageEntity {
   final String id;
-  final String senderId;
-  final String receiverId;
+  final String messageSenderId;
+  final String messageReceiverId;
   final String content;
   final DateTime timeStamp;
   final bool isRead;
@@ -13,8 +13,8 @@ class MessageEntity {
 
   MessageEntity({
     required this.id,
-    required this.senderId,
-    required this.receiverId,
+    required this.messageSenderId,
+    required this.messageReceiverId,
     required this.content,
     required this.timeStamp,
     this.isRead = false,

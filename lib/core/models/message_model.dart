@@ -4,8 +4,8 @@ import 'package:real_time_chat_app/core/enums/message_type.dart';
 
 class MessageModel {
   final String id;
-  final String senderId;
-  final String receiverId;
+  final String messageSenderId;
+  final String messageReceiverId;
   final String content;
   final DateTime timeStamp;
   final bool isRead;
@@ -15,8 +15,8 @@ class MessageModel {
 
   MessageModel({
     required this.id,
-    required this.senderId,
-    required this.receiverId,
+    required this.messageSenderId,
+    required this.messageReceiverId,
     required this.content,
     required this.timeStamp,
     this.isRead = false,
@@ -27,8 +27,8 @@ class MessageModel {
   factory MessageModel.fromMap(Map<String, dynamic> map) {
     return MessageModel(
       id: map["id"],
-      senderId: map["senderId"],
-      receiverId: map["receiverId"],
+      messageSenderId: map["messageSenderId"],
+      messageReceiverId: map["messageReceiverId"],
       content: map["content"],
       type: MessageType.values.firstWhere(
         (e) => e.name == (map["type"] ?? "text"),
@@ -46,8 +46,8 @@ class MessageModel {
   factory MessageModel.formEntity({required MessageEntity messageEntity}) {
     return MessageModel(
       id: messageEntity.id,
-      senderId: messageEntity.senderId,
-      receiverId: messageEntity.receiverId,
+      messageSenderId: messageEntity.messageSenderId,
+      messageReceiverId: messageEntity.messageReceiverId,
       content: messageEntity.content,
       timeStamp: messageEntity.timeStamp,
     );
@@ -56,8 +56,8 @@ class MessageModel {
   MessageEntity toEntity() {
     return MessageEntity(
       id: id,
-      senderId: senderId,
-      receiverId: receiverId,
+      messageSenderId: messageSenderId,
+      messageReceiverId: messageReceiverId,
       content: content,
       timeStamp: timeStamp,
     );
@@ -66,8 +66,8 @@ class MessageModel {
   Map<String, dynamic> toMap() {
     return {
       "id": id,
-      "senderId": senderId,
-      "receiverId": receiverId,
+      "messageSenderId": messageSenderId,
+      "messageReceiverId": messageReceiverId,
       "content": content,
       "type": type.name,
       "timeStamp": timeStamp,

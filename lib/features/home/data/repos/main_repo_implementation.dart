@@ -454,7 +454,7 @@ class MainRepoImplementation implements MainRepo {
       data: {
         "lastMessage": message.content,
         "lastMessageTime": message,
-        "lastMessageSenderId": message.senderId,
+        "lastMessageSenderId": message.messageSenderId,
         "updatedAt": DateTime.now(),
       },
       documentId: chatId,
