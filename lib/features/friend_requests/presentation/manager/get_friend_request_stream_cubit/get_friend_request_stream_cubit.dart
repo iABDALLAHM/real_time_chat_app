@@ -11,24 +11,19 @@ class GetFriendRequestStreamCubit extends Cubit<GetFriendRequestStreamStates> {
   final MainRepo mainRepo;
   final AuthRepo authRepo;
   StreamSubscription? streamSubscription;
-  int length = 0;
+  List<FriendRequestWithUserEntity> friendRequestWithUserList = [];
   void getFriendRequestStream({required String userId}) async {
     emit(LoadingGetFriendRequestStreamState());
     streamSubscription = mainRepo.getFriendRequestStream(userId: userId).listen(
       (result) async {
-        length = result.length;
-        List<FriendRequestWithUserEntity> friendRequestWithUserList = [];
-
         for (var request in result) {
           var user = await authRepo.getUserData(uId: request.senderId);
-
           friendRequestWithUserList.add(
             FriendRequestWithUserEntity(
               friendRequestEntity: request,
               userEntity: user,
             ),
           );
-
           emit(
             SuccessGetFriendRequestStreamState(
               friendRequestWithUserList: friendRequestWithUserList,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:real_time_chat_app/core/functions/get_user_data.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
-import 'package:real_time_chat_app/features/home/presentation/views/widgets/notification_view_bloc_provider.dart';
+import 'package:real_time_chat_app/features/home/presentation/manager/notifications_cubit/notifications_cubit.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/notifications_view_body.dart';
 
 class NotificationsView extends StatelessWidget {
@@ -8,11 +10,9 @@ class NotificationsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NotificationViewBlocProvider(
-      child: Scaffold(
-        appBar: buildNotificationViewAppBar(context),
-        body: NotificationsViewBody(),
-      ),
+    return Scaffold(
+      appBar: buildNotificationViewAppBar(context),
+      body: NotificationsViewBody(),
     );
   }
 
@@ -22,6 +22,9 @@ class NotificationsView extends StatelessWidget {
       actions: [
         InkWell(
           onTap: () {
+            context.read<NotificationsCubit>().markAllNotificationsAsRead(
+              userId: getUserData().uId,
+            );
             // when i pressed here all notification on my list(view) must be transformeed to a seen notification and => primary Color disapperad and icon also disaapeard;
           },
           child: Padding(

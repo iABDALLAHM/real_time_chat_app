@@ -18,4 +18,10 @@ class NotificationsCubit extends Cubit<NotificationStates> {
     await mainRepo.markNotificationAsRead(notificationId: notificationId);
     emit(SuccessMarkNotificationAsReadState());
   }
+
+  void markAllNotificationsAsRead({required String userId}) async {
+    emit(LoadingMarkAllNotificationsAsReadState());
+    await mainRepo.markAllNotificationAsRead(userId: userId);
+    emit(SuccessMarkAllNotificationsAsReadState());
+  }
 }

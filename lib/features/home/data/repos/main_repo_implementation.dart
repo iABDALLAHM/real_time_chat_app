@@ -258,14 +258,9 @@ class MainRepoImplementation implements MainRepo {
       path: BackendEndPoints.friendShips,
       documentId: friendShipId,
     );
-    
-    await dataBaseService.deleteSingleData(
-      path: BackendEndPoints.chats,
-      documentId: friendShipId,
-    );
 
     await dataBaseService.deleteSingleData(
-      path: BackendEndPoints.messages,
+      path: BackendEndPoints.chats,
       documentId: friendShipId,
     );
 
@@ -692,7 +687,11 @@ class MainRepoImplementation implements MainRepo {
 
   @override
   Future<void> markAllNotificationAsRead({required String userId}) async {
-    await dataBaseService.getQueryData(path: BackendEndPoints.notification);
+    await dataBaseService.getQueryData(
+      query: {"userId": userId, "isRead": false},
+      isQuery: true,
+      path: BackendEndPoints.notification,
+    );
   }
 
   @override

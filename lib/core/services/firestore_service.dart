@@ -71,7 +71,7 @@ class FirestoreService implements DataBaseService {
           var status = query["status"];
           data = data.where("status", isEqualTo: status);
         }
-        // when request is send
+
         if (query["senderId"] != null) {
           var senderId = query["senderId"];
           data = data.where("senderId", isEqualTo: senderId);
@@ -136,6 +136,11 @@ class FirestoreService implements DataBaseService {
         data = data.where("type", isEqualTo: type);
       }
 
+      if (query["isRead"] != null) {
+        var isRead = query["isRead"];
+        data = data.where("isRead", isEqualTo: isRead);
+      }
+
       if (query["senderId"] != null) {
         var senderId = query["senderId"];
         data = data.where("senderId", isEqualTo: senderId);
@@ -156,15 +161,21 @@ class FirestoreService implements DataBaseService {
 
     // a lot of operations Done Here !!
     WriteBatch batch = firestore.batch();
-    for (var doc in result.docs) {
-      Map<String, dynamic> data = doc.data();
 
-      if ((data["data"]["senderId"] == relatedId ||
-          data["data"]["requestId"] == relatedId)) {
-        batch.delete(doc.reference);
-      }
+    for (var doc in result.docs) {
+      batch.update(doc.reference, {"isRead": true});
     }
     await batch.commit();
+
+    // for (var doc in result.docs) {
+    //   Map<String, dynamic> data = doc.data();
+
+    //   if ((data["data"]["senderId"] == relatedId ||
+    //       data["data"]["requestId"] == relatedId)) {
+    //     batch.delete(doc.reference);
+    //   }
+    // }
+    // await batch.commit();
   }
 
   // add Data

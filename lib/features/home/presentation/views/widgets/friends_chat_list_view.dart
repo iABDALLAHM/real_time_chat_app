@@ -41,9 +41,12 @@ class FriendsChatListView extends StatelessWidget {
           );
         },
         onBlock: () {
+          var user1Id = friendShipWithUserEntityList[index]
+              .friendshipEntity
+              .userIds
+              .firstWhere((id) => id != getUserData().uId);
           context.read<FriendShipCubit>().blockFriendShip(
-            blockedId:
-                friendShipWithUserEntityList[index].friendshipEntity.userIds[0],
+            blockedId: user1Id,
             blockerId: getUserData().uId,
           );
         },

@@ -23,7 +23,7 @@ class _FriendRequestViewBodyState extends State<FriendRequestViewBody> {
     context.read<GetFriendRequestStreamCubit>().getFriendRequestStream(
       userId: getUserData().uId,
     );
-    
+
     context.read<GetSentFriendRequestStreamCubit>().getSentFriendRequestStream(
       userId: getUserData().uId,
     );
@@ -46,7 +46,10 @@ class _FriendRequestViewBodyState extends State<FriendRequestViewBody> {
             children: [
               Expanded(
                 child: CustomTapButton(
-                  length: context.watch<GetFriendRequestStreamCubit>().length,
+                  length: context
+                      .watch<GetFriendRequestStreamCubit>()
+                      .friendRequestWithUserList
+                      .length,
                   icon: Icons.inbox,
                   text: "Recevied",
                   isSelected: selectedIndex == 0 ? true : false,
