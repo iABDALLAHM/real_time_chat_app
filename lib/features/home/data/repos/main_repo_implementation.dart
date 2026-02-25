@@ -258,6 +258,16 @@ class MainRepoImplementation implements MainRepo {
       path: BackendEndPoints.friendShips,
       documentId: friendShipId,
     );
+    
+    await dataBaseService.deleteSingleData(
+      path: BackendEndPoints.chats,
+      documentId: friendShipId,
+    );
+
+    await dataBaseService.deleteSingleData(
+      path: BackendEndPoints.messages,
+      documentId: friendShipId,
+    );
 
     await createNotification(
       notificationEntity: NotificationEntity(

@@ -10,7 +10,6 @@ import 'package:real_time_chat_app/features/chat/presentation/views/widgets/empt
 import 'package:real_time_chat_app/features/chat/presentation/views/widgets/message_input.dart';
 import 'package:real_time_chat_app/features/chat/presentation/views/widgets/my_friend_message.dart';
 import 'package:real_time_chat_app/features/chat/presentation/views/widgets/my_message.dart';
-import 'package:uuid/uuid.dart';
 
 class ChatViewBody extends StatefulWidget {
   const ChatViewBody({super.key, required this.userEntity});
@@ -78,8 +77,9 @@ class _ChatViewBodyState extends State<ChatViewBody> {
               messagesList.insert(0, currentMessage);
             });
             textController.clear();
+            var uId = "${getUserData().uId}_${widget.userEntity.uId}";
             MessageEntity messageEntity = MessageEntity(
-              id: Uuid().v4(),
+              id: uId,
               messageSenderId: getUserData().uId,
               messageReceiverId: widget.userEntity.uId,
               content: currentMessage,
