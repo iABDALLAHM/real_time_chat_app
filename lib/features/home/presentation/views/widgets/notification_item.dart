@@ -19,6 +19,7 @@ class _NotificationItemState extends State<NotificationItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
         color: widget.notificationEntity.isRead == true
             ? AppTheme.cardColor
@@ -31,6 +32,11 @@ class _NotificationItemState extends State<NotificationItem> {
           context.read<NotificationsCubit>().markNotificationAsRead(
             notificationId: widget.notificationEntity.id,
           );
+          navigateToTargetNotificationScreen(
+            context,
+            notificationType: NotificationType.friendRequest,
+          );
+
           // here when i pressed on it the color of the card must changed to express about i see the notification and also the icon must me disappeared that is behind a notification title;
         },
         child: ListTile(
@@ -87,6 +93,18 @@ class _NotificationItemState extends State<NotificationItem> {
         ),
       ),
     );
+  }
+
+  void navigateToTargetNotificationScreen(
+    BuildContext context, {
+    required NotificationType notificationType,
+  }) {
+    if (widget.notificationEntity.type == NotificationType.friendRequest) {
+      navigateToTargetNotificationScreen(
+        context,
+        notificationType: NotificationType.friendRequest,
+      );
+    }
   }
 
   Widget getNotificationTypeIcon({required NotificationType notificationType}) {

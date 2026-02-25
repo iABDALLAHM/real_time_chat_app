@@ -23,7 +23,7 @@ class _FriendRequestViewBodyState extends State<FriendRequestViewBody> {
     context.read<GetFriendRequestStreamCubit>().getFriendRequestStream(
       userId: getUserData().uId,
     );
-
+    
     context.read<GetSentFriendRequestStreamCubit>().getSentFriendRequestStream(
       userId: getUserData().uId,
     );
