@@ -566,7 +566,7 @@ class MainRepoImplementation implements MainRepo {
       path: BackendEndPoints.messages,
       isQuery: true,
       query: {
-        "senderId": [user1Id, user2Id],
+        "messageSenderId": [user1Id, user2Id],
       },
     );
 
