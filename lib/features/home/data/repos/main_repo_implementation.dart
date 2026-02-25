@@ -528,8 +528,8 @@ class MainRepoImplementation implements MainRepo {
   Future<void> sendMessage({required MessageEntity message}) async {
     await dataBaseService.addSinleData(
       path: BackendEndPoints.messages,
-      data: MessageModel.formEntity(messageEntity: message).toMap(),
       documentId: message.id,
+      data: MessageModel.formEntity(messageEntity: message).toMap(),
     );
 
     // String chatId = await createOrGetChat(
@@ -569,7 +569,7 @@ class MainRepoImplementation implements MainRepo {
         "senderId": [user1Id, user2Id],
       },
     );
-    
+
     List<MessageEntity> messagesList = [];
     await for (var messageMap in data) {
       messagesList = messageMap

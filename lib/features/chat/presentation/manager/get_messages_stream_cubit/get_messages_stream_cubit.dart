@@ -18,6 +18,7 @@ class GetMessagesStreamCubit extends Cubit<GetMessagesStreamStates> {
           if (messages.isEmpty) {
             emit(EmptyMessagesStreamState());
           } else {
+            print("Messages length: ${messages.length}");
             emit(SuccessGetMessagesStreamState(messagesList: messages));
           }
         });

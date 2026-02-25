@@ -8,6 +8,7 @@ import 'package:real_time_chat_app/features/chat/presentation/manager/get_messag
 import 'package:real_time_chat_app/features/chat/presentation/manager/send_message_cubit/send_message_cubit.dart';
 import 'package:real_time_chat_app/features/chat/presentation/views/widgets/empty_chat_widget.dart';
 import 'package:real_time_chat_app/features/chat/presentation/views/widgets/message_input.dart';
+import 'package:real_time_chat_app/features/chat/presentation/views/widgets/my_friend_message.dart';
 import 'package:real_time_chat_app/features/chat/presentation/views/widgets/my_message.dart';
 import 'package:uuid/uuid.dart';
 
@@ -22,13 +23,13 @@ class _ChatViewBodyState extends State<ChatViewBody> {
   @override
   void initState() {
     context.read<GetMessagesStreamCubit>().getMessages(
-      user1Id: "n4iCQ1qvmAbMBdoBEJJ5xpQRagG3",
-      user2Id: "receiverId",
+      user1Id: getUserData().uId,
+      user2Id: widget.userEntity.uId,
     );
     super.initState();
   }
 
-  List<String> messages = [];
+  List<String> messagesList = [];
   String currentMessage = "";
   TextEditingController textController = TextEditingController();
 
@@ -51,9 +52,15 @@ class _ChatViewBodyState extends State<ChatViewBody> {
                         horizontal: 20,
                         vertical: 5,
                       ),
-                      child: MyMessage(
-                        message: state.messagesList[index].content,
-                      ),
+                      child:
+                          getUserData().uId ==
+                              state.messagesList[index].senderId
+                          ? MyMessage(
+                              message: state.messagesList[index].content,
+                            )
+                          : MyFriendMessage(
+                              message: state.messagesList[index].content,
+                            ),
                     );
                   },
                 );
@@ -68,13 +75,13 @@ class _ChatViewBodyState extends State<ChatViewBody> {
             currentMessage = textController.text.trim();
             if (currentMessage.isEmpty) return;
             setState(() {
-              messages.insert(0, currentMessage);
+              messagesList.insert(0, currentMessage);
             });
             textController.clear();
             MessageEntity messageEntity = MessageEntity(
               id: Uuid().v4(),
               senderId: getUserData().uId,
-              receiverId: "receiverId",
+              receiverId: widget.userEntity.uId,
               content: currentMessage,
               timeStamp: DateTime.now(),
             );

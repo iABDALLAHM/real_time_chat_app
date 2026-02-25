@@ -68,11 +68,11 @@ class FirestoreService implements DataBaseService {
           var status = query["status"];
           data = data.where("status", isEqualTo: status);
         }
-
-        if (query["senderId"] != null) {
-          var senderId = query["senderId"];
-          data = data.where("senderId", isEqualTo: senderId);
-        }
+        // when request is send
+        // if (query["senderId"] != null) {
+        //   var senderId = query["senderId"];
+        //   data = data.where("senderId", isEqualTo: senderId);
+        // }
 
         if (query["createdAt"] != null) {
           var createdAt = query["createdAt"];
@@ -88,11 +88,11 @@ class FirestoreService implements DataBaseService {
           var userId = query["userId"];
           data = data.where("userId", isEqualTo: userId);
         }
-
-        // if (query["senderId"] != null) {
-        //   var senderId = query["senderId"];
-        //   data = data.where("senderId", whereIn: senderId);
-        // }
+        // when message is sent
+        if (query["senderId"] != null) {
+          var senderId = query["senderId"];
+          data = data.where("senderId", whereIn: senderId);
+        }
       }
 
       // هنا أنت بتعمل transformation للـ Stream
