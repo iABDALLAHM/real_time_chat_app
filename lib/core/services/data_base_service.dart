@@ -11,13 +11,16 @@ abstract class DataBaseService {
   });
 
   // delete data
-  Future<dynamic> deleteSingleData({required String path,required String documentId});
-  
+  Future<dynamic> deleteSingleData({
+    required String path,
+    required String documentId,
+  });
+
   // update data
-  Future<void> updateData({
+  Future<void> updateSingleData({
     required String path,
     required Map<String, dynamic> data,
-    String? documentId,
+    required String documentId,
   });
 
   // get stream data
@@ -35,6 +38,7 @@ abstract class DataBaseService {
     required String path,
     required String documentId,
   });
+
   Future<dynamic> getData({required String path});
 
   // قابلة للنقاش والتعديل

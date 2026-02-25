@@ -93,7 +93,7 @@ class MainRepoImplementation implements MainRepo {
     required String requestId,
     required FriendRequestStatus status,
   }) async {
-    await dataBaseService.updateData(
+    await dataBaseService.updateSingleData(
       documentId: requestId,
       path: BackendEndPoints.friendRequests,
       data: {"status": status.name, "responsedAt": DateTime.now()},
@@ -282,7 +282,7 @@ class MainRepoImplementation implements MainRepo {
     userIds.sort();
     String friendShipId = "${userIds[0]}_${userIds[1]}";
 
-    await dataBaseService.updateData(
+    await dataBaseService.updateSingleData(
       path: BackendEndPoints.friendShips,
       data: {"isBlocked": true, "blockedBy": blockerId},
       documentId: friendShipId,
@@ -298,7 +298,7 @@ class MainRepoImplementation implements MainRepo {
     userIds.sort();
     String friendShipId = "${userIds[0]}_${userIds[1]}";
 
-    await dataBaseService.updateData(
+    await dataBaseService.updateSingleData(
       path: BackendEndPoints.friendShips,
       data: {"isBlocked": false, "blockedBy": null},
       documentId: friendShipId,
@@ -449,7 +449,7 @@ class MainRepoImplementation implements MainRepo {
     required String chatId,
     required MessageEntity message,
   }) async {
-    dataBaseService.updateData(
+    dataBaseService.updateSingleData(
       path: BackendEndPoints.chats,
       data: {
         "lastMessage": message.content,
@@ -466,7 +466,7 @@ class MainRepoImplementation implements MainRepo {
     required String chatId,
     required String userId,
   }) async {
-    await dataBaseService.updateData(
+    await dataBaseService.updateSingleData(
       path: BackendEndPoints.chats,
       data: {"lastSeenBy.$userId": DateTime.now()},
       documentId: chatId,
@@ -478,7 +478,7 @@ class MainRepoImplementation implements MainRepo {
     required String chatId,
     required String userId,
   }) async {
-    await dataBaseService.updateData(
+    await dataBaseService.updateSingleData(
       path: BackendEndPoints.chats,
       data: {"deletedBy.$userId": true, "deletedAt.$userId": DateTime.now()},
       documentId: chatId,
@@ -490,7 +490,7 @@ class MainRepoImplementation implements MainRepo {
     required String chatId,
     required String userId,
   }) async {
-    await dataBaseService.updateData(
+    await dataBaseService.updateSingleData(
       path: BackendEndPoints.chats,
       data: {"deletedBy.$userId": false},
       documentId: chatId,
@@ -503,7 +503,7 @@ class MainRepoImplementation implements MainRepo {
     required String userId,
     required int count,
   }) async {
-    await dataBaseService.updateData(
+    await dataBaseService.updateSingleData(
       path: BackendEndPoints.chats,
       data: {"unreadCount.$userId": count},
       documentId: chatId,
@@ -515,7 +515,7 @@ class MainRepoImplementation implements MainRepo {
     required String chatId,
     required String userId,
   }) async {
-    await dataBaseService.updateData(
+    await dataBaseService.updateSingleData(
       path: BackendEndPoints.chats,
       data: {"unreadCount.$userId": 0},
       documentId: chatId,
@@ -581,7 +581,7 @@ class MainRepoImplementation implements MainRepo {
 
   @override
   Future<void> markMessagesAsRead({required String messageId}) async {
-    await dataBaseService.updateData(
+    await dataBaseService.updateSingleData(
       path: BackendEndPoints.messages,
       data: {"isRead": true},
       documentId: messageId,
@@ -601,7 +601,7 @@ class MainRepoImplementation implements MainRepo {
     required String messageId,
     required String newContent,
   }) async {
-    await dataBaseService.updateData(
+    await dataBaseService.updateSingleData(
       path: BackendEndPoints.messages,
       data: {
         "content": newContent,
@@ -673,7 +673,7 @@ class MainRepoImplementation implements MainRepo {
 
   @override
   Future<void> markNotificationAsRead({required String notificationId}) async {
-    await dataBaseService.updateData(
+    await dataBaseService.updateSingleData(
       path: BackendEndPoints.notification,
       data: {"isRead": true},
       documentId: notificationId,

@@ -35,7 +35,7 @@ class ProfileRepoImplementation implements ProfileRepo {
 
   @override
   Future<void> updateUserInfo({required UserEntity userEntity}) async {
-    await dataBaseService.updateData(
+    await dataBaseService.updateSingleData(
       path: BackendEndPoints.updateUser,
       data: UserModel.fromEntity(userEntity).toMap(),
       documentId: userEntity.uId,
@@ -72,7 +72,7 @@ class ProfileRepoImplementation implements ProfileRepo {
     required String userId,
     required bool isOnline,
   }) async {
-    await dataBaseService.updateData(
+    await dataBaseService.updateSingleData(
       documentId: userId,
       path: BackendEndPoints.getUsers,
       data: {"isOnline": isOnline, "lastSeen": DateTime.now()},

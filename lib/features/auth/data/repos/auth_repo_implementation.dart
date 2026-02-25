@@ -126,7 +126,7 @@ class AuthRepoImplementation implements AuthRepo {
     required String userId,
     required bool isOnline,
   }) async {
-    await dataBaseService.updateData(
+    await dataBaseService.updateSingleData(
       documentId: userId,
       path: BackendEndPoints.getUsers,
       data: {"isOnline": isOnline, "lastSeen": DateTime.now()},
