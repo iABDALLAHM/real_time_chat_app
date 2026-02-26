@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:real_time_chat_app/features/home/presentation/manager/get_user_chats_stream_cubit/get_user_chats_cubit.dart';
 import 'package:real_time_chat_app/features/home/presentation/views/widgets/separated_sections_item.dart';
 
 class CustomSectionsTabs extends StatefulWidget {
@@ -12,6 +14,7 @@ class _CustomSectionsTabsState extends State<CustomSectionsTabs> {
   int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
+    var length = context.watch<GetUserChatsCubit>().chats.length;
     return SizedBox(
       height: 40,
       child: Row(
@@ -28,7 +31,7 @@ class _CustomSectionsTabsState extends State<CustomSectionsTabs> {
           SeparatedSectionsItem(
             title: "Unread",
             isSelected: selectedIndex == 1 ? true : false,
-            count: 0,
+            count: length,
             onPressed: () {
               selectedIndex = 1;
               widget.onChange(selectedIndex);
@@ -38,7 +41,7 @@ class _CustomSectionsTabsState extends State<CustomSectionsTabs> {
           SeparatedSectionsItem(
             title: "Recent",
             isSelected: selectedIndex == 2 ? true : false,
-            count: 0,
+            count: length,
             onPressed: () {
               selectedIndex = 2;
               widget.onChange(selectedIndex);
@@ -48,7 +51,7 @@ class _CustomSectionsTabsState extends State<CustomSectionsTabs> {
           SeparatedSectionsItem(
             title: "Active",
             isSelected: selectedIndex == 3 ? true : false,
-            count: 0,
+            count: length,
             onPressed: () {
               selectedIndex = 3;
               widget.onChange(selectedIndex);

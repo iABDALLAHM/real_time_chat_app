@@ -201,7 +201,7 @@ class ChatItem extends StatelessWidget {
   }
 
   IconData getSeenStatusIcon() {
-    return Icons.search;
+    return Icons.done_all;
   }
 
   String getSeenStatusText() {
@@ -209,7 +209,7 @@ class ChatItem extends StatelessWidget {
   }
 
   Color getSeenStatusColor() {
-    return Colors.red;
+    return const Color.fromARGB(255, 1, 255, 9);
   }
 
   void showChatOptions() {}

@@ -24,6 +24,7 @@ class ChatBody extends StatefulWidget {
 
 class _ChatBodyState extends State<ChatBody> {
   int currentIndex = 0;
+
   @override
   void initState() {
     context.read<GetNotificationsStreamCubit>().getNotifications(
@@ -35,7 +36,7 @@ class _ChatBodyState extends State<ChatBody> {
 
   @override
   Widget build(BuildContext context) {
-    var chatsList = context.watch<GetUserChatsCubit>().chats.isEmpty;
+    var chatsList = context.watch<GetUserChatsCubit>().chats;
     return Scaffold(
       floatingActionButton: CustomFloatingActionButton(
         onChange: (value) {
@@ -64,14 +65,16 @@ class _ChatBodyState extends State<ChatBody> {
             ),
             const SizedBox(height: 10),
 
-            chatsList
+            chatsList.isEmpty
                 ? SizedBox.shrink()
                 : CustomSectionsTabsBody(currentIndex: currentIndex),
             BlocBuilder<GetUserChatsCubit, GetUserChatsStates>(
               builder: (context, state) {
                 if (state is SuccessGetUserChatsState) {
                   return Expanded(
-                    child: ChatItemListView(chats: state.userWithChatList),
+                    child: ChatItemListView(
+                      userWithChatList: state.userWithChatList,
+                    ),
                   );
                 } else if (state is EmptyGetUserChatsState) {
                   return NoConversationsWidget(
@@ -80,7 +83,7 @@ class _ChatBodyState extends State<ChatBody> {
                     },
                   );
                 }
-                // this is the intial state of ui before exist any chat or any body tap!!!!!
+                // this is the intial state of ui before exist any chat or any body tap !!!!!
                 return SizedBox.shrink();
               },
             ),
