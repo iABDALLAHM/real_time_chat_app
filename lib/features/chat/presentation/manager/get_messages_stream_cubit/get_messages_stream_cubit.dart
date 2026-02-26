@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/features/chat/presentation/manager/get_messages_stream_cubit/get_messages_stream_state.dart';
 import 'package:real_time_chat_app/features/home/domain/repos/main_repo.dart';
@@ -18,7 +17,6 @@ class GetMessagesStreamCubit extends Cubit<GetMessagesStreamStates> {
           if (messages.isEmpty) {
             emit(EmptyMessagesStreamState());
           } else {
-            print("Messages length: ${messages.length}");
             emit(SuccessGetMessagesStreamState(messagesList: messages));
           }
         });

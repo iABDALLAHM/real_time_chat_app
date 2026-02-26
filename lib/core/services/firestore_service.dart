@@ -82,6 +82,11 @@ class FirestoreService implements DataBaseService {
           data = data.orderBy("createdAt", descending: createdAt);
         }
 
+        if (query["timeStamp"] != null) {
+          var timeStamp = query["timeStamp"];
+          data = data.orderBy("timeStamp", descending: timeStamp);
+        }
+
         if (query["userIds"] != null) {
           var userIds = query["userIds"];
           data = data.where("userIds", arrayContains: userIds);

@@ -572,6 +572,7 @@ class MainRepoImplementation implements MainRepo {
       isQuery: true,
       query: {
         "messageSenderId": [user1Id, user2Id],
+        "timeStamp" : true
       },
     );
 

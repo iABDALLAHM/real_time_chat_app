@@ -20,6 +20,7 @@ class ChatViewBody extends StatefulWidget {
 }
 
 class _ChatViewBodyState extends State<ChatViewBody> {
+  final ScrollController _scrollController = ScrollController();
   @override
   void initState() {
     context.read<GetMessagesStreamCubit>().getMessages(
@@ -43,6 +44,7 @@ class _ChatViewBodyState extends State<ChatViewBody> {
             builder: (context, state) {
               if (state is SuccessGetMessagesStreamState) {
                 return ListView.builder(
+                  controller: _scrollController,
                   reverse: true,
                   itemCount: state.messagesList.length,
                   itemBuilder: (context, index) {
@@ -71,6 +73,11 @@ class _ChatViewBodyState extends State<ChatViewBody> {
         ),
         MessageInput(
           onPressed: () {
+            _scrollController.animateTo(
+              0,
+              duration: Duration(milliseconds: 300),
+              curve: Curves.easeIn,
+            );
             currentMessage = textController.text.trim();
             if (currentMessage.isEmpty) return;
             textController.clear();
