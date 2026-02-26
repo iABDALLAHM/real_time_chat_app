@@ -34,7 +34,7 @@ class _NotificationItemState extends State<NotificationItem> {
           );
           navigateToTargetNotificationScreen(
             context,
-            notificationType: NotificationType.friendRequest,
+            notificationType: widget.notificationEntity.type,
           );
 
           // here when i pressed on it the color of the card must changed to express about i see the notification and also the icon must me disappeared that is behind a notification title;
@@ -99,7 +99,7 @@ class _NotificationItemState extends State<NotificationItem> {
     BuildContext context, {
     required NotificationType notificationType,
   }) {
-    if (widget.notificationEntity.type == NotificationType.friendRequest) {
+    if (notificationType == NotificationType.friendRequest) {
       navigateToTargetNotificationScreen(
         context,
         notificationType: NotificationType.friendRequest,

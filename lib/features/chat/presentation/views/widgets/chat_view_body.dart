@@ -29,7 +29,6 @@ class _ChatViewBodyState extends State<ChatViewBody> {
     super.initState();
   }
 
-  List<String> messagesList = [];
   String currentMessage = "";
   TextEditingController textController = TextEditingController();
 
@@ -74,11 +73,7 @@ class _ChatViewBodyState extends State<ChatViewBody> {
           onPressed: () {
             currentMessage = textController.text.trim();
             if (currentMessage.isEmpty) return;
-            setState(() {
-              messagesList.insert(0, currentMessage);
-            });
             textController.clear();
-
             MessageEntity messageEntity = MessageEntity(
               id: Uuid().v4(),
               messageSenderId: getUserData().uId,
