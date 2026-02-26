@@ -123,6 +123,8 @@ abstract class MainRepo {
 
   Future<void> deleteNotification({required String notificationId});
 
+  // Future<void> getReadNotifications({required String userId});
+
   Future<void> removeNotificationForCancelledRequest({
     required String senderId,
     required String receiverId,

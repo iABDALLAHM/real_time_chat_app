@@ -294,6 +294,7 @@ class MainRepoImplementation implements MainRepo {
     );
   }
 
+  // not now
   @override
   Future<void> unBlockUser({
     required String user1Id,
@@ -349,6 +350,7 @@ class MainRepoImplementation implements MainRepo {
     return friendshipEntity;
   }
 
+  // not now
   @override
   Future<bool> isUserBlocked({
     required String userId,
@@ -367,6 +369,7 @@ class MainRepoImplementation implements MainRepo {
     return isUserBlocked;
   }
 
+  // not now
   @override
   Future<bool> isUnFriended({
     required String userId,
@@ -418,18 +421,20 @@ class MainRepoImplementation implements MainRepo {
         path: BackendEndPoints.chats,
         data: ChatModel.fromEntity(chatEntity: newChat).toMap(),
       );
-    } else {
-      ChatEntity existingChat = ChatModel.fromMap(chatRefernce).toEntity();
-
-      if (existingChat.isDeletedBy(userId: user1Id)) {
-        await restoreChatForUser(chatId: chatId, userId: user1Id);
-      }
-
-      if (existingChat.isDeletedBy(userId: user2Id)) {
-        await restoreChatForUser(chatId: chatId, userId: user2Id);
-      }
     }
 
+    // not now
+    //  else {
+    //   ChatEntity existingChat = ChatModel.fromMap(chatRefernce).toEntity();
+
+    //   if (existingChat.isDeletedBy(userId: user1Id)) {
+    //     await restoreChatForUser(chatId: chatId, userId: user1Id);
+    //   }
+
+    //   if (existingChat.isDeletedBy(userId: user2Id)) {
+    //     await restoreChatForUser(chatId: chatId, userId: user2Id);
+    //   }
+    // }
     return chatId;
   }
 
@@ -458,7 +463,7 @@ class MainRepoImplementation implements MainRepo {
       path: BackendEndPoints.chats,
       data: {
         "lastMessage": message.content,
-        "lastMessageTime": message,
+        "lastMessageTime": message.timeStamp,
         "lastMessageSenderId": message.messageSenderId,
         "updatedAt": DateTime.now(),
       },
@@ -527,6 +532,7 @@ class MainRepoImplementation implements MainRepo {
     );
   }
   // ***********************************************************************************************************
+
   /// message collection
 
   @override
@@ -537,29 +543,29 @@ class MainRepoImplementation implements MainRepo {
       data: MessageModel.formEntity(messageEntity: message).toMap(),
     );
 
-    // String chatId = await createOrGetChat(
-    //   user1Id: message.senderId,
-    //   user2Id: message.receiverId,
-    // );
+    String chatId = await createOrGetChat(
+      user1Id: message.messageSenderId,
+      user2Id: message.messageReceiverId,
+    );
 
-    // await updateChatLastMessage(chatId: chatId, message: message);
+    await updateChatLastMessage(chatId: chatId, message: message);
 
-    // await updateUserLastSeen(userId: message.senderId, chatId: chatId);
+    await updateUserLastSeen(userId: message.messageSenderId, chatId: chatId);
 
-    // var chatDoc = await dataBaseService.getSingleData(
-    //   path: BackendEndPoints.chats,
-    //   documentId: chatId,
-    // );
+    var chatDoc = await dataBaseService.getSingleData(
+      path: BackendEndPoints.chats,
+      documentId: chatId,
+    );
 
-    // ChatEntity chat = ChatModel.fromMap(chatDoc).toEntity();
+    ChatEntity chat = ChatModel.fromMap(chatDoc).toEntity();
 
-    // int currentUnread = chat.getUnreadCount(userId: message.receiverId);
+    int currentUnread = chat.getUnreadCount(userId: message.messageReceiverId);
 
-    // await updateunReadCount(
-    //   chatId: chatId,
-    //   userId: message.receiverId,
-    //   count: currentUnread + 1,
-    // );
+    await updateunReadCount(
+      chatId: chatId,
+      userId: message.messageReceiverId,
+      count: currentUnread + 1,
+    );
   }
 
   @override
@@ -572,7 +578,7 @@ class MainRepoImplementation implements MainRepo {
       isQuery: true,
       query: {
         "messageSenderId": [user1Id, user2Id],
-        "timeStamp" : true
+        "timeStamp": true,
       },
     );
 
@@ -619,7 +625,8 @@ class MainRepoImplementation implements MainRepo {
   }
 
   // ***********************************************************************************************************
-  /// notifications collection all done
+
+  // notifications collection all done
 
   @override
   Future<void> createNotification({
@@ -703,4 +710,10 @@ class MainRepoImplementation implements MainRepo {
       documentId: notificationId,
     );
   }
+
+  // @override
+  // Future<void> getReadNotifications({required String userId}) {
+  //   // TODO: implement getReadNotifications
+  //   throw UnimplementedError();
+  // }
 }

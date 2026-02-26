@@ -33,7 +33,7 @@ class RealTimeChat extends StatelessWidget {
           create: (context) =>
               GetNotificationsStreamCubit(mainRepo: getIt.get<MainRepo>()),
         ),
-     BlocProvider(
+        BlocProvider(
           create: (context) =>
               NotificationsCubit(mainRepo: getIt.get<MainRepo>()),
         ),
