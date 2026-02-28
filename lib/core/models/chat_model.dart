@@ -37,8 +37,8 @@ class ChatModel {
       "lastMessageSenderId": lastMessageSenderId,
       "unreadCount": unreadCount,
       "deletedBy": deletedBy,
-      "deletedAt": deletedAt.map((key, value) => MapEntry(key, value)),
-      "lastSeenBy": lastSeenBy.map((key, value) => MapEntry(key, value)),
+      "deletedAt": deletedAt,
+      "lastSeenBy": lastSeenBy,
       "createdAt": createdAt,
       "updatedAt": updatedAt,
     };
@@ -71,45 +71,35 @@ class ChatModel {
   }
 
   factory ChatModel.fromMap(Map<String, dynamic> map) {
-    Map<String, DateTime?> lastSeenMap = {};
-    if (map["lastSeenBy"] != null) {
-      Map<String, dynamic> rawLastSeen = Map<String, dynamic>.from(
-        map["lastSeenBy"],
-      );
-      // lastSeenMap = rawLastSeen.map(
-      //   (key, value) => MapEntry(
-      //     key,
-      //     value != null ? DateTime.fromMillisecondsSinceEpoch(value) : null,
-      //   ),
-      // );
-    }
-
-    Map<String, DateTime?> deletedAtMap = {};
-    if (map["deletedAt"] != null) {
-      Map<String, dynamic> rawDeletedAt = Map<String, dynamic>.from(
-        map["lastSeenBy"],
-      );
-      // deletedAtMap = rawDeletedAt.map(
-      //   (key, value) => MapEntry(
-      //     key,
-      //     value != null ? DateTime.fromMillisecondsSinceEpoch(value) : null,
-      //   ),
-      // );
-    }
-
     return ChatModel(
       id: map["id"] ?? "",
+
       participants: List<String>.from(map["participants"] ?? []),
+
       lastMessage: map["lastMessage"],
+
       lastMessageTime: map["lastMessageTime"] != null
           ? (map["lastMessageTime"] as Timestamp).toDate()
           : null,
+
       lastMessageSenderId: map["lastMessageSenderId"],
-      unreadCount: Map<String, int>.from(map["unreadCount"]),
-      deletedBy: Map<String, bool>.from(map["deletedBy"]),
-      deletedAt: deletedAtMap,
-      lastSeenBy: lastSeenMap,
+
+      unreadCount: Map<String, int>.from(map["unreadCount"] ?? {}),
+
+      deletedBy: Map<String, bool>.from(map["deletedBy"] ?? {}),
+
+      deletedAt: (map["deletedAt"] as Map<String, dynamic>? ?? {}).map(
+        (key, value) =>
+            MapEntry(key, value != null ? (value as Timestamp).toDate() : null),
+      ),
+
+      lastSeenBy: (map["lastSeenBy"] as Map<String, dynamic>? ?? {}).map(
+        (key, value) =>
+            MapEntry(key, value != null ? (value as Timestamp).toDate() : null),
+      ),
+
       createdAt: (map["createdAt"] as Timestamp).toDate(),
+
       updatedAt: (map["updatedAt"] as Timestamp).toDate(),
     );
   }
