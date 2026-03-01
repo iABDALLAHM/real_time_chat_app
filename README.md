@@ -1,11 +1,11 @@
-# Chat App
+# RealTime Chat App - Flutter
 
-<hr style="width:60%; margin:auto;">
+
 
 ## Descriptions
 this is a description 
 
-<hr style="width:60%; margin:auto;">
+
 
 ## ScreenShots
 
@@ -24,7 +24,7 @@ this is a description
 
 
 
-<hr style="width:50%; margin:auto;">
+
 
 ## Connect With Me
 
