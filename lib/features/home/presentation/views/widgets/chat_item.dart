@@ -201,14 +201,18 @@ class ChatItem extends StatelessWidget {
   }
 
   IconData getSeenStatusIcon() {
-    return Icons.done_all;
+    if (chat.unreadCount[otherUser.uId] == 0) {
+      return Icons.done_all;
+    } else {
+      return Icons.done;
+    }
   }
 
   String getSeenStatusText() {
     if (chat.unreadCount[otherUser.uId] == 0) {
       return "seen";
     } else {
-      return "";
+      return "Delivered";
     }
   }
 

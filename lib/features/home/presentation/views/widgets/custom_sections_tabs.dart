@@ -30,8 +30,8 @@ class _CustomSectionsTabsState extends State<CustomSectionsTabs> {
           ),
           SeparatedSectionsItem(
             title: "Unread",
-            isSelected: selectedIndex == 1 ? true : false,
             count: length,
+            isSelected: selectedIndex == 1 ? true : false,
             onPressed: () {
               selectedIndex = 1;
               widget.onChange(selectedIndex);

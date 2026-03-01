@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/entities/message_entity.dart';
@@ -43,6 +45,7 @@ class _ChatViewBodyState extends State<ChatViewBody> {
           child: BlocBuilder<GetMessagesStreamCubit, GetMessagesStreamStates>(
             builder: (context, state) {
               if (state is SuccessGetMessagesStreamState) {
+                log("update");
                 return ListView.builder(
                   controller: _scrollController,
                   reverse: true,
