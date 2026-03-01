@@ -12,7 +12,7 @@
 ## ScreenShots
 
 <p align="center">
-  <img src="assets/images/Screenshot_141731.png"  width="100%"/>
+  <img src="assets/images/Screenshot_144313.png"  width="100%"/>
   <br><br>
   <img src="assets/images/Screenshot_141522.png"  width="100%"/>
   <br><br>
