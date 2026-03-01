@@ -12,11 +12,11 @@
 ## ScreenShots
 
 <p align="center">
-  <img src="assets/images/Screenshot_141731.png" width="700"/>
+  <img src="assets/images/Screenshot_141731.png"  width="100%"/>
   <br><br>
-  <img src="assets/images/Screenshot_141522.png" width="700"/>
+  <img src="assets/images/Screenshot_141522.png"  width="100%"/>
   <br><br>
-  <img src="assets/images/Screenshot_141500.png" width="700"/>
+  <img src="assets/images/Screenshot_141500.png"  width="100%"/>
   <br><br>
   <img src="assets/images/Screenshot_141418.png" width="700"/>
   <br><br>
