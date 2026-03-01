@@ -23,6 +23,12 @@ abstract class DataBaseService {
     required String documentId,
   });
 
+  Future<void> updateData({
+    required String path,
+    required Map<String, dynamic> data,
+        Map<String, dynamic>? query,
+  });
+
   // get stream data
   Stream getSingleDataStream({required String uId, required String path});
 

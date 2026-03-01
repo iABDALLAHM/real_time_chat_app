@@ -101,7 +101,9 @@ abstract class MainRepo {
     required String user2Id,
   });
 
-  Future<void> markMessagesAsRead({required String messageId});
+  Future<void> markMessageAsRead({required String messageId});
+    Future<void> markMessagesAsRead({required String messageId});
+
   Future<void> deleteMessage({required String messageId});
   Future<void> editMessage({
     required String messageId,

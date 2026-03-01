@@ -200,4 +200,29 @@ class FirestoreService implements DataBaseService {
   }) async {
     await firestore.collection(path).add(data);
   }
+
+  @override
+  Future<void> updateData({
+    Map<String, dynamic>? query,
+    required String path,
+    required Map<String, dynamic> data,
+  }) async {
+    Query<Map<String, dynamic>> data = firestore.collection(path);
+
+    if (query != null) {
+      if (query["isRead"] != null) {
+        var isRead = query["isRead"];
+        data = data.where("isRead", isEqualTo: isRead);
+      }
+    }
+
+    final result = await data.get();
+    // a lot of operations Done Here !!
+    WriteBatch batch = firestore.batch();
+
+    for (var doc in result.docs) {
+      batch.update(doc.reference, {"isRead": true});
+    }
+    await batch.commit();
+  }
 }

@@ -593,7 +593,7 @@ class MainRepoImplementation implements MainRepo {
   }
 
   @override
-  Future<void> markMessagesAsRead({required String messageId}) async {
+  Future<void> markMessageAsRead({required String messageId}) async {
     await dataBaseService.updateSingleData(
       path: BackendEndPoints.messages,
       data: {"isRead": true},
@@ -622,6 +622,14 @@ class MainRepoImplementation implements MainRepo {
         "editedAt": DateTime.now(),
       },
       documentId: messageId,
+    );
+  }
+
+  @override
+  Future<void> markMessagesAsRead({required String messageId})async {
+     await dataBaseService.updateData(
+      path: BackendEndPoints.messages,
+      data: {"isRead": true},
     );
   }
 
