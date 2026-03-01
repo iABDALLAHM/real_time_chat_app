@@ -531,6 +531,7 @@ class MainRepoImplementation implements MainRepo {
       documentId: chatId,
     );
   }
+
   // ***********************************************************************************************************
 
   /// message collection
@@ -710,10 +711,4 @@ class MainRepoImplementation implements MainRepo {
       documentId: notificationId,
     );
   }
-
-  // @override
-  // Future<void> getReadNotifications({required String userId}) {
-  //   // TODO: implement getReadNotifications
-  //   throw UnimplementedError();
-  // }
 }

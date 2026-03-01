@@ -1,0 +1,9 @@
+abstract class RestoreUnReadCountMessagesStates {}
+
+final class InitialRestoreUnReadCountMessagesState extends RestoreUnReadCountMessagesStates {}
+
+final class SuccessRestoreUnReadCountMessagesState extends RestoreUnReadCountMessagesStates {}
+
+final class LoadingRestoreUnReadCountMessagesState extends RestoreUnReadCountMessagesStates {}
+
+final class FailureRestoreUnReadCountMessagesState extends RestoreUnReadCountMessagesStates {}

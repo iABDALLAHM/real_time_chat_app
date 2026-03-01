@@ -10,6 +10,7 @@ class GetOrCreateChatCubit extends Cubit<GetOrCreateChatStates> {
   void getOrCreateChat({required String user1Id, required String user2Id}) {
     emit(LoadingGetOrCreateChatState());
     var result = mainRepo.createOrGetChat(user1Id: user1Id, user2Id: user2Id);
+    result.toString();
     emit(SuccessGetOrCreateChatState());
   }
 }

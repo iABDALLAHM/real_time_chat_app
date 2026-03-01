@@ -209,7 +209,12 @@ class ChatItem extends StatelessWidget {
   }
 
   Color getSeenStatusColor() {
-    return const Color.fromARGB(255, 1, 255, 9);
+    var lastSeenDate = chat.lastSeenBy[getUserData().uId];
+    if (lastSeenDate == DateTime.now()) {
+      return Colors.green;
+    } else {
+      return Colors.black;
+    }
   }
 
   void showChatOptions() {}

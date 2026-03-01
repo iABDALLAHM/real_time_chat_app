@@ -73,33 +73,23 @@ class ChatModel {
   factory ChatModel.fromMap(Map<String, dynamic> map) {
     return ChatModel(
       id: map["id"] ?? "",
-
       participants: List<String>.from(map["participants"] ?? []),
-
       lastMessage: map["lastMessage"],
-
       lastMessageTime: map["lastMessageTime"] != null
           ? (map["lastMessageTime"] as Timestamp).toDate()
           : null,
-
       lastMessageSenderId: map["lastMessageSenderId"],
-
       unreadCount: Map<String, int>.from(map["unreadCount"] ?? {}),
-
       deletedBy: Map<String, bool>.from(map["deletedBy"] ?? {}),
-
       deletedAt: (map["deletedAt"] as Map<String, dynamic>? ?? {}).map(
         (key, value) =>
             MapEntry(key, value != null ? (value as Timestamp).toDate() : null),
       ),
-
       lastSeenBy: (map["lastSeenBy"] as Map<String, dynamic>? ?? {}).map(
         (key, value) =>
             MapEntry(key, value != null ? (value as Timestamp).toDate() : null),
       ),
-
       createdAt: (map["createdAt"] as Timestamp).toDate(),
-
       updatedAt: (map["updatedAt"] as Timestamp).toDate(),
     );
   }

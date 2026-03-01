@@ -10,6 +10,7 @@ import 'package:real_time_chat_app/features/home/presentation/manager/friend_req
 import 'package:real_time_chat_app/features/home/presentation/manager/get_my_friends_stream_cubit.dart/get_my_friends_stream_cubit.dart';
 import 'package:real_time_chat_app/features/home/presentation/manager/chat_cubit/get_or_create_chat_cubit.dart';
 import 'package:real_time_chat_app/features/home/presentation/manager/get_user_chats_stream_cubit/get_user_chats_cubit.dart';
+import 'package:real_time_chat_app/features/home/presentation/manager/restore_unreadCount_messages_cubit/restore_unread_count_messages_cubit.dart';
 import 'package:real_time_chat_app/features/profile/domain/repos/profile_repo.dart';
 
 class MainViewMultiBlocProvider extends StatelessWidget {
@@ -43,6 +44,10 @@ class MainViewMultiBlocProvider extends StatelessWidget {
         BlocProvider(
           create: (context) =>
               GetOrCreateChatCubit(mainRepo: getIt.get<MainRepo>()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              RestoreUnReadCountMessagesCubit(mainRepo: getIt.get<MainRepo>()),
         ),
         BlocProvider(
           create: (context) => GetUserChatsCubit(
