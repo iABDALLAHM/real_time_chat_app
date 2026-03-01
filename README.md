@@ -1,10 +1,12 @@
 # Chat App
 
 <hr style="width:60%; margin:auto;">
-## Descriptions
 
+## Descriptions
+this is a description 
 
 <hr style="width:60%; margin:auto;">
+
 ## ScreenShots
 
 <p>
@@ -22,7 +24,8 @@
 
 
 
-<hr style="width:60%; margin:auto;">
+<hr style="width:50%; margin:auto;">
+
 ## Connect With Me
 
 [![LinkedIn](https://img.shields.io/badge/-Project_Post_on_LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)]()
