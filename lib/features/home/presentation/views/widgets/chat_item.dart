@@ -205,13 +205,16 @@ class ChatItem extends StatelessWidget {
   }
 
   String getSeenStatusText() {
-    return "";
+    if (chat.unreadCount[otherUser.uId] == 0) {
+      return "seen";
+    } else {
+      return "";
+    }
   }
 
   Color getSeenStatusColor() {
-    var lastSeenDate = chat.lastSeenBy[getUserData().uId];
-    if (lastSeenDate == DateTime.now()) {
-      return Colors.green;
+    if (chat.unreadCount[otherUser.uId] == 0) {
+      return AppTheme.primaryColor;
     } else {
       return Colors.black;
     }

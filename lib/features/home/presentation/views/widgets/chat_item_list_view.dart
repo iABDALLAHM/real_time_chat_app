@@ -19,7 +19,7 @@ class ChatItemListView extends StatelessWidget {
           lastMessageTime:
               "${userWithChatList[index].chatEntity.lastMessageTime?.day.toString()}-${userWithChatList[index].chatEntity.lastMessageTime?.month.toString()}-${userWithChatList[index].chatEntity.lastMessageTime?.year.toString()}",
           onTap: () {
-            handleUpdateUnReadMessagesCount(index: index, context: context);
+            updateUnReadMessagesCount(index: index, context: context);
             Navigator.of(context).pushNamed(
               ChatView.routeName,
               arguments: userWithChatList[index].userEntity,
@@ -31,7 +31,7 @@ class ChatItemListView extends StatelessWidget {
     );
   }
 
-  void handleUpdateUnReadMessagesCount({
+  void updateUnReadMessagesCount({
     required int index,
     required BuildContext context,
   }) {
@@ -39,20 +39,10 @@ class ChatItemListView extends StatelessWidget {
 
     int myunreadCount =
         userWithChatList[index].chatEntity.unreadCount[getUserData().uId] ?? 0;
-    int myFriendunreadCount =
-        userWithChatList[index].chatEntity.unreadCount[userWithChatList[index]
-            .userEntity
-            .uId] ??
-        0;
 
     if (myunreadCount > 0) {
       context.read<RestoreUnReadCountMessagesCubit>().restoreunReadCount(
         userId: getUserData().uId,
-        chatId: chatId,
-      );
-    } else if (myFriendunreadCount > 0) {
-      context.read<RestoreUnReadCountMessagesCubit>().restoreunReadCount(
-        userId: userWithChatList[index].userEntity.uId,
         chatId: chatId,
       );
     }
