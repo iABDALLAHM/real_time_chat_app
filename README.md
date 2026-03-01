@@ -3,7 +3,8 @@
 
 
 ## Descriptions
-this is a description 
+
+A Clean Architecture Real-Time Chat App built with Flutter, supporting secure messaging, organized code structure, and scalable features. Designed for learning, building, and deploying production-ready mobile apps.
 
 
 
