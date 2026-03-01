@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/entities/user_with_chat_entity.dart';
+import 'package:real_time_chat_app/core/functions/get_message_time.dart';
 import 'package:real_time_chat_app/core/functions/get_user_data.dart';
 import 'package:real_time_chat_app/features/chat/presentation/views/chat_view.dart';
 import 'package:real_time_chat_app/features/home/presentation/manager/restore_unreadCount_messages_cubit/restore_unread_count_messages_cubit.dart';
@@ -16,8 +17,9 @@ class ChatItemListView extends StatelessWidget {
       itemBuilder: (context, index) {
         return ChatItem(
           otherUser: userWithChatList[index].userEntity,
-          lastMessageTime:
-              "${userWithChatList[index].chatEntity.lastMessageTime?.day.toString()}-${userWithChatList[index].chatEntity.lastMessageTime?.month.toString()}-${userWithChatList[index].chatEntity.lastMessageTime?.year.toString()}",
+          lastMessageTime: getMessageTime(
+            time: userWithChatList[index].chatEntity.lastMessageTime,
+          ),
           onTap: () {
             updateUnReadMessagesCount(index: index, context: context);
             Navigator.of(context).pushNamed(
