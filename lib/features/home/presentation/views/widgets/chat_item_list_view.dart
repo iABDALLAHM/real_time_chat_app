@@ -39,8 +39,7 @@ class ChatItemListView extends StatelessWidget {
 
     int myunreadCount =
         userWithChatList[index].chatEntity.unreadCount[getUserData().uId] ?? 0;
-
-    if (myunreadCount > 0) {
+    if (myunreadCount.round() > 0) {
       context.read<RestoreUnReadCountMessagesCubit>().restoreunReadCount(
         userId: getUserData().uId,
         chatId: chatId,

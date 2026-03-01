@@ -435,6 +435,7 @@ class MainRepoImplementation implements MainRepo {
     //     await restoreChatForUser(chatId: chatId, userId: user2Id);
     //   }
     // }
+
     return chatId;
   }
 
@@ -622,14 +623,6 @@ class MainRepoImplementation implements MainRepo {
         "editedAt": DateTime.now(),
       },
       documentId: messageId,
-    );
-  }
-
-  @override
-  Future<void> markMessagesAsRead({required String messageId})async {
-     await dataBaseService.updateData(
-      path: BackendEndPoints.messages,
-      data: {"isRead": true},
     );
   }
 
