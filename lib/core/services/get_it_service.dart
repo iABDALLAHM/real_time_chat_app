@@ -8,12 +8,12 @@ import 'package:real_time_chat_app/features/auth/domain/repos/auth_repo.dart';
 import 'package:real_time_chat_app/features/home/data/repos/chats_repo_implementation.dart';
 import 'package:real_time_chat_app/features/home/data/repos/friend_ship_repo_implementation.dart';
 import 'package:real_time_chat_app/features/home/data/repos/main_repo_implementation.dart';
-import 'package:real_time_chat_app/features/home/data/repos/messages_repo_implementation.dart';
+import 'package:real_time_chat_app/core/repos/messages_repo_implementation.dart';
 import 'package:real_time_chat_app/features/home/data/repos/notifications_repo_implementation.dart';
 import 'package:real_time_chat_app/features/home/domain/repos/chats_repo.dart';
 import 'package:real_time_chat_app/features/home/domain/repos/friend_ship_repo.dart';
 import 'package:real_time_chat_app/features/home/domain/repos/main_repo.dart';
-import 'package:real_time_chat_app/features/home/domain/repos/messages_repo.dart';
+import 'package:real_time_chat_app/core/repos/messages_repo.dart';
 import 'package:real_time_chat_app/features/home/domain/repos/notifications_repo.dart';
 import 'package:real_time_chat_app/features/profile/data/repos/profile_repo_implementation.dart';
 import 'package:real_time_chat_app/features/profile/domain/repos/profile_repo.dart';
@@ -60,7 +60,7 @@ void setupGetIt() {
       dataBaseService: getIt<DataBaseService>(),
     ),
   );
-  
+
   getIt.registerSingleton<AuthRepo>(
     AuthRepoImplementation(
       authService: getIt<AuthService>(),

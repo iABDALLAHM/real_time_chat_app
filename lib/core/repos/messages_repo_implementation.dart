@@ -5,7 +5,7 @@ import 'package:real_time_chat_app/core/models/message_model.dart';
 import 'package:real_time_chat_app/core/services/data_base_service.dart';
 import 'package:real_time_chat_app/core/utils/backend_end_points.dart';
 import 'package:real_time_chat_app/features/home/domain/repos/chats_repo.dart';
-import 'package:real_time_chat_app/features/home/domain/repos/messages_repo.dart';
+import 'package:real_time_chat_app/core/repos/messages_repo.dart';
 
 class MessagesRepoImplementation implements MessagesRepo {
   final DataBaseService dataBaseService;
