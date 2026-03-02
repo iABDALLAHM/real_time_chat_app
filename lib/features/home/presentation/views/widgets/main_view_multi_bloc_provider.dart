@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/cubits/user_stream_cubit/user_data_stream_cubit.dart';
 import 'package:real_time_chat_app/core/services/get_it_service.dart';
 import 'package:real_time_chat_app/features/auth/domain/repos/auth_repo.dart';
+import 'package:real_time_chat_app/features/home/domain/repos/friend_ship_repo.dart';
 import 'package:real_time_chat_app/features/home/domain/repos/main_repo.dart';
 import 'package:real_time_chat_app/features/home/presentation/manager/friend_ship_cubit/friend_ship_cubit.dart';
 import 'package:real_time_chat_app/features/home/presentation/manager/get_all_users_stream_cubit/get_all_users_stream_cubit.dart';
@@ -34,12 +35,13 @@ class MainViewMultiBlocProvider extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => GetMyFriendsStreamCubit(
-            mainRepo: getIt.get<MainRepo>(),
+            friendShipRepo: getIt.get<FriendShipRepo>(),
             authRepo: getIt.get<AuthRepo>(),
           ),
         ),
         BlocProvider(
-          create: (context) => FriendShipCubit(mainRepo: getIt.get<MainRepo>()),
+          create: (context) =>
+              FriendShipCubit(friendShipRepo: getIt.get<FriendShipRepo>()),
         ),
         BlocProvider(
           create: (context) =>

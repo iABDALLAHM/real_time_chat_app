@@ -3,18 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/entities/friend_ship_with_user_entity.dart';
 import 'package:real_time_chat_app/core/entities/user_entity.dart';
 import 'package:real_time_chat_app/features/auth/domain/repos/auth_repo.dart';
-import 'package:real_time_chat_app/features/home/domain/repos/main_repo.dart';
+import 'package:real_time_chat_app/features/home/domain/repos/friend_ship_repo.dart';
 import 'package:real_time_chat_app/features/home/presentation/manager/get_my_friends_stream_cubit.dart/get_my_friends_stream_states.dart';
 
 class GetMyFriendsStreamCubit extends Cubit<GetMyFriendsStreamStates> {
-  GetMyFriendsStreamCubit({required this.mainRepo, required this.authRepo})
+  GetMyFriendsStreamCubit({required this.friendShipRepo, required this.authRepo})
     : super(InitialGetMyFriendsStreamState());
-  final MainRepo mainRepo;
+  final FriendShipRepo friendShipRepo;
   final AuthRepo authRepo;
   StreamSubscription? _streamSubscription;
   void getMyFriends({required String userId}) {
     emit(LoadingGetMyFriendsStreamState());
-    _streamSubscription = mainRepo.getFriendsStream(userId: userId).listen((
+    _streamSubscription = friendShipRepo.getFriendsStream(userId: userId).listen((
       result,
     ) async {
       if (result.isEmpty) {
