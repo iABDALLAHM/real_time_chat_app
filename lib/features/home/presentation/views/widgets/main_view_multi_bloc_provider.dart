@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/cubits/user_stream_cubit/user_data_stream_cubit.dart';
 import 'package:real_time_chat_app/core/services/get_it_service.dart';
 import 'package:real_time_chat_app/features/auth/domain/repos/auth_repo.dart';
+import 'package:real_time_chat_app/features/home/domain/repos/chats_repo.dart';
 import 'package:real_time_chat_app/features/home/domain/repos/friend_ship_repo.dart';
 import 'package:real_time_chat_app/features/home/domain/repos/main_repo.dart';
 import 'package:real_time_chat_app/features/home/presentation/manager/friend_ship_cubit/friend_ship_cubit.dart';
@@ -45,15 +46,15 @@ class MainViewMultiBlocProvider extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) =>
-              GetOrCreateChatCubit(mainRepo: getIt.get<MainRepo>()),
+              GetOrCreateChatCubit(chatsRepo: getIt.get<ChatsRepo>()),
         ),
         BlocProvider(
           create: (context) =>
-              RestoreUnReadCountMessagesCubit(mainRepo: getIt.get<MainRepo>()),
+              RestoreUnReadCountMessagesCubit(chatsRepo: getIt.get<ChatsRepo>()),
         ),
         BlocProvider(
           create: (context) => GetUserChatsCubit(
-            mainRepo: getIt.get<MainRepo>(),
+            chatsRepo: getIt.get<ChatsRepo>(),
             authRepo: getIt.get<AuthRepo>(),
           ),
         ),

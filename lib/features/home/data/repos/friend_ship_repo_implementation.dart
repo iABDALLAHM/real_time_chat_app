@@ -7,12 +7,14 @@ import 'package:real_time_chat_app/core/utils/backend_end_points.dart';
 import 'package:real_time_chat_app/features/home/domain/repos/friend_ship_repo.dart';
 import 'package:real_time_chat_app/features/home/domain/repos/notifications_repo.dart';
 
-class FriendShipRepoImplementation implements FriendShipRepo{
-
+class FriendShipRepoImplementation implements FriendShipRepo {
   final DataBaseService dataBaseService;
   final NotificationsRepo notificationsRepo;
-  FriendShipRepoImplementation({required this.dataBaseService, required this.notificationsRepo});
-  
+  FriendShipRepoImplementation({
+    required this.dataBaseService,
+    required this.notificationsRepo,
+  });
+
   @override
   Future<void> createFriendShip({
     required String user1Id,
@@ -177,5 +179,4 @@ class FriendShipRepoImplementation implements FriendShipRepo{
     }
     return false;
   }
-
 }

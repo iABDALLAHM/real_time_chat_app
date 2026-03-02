@@ -1,6 +1,4 @@
-import 'package:real_time_chat_app/core/entities/chat_entity.dart';
 import 'package:real_time_chat_app/core/entities/friend_request_entity.dart';
-import 'package:real_time_chat_app/core/entities/message_entity.dart';
 import 'package:real_time_chat_app/core/entities/user_entity.dart';
 import 'package:real_time_chat_app/core/enums/friend_request_status.dart';
 
@@ -22,55 +20,4 @@ abstract class MainRepo {
     required String senderId,
     required String receiverId,
   });
-
- 
-  // chats collections
-  Future<String> createOrGetChat({
-    required String user1Id,
-    required String user2Id,
-  });
-  Stream<List<ChatEntity>> getUserChatsStream({required String userId});
-  Future<void> updateChatLastMessage({
-    required String chatId,
-    required MessageEntity message,
-  });
-  Future<void> updateUserLastSeen({
-    required String chatId,
-    required String userId,
-  });
-  Future<void> deleteChatForUser({
-    required String chatId,
-    required String userId,
-  });
-  Future<void> restoreChatForUser({
-    required String chatId,
-    required String userId,
-  });
-  Future<void> updateunReadCount({
-    required String chatId,
-    required String userId,
-    required int count,
-  });
-  Future<void> restoreunReadCount({
-    required String chatId,
-    required String userId,
-  });
-
-  /// message collection
-  Future<void> sendMessage({required MessageEntity message});
-
-  Stream<List<MessageEntity>> getMessagesStream({
-    required String user1Id,
-    required String user2Id,
-  });
-
-  Future<void> markMessageAsRead({required String messageId});
-
-  Future<void> deleteMessage({required String messageId});
-  Future<void> editMessage({
-    required String messageId,
-    required String newContent,
-  });
-
-
 }

@@ -1,7 +1,7 @@
 import 'package:real_time_chat_app/core/entities/friendship_entity.dart';
 
 abstract class FriendShipRepo {
-   // friendship collections
+  // friendship collections
   Future<void> createFriendShip({
     required String user1Id,
     required String user2Id,
@@ -35,5 +35,4 @@ abstract class FriendShipRepo {
     required String userId,
     required String otherUserId,
   });
-
 }

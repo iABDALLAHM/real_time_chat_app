@@ -1,13 +1,13 @@
 // notifications collection all done
 
-  import 'package:real_time_chat_app/core/entities/notification_entity.dart';
+import 'package:real_time_chat_app/core/entities/notification_entity.dart';
 import 'package:real_time_chat_app/core/enums/notification_type.dart';
 import 'package:real_time_chat_app/core/models/notification_model.dart';
 import 'package:real_time_chat_app/core/services/data_base_service.dart';
 import 'package:real_time_chat_app/core/utils/backend_end_points.dart';
 import 'package:real_time_chat_app/features/home/domain/repos/notifications_repo.dart';
 
-class NotificationsRepoImplementation implements NotificationsRepo{
+class NotificationsRepoImplementation implements NotificationsRepo {
   final DataBaseService dataBaseService;
 
   NotificationsRepoImplementation({required this.dataBaseService});
