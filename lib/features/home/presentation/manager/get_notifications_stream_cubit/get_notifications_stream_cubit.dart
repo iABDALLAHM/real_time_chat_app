@@ -1,17 +1,17 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:real_time_chat_app/features/home/domain/repos/main_repo.dart';
+import 'package:real_time_chat_app/features/home/domain/repos/notifications_repo.dart';
 import 'package:real_time_chat_app/features/home/presentation/manager/get_notifications_stream_cubit/get_notifications_stream_state.dart';
 
 class GetNotificationsStreamCubit extends Cubit<GetNotificationsStreamStates> {
-  GetNotificationsStreamCubit({required this.mainRepo})
+  GetNotificationsStreamCubit({required this.notificationsRepo})
     : super(InitialGetNotificationsStreamState());
-  final MainRepo mainRepo;
+  final NotificationsRepo notificationsRepo;
   StreamSubscription? _streamSubscription;
   int notificationLenght = 0;
   void getNotifications({required String userId}) async {
     emit(LoadingGetNotificationsStreamState());
-    _streamSubscription = mainRepo
+    _streamSubscription = notificationsRepo
         .getNotificationsStream(userId: userId)
         .listen((result) {
           notificationLenght = result.length;

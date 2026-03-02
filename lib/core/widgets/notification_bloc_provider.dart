@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/services/get_it_service.dart';
-import 'package:real_time_chat_app/features/home/domain/repos/main_repo.dart';
+import 'package:real_time_chat_app/features/home/domain/repos/notifications_repo.dart';
 import 'package:real_time_chat_app/features/home/presentation/manager/get_notifications_stream_cubit/get_notifications_stream_cubit.dart';
 import 'package:real_time_chat_app/features/home/presentation/manager/notifications_cubit/notifications_cubit.dart';
 
@@ -14,11 +14,11 @@ class NotificationBlocProvider extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) =>
-              GetNotificationsStreamCubit(mainRepo: getIt.get<MainRepo>()),
+              GetNotificationsStreamCubit(notificationsRepo: getIt.get<NotificationsRepo>()),
         ),
         BlocProvider(
           create: (context) =>
-              NotificationsCubit(mainRepo: getIt.get<MainRepo>()),
+              NotificationsCubit(notificationsRepo: getIt.get<NotificationsRepo>()),
         ),
       ],
       child: child,

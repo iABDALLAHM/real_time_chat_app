@@ -10,17 +10,18 @@ import 'package:real_time_chat_app/core/models/chat_model.dart';
 import 'package:real_time_chat_app/core/models/friend_request_model.dart';
 import 'package:real_time_chat_app/core/models/friendship_model.dart';
 import 'package:real_time_chat_app/core/models/message_model.dart';
-import 'package:real_time_chat_app/core/models/notification_model.dart';
+
 import 'package:real_time_chat_app/core/models/user_model.dart';
 import 'package:real_time_chat_app/core/services/data_base_service.dart';
 import 'package:real_time_chat_app/core/utils/backend_end_points.dart';
 import 'package:real_time_chat_app/features/home/domain/repos/main_repo.dart';
+import 'package:real_time_chat_app/features/home/domain/repos/notifications_repo.dart';
 
 class MainRepoImplementation implements MainRepo {
   final DataBaseService dataBaseService;
-  MainRepoImplementation({required this.dataBaseService});
+  final NotificationsRepo notificationsRepo;
+  MainRepoImplementation({required this.dataBaseService, required this.notificationsRepo});
 
-  // done
   @override
   Stream<List<UserEntity>> getAllUsersStream() async* {
     await for (var userMaps in dataBaseService.getAllDataStream(
@@ -34,7 +35,6 @@ class MainRepoImplementation implements MainRepo {
     }
   }
 
-  // done
   @override
   Future<void> sendFriendRequest({
     required FriendRequestEntity friendRequest,
@@ -60,10 +60,9 @@ class MainRepoImplementation implements MainRepo {
       type: NotificationType.friendRequest,
       createdAt: DateTime.now(),
     );
-    await createNotification(notificationEntity: notificationEntity);
+    await notificationsRepo.createNotification(notificationEntity: notificationEntity);
   }
 
-  // done
   @override
   Future<void> cancelFriendRequest({required String requestId}) async {
     var requestDoc = await dataBaseService.getSingleData(
@@ -75,7 +74,7 @@ class MainRepoImplementation implements MainRepo {
       requestDoc,
     );
 
-    await deleteNotificationByTypeAndUser(
+    await notificationsRepo.deleteNotificationByTypeAndUser(
       userId: friendRequestModel.receiverId,
       type: NotificationType.friendRequest,
       relatedUserId: friendRequestModel.senderId,
@@ -87,7 +86,6 @@ class MainRepoImplementation implements MainRepo {
     );
   }
 
-  // done
   @override
   Future<void> respondToFriendRequest({
     required String requestId,
@@ -125,9 +123,9 @@ class MainRepoImplementation implements MainRepo {
         createdAt: DateTime.now(),
       );
 
-      await createNotification(notificationEntity: notificationEntity);
+      await notificationsRepo.createNotification(notificationEntity: notificationEntity);
 
-      await removeNotificationForCancelledRequest(
+      await notificationsRepo.removeNotificationForCancelledRequest(
         receiverId: friendRequestModel.receiverId,
         senderId: friendRequestModel.senderId,
       );
@@ -143,16 +141,15 @@ class MainRepoImplementation implements MainRepo {
         createdAt: DateTime.now(),
       );
 
-      await createNotification(notificationEntity: notificationEntity);
+      await notificationsRepo.createNotification(notificationEntity: notificationEntity);
 
-      await removeNotificationForCancelledRequest(
+      await notificationsRepo.removeNotificationForCancelledRequest(
         receiverId: friendRequestModel.receiverId,
         senderId: friendRequestModel.senderId,
       );
     }
   }
 
-  // done
   @override
   Stream<List<FriendRequestEntity>> getFriendRequestStream({
     required String userId,
@@ -175,7 +172,6 @@ class MainRepoImplementation implements MainRepo {
     }
   }
 
-  // done
   @override
   Stream<List<FriendRequestEntity>> getSentFriendRequestStream({
     required String userId,
@@ -194,7 +190,6 @@ class MainRepoImplementation implements MainRepo {
     }
   }
 
-  // done
   @override
   Future<FriendRequestEntity> getFriendRequest({
     required String senderId,
@@ -264,7 +259,7 @@ class MainRepoImplementation implements MainRepo {
       documentId: friendShipId,
     );
 
-    await createNotification(
+    await notificationsRepo.createNotification(
       notificationEntity: NotificationEntity(
         isRead: false,
         id: DateTime.now().toString(),
@@ -628,88 +623,5 @@ class MainRepoImplementation implements MainRepo {
 
   // ***********************************************************************************************************
 
-  // notifications collection all done
-
-  @override
-  Future<void> createNotification({
-    required NotificationEntity notificationEntity,
-  }) async {
-    await dataBaseService.addSinleData(
-      path: BackendEndPoints.notification,
-      data: NotificationModel.fromEntity(
-        notificationEntity: notificationEntity,
-      ).toMap(),
-      documentId: notificationEntity.id,
-    );
-  }
-
-  @override
-  Future<void> removeNotificationForCancelledRequest({
-    required String senderId,
-    required String receiverId,
-  }) async {
-    await deleteNotificationByTypeAndUser(
-      userId: receiverId,
-      type: NotificationType.friendRequest,
-      relatedUserId: senderId,
-    );
-  }
-
-  @override
-  Future<void> deleteNotificationByTypeAndUser({
-    required String userId,
-    required NotificationType type,
-    required String relatedUserId,
-  }) async {
-    await dataBaseService.getQueryData(
-      path: BackendEndPoints.notification,
-      relatedId: relatedUserId,
-      query: {"userId": userId, "type": type.name},
-      isQuery: true,
-    );
-  }
-
-  @override
-  Stream<List<NotificationEntity>> getNotificationsStream({
-    required String userId,
-  }) async* {
-    var data = dataBaseService.getAllDataStream(
-      path: BackendEndPoints.notification,
-      isQuery: true,
-      query: {"userId": userId, "createdAt": true},
-    );
-    await for (var notificationMap in data) {
-      List<NotificationEntity> notificationList = notificationMap
-          .map((ele) => NotificationModel.fromMap(ele).toEntity())
-          .toList();
-
-      yield notificationList;
-    }
-  }
-
-  @override
-  Future<void> markNotificationAsRead({required String notificationId}) async {
-    await dataBaseService.updateSingleData(
-      path: BackendEndPoints.notification,
-      data: {"isRead": true},
-      documentId: notificationId,
-    );
-  }
-
-  @override
-  Future<void> markAllNotificationAsRead({required String userId}) async {
-    await dataBaseService.getQueryData(
-      query: {"userId": userId, "isRead": false},
-      isQuery: true,
-      path: BackendEndPoints.notification,
-    );
-  }
-
-  @override
-  Future<void> deleteNotification({required String notificationId}) async {
-    await dataBaseService.deleteSingleData(
-      path: BackendEndPoints.notification,
-      documentId: notificationId,
-    );
-  }
+  
 }
