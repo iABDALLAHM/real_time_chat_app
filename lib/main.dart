@@ -5,9 +5,7 @@ import 'package:real_time_chat_app/core/functions/on_generate_route.dart';
 import 'package:real_time_chat_app/core/services/get_it_service.dart';
 import 'package:real_time_chat_app/core/services/shared_prefs_service.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
-import 'package:real_time_chat_app/features/home/domain/repos/main_repo.dart';
-import 'package:real_time_chat_app/features/home/presentation/manager/get_notifications_stream_cubit/get_notifications_stream_cubit.dart';
-import 'package:real_time_chat_app/features/home/presentation/manager/notifications_cubit/notifications_cubit.dart';
+import 'package:real_time_chat_app/core/widgets/notification_bloc_provider.dart';
 import 'package:real_time_chat_app/features/splash/presentation/views/splash_view.dart';
 import 'package:real_time_chat_app/firebase_options.dart';
 import 'package:real_time_chat_app/simple_bloc_observer.dart';
@@ -27,17 +25,7 @@ class RealTimeChat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) =>
-              GetNotificationsStreamCubit(mainRepo: getIt.get<MainRepo>()),
-        ),
-        BlocProvider(
-          create: (context) =>
-              NotificationsCubit(mainRepo: getIt.get<MainRepo>()),
-        ),
-      ],
+    return NotificationBlocProvider(
       child: MaterialApp(
         initialRoute: SplashView.routeName,
         onGenerateRoute: onGenerateRoute,
