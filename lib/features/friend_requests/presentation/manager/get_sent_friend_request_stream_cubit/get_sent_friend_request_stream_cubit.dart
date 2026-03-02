@@ -23,10 +23,11 @@ class GetSentFriendRequestStreamCubit
         .listen((result) async {
           length = result.length;
           List<FriendRequestWithUserEntity> friendRequestWithUserList = [];
-
           for (var request in result) {
-            // there are aproblem here
-            var user = await authRepo.getUserData(uId: request.senderId);
+            var sentRequestId = request.id == userId
+                ? request.receiverId
+                : request.senderId;
+            var user = await authRepo.getUserData(uId: sentRequestId);
             friendRequestWithUserList.add(
               FriendRequestWithUserEntity(
                 friendRequestEntity: request,
