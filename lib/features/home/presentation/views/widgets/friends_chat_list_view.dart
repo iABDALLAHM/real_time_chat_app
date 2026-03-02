@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/entities/friend_ship_with_user_entity.dart';
+import 'package:real_time_chat_app/core/functions/get_time.dart';
 import 'package:real_time_chat_app/core/functions/get_user_data.dart';
 import 'package:real_time_chat_app/features/chat/presentation/views/chat_view.dart';
 import 'package:real_time_chat_app/features/home/presentation/manager/chat_cubit/get_or_create_chat_cubit.dart';
@@ -50,8 +51,9 @@ class FriendsChatListView extends StatelessWidget {
             blockerId: getUserData().uId,
           );
         },
-        lastSeenText:
-            "${friendShipWithUserEntityList[index].friendshipEntity.createdAt.day.toString()}-${friendShipWithUserEntityList[index].friendshipEntity.createdAt.month.toString()}-${friendShipWithUserEntityList[index].friendshipEntity.createdAt.year.toString()}",
+        lastSeenText: getTime(
+          time: friendShipWithUserEntityList[index].friendshipEntity.createdAt,
+        ),
       ),
     );
   }

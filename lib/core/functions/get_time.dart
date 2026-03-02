@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-String getMessageTime({required DateTime? time}) {
+String getTime({required DateTime? time}) {
     final now = DateTime.now();
     final difference = now.difference(time!);
     if (difference.inSeconds < 30) {
