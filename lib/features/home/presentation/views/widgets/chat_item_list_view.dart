@@ -17,9 +17,11 @@ class ChatItemListView extends StatelessWidget {
       itemBuilder: (context, index) {
         return ChatItem(
           otherUser: userWithChatList[index].userEntity,
-          lastMessageTime: getTime(
-            time: userWithChatList[index].chatEntity.lastMessageTime,
-          ),
+          lastMessageTime:
+              getTime(
+                time: userWithChatList[index].chatEntity.lastMessageTime,
+              ) ??
+              "",
           onTap: () {
             updateUnReadMessagesCount(index: index, context: context);
             Navigator.of(context).pushNamed(

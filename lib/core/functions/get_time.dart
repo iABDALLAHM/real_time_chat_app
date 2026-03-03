@@ -1,11 +1,12 @@
 import 'package:intl/intl.dart';
 
-String getTime({required DateTime? time}) {
-    final now = DateTime.now();
-    final difference = now.difference(time!);
-    if (difference.inSeconds < 30) {
-      return "Just Now";
-    } else {
-      return "${DateFormat("h").format(time)}:${time.minute} ${time.hour <= 12 ? "AM" : "PM"}";
-    }
+String? getTime({required DateTime? time}) {
+  if (time == null) return null;
+  final now = DateTime.now();
+  final difference = now.difference(time);
+  if (difference.inSeconds < 30) {
+    return "Just Now";
+  } else {
+    return "${DateFormat("h").format(time)}:${time.minute} ${time.hour <= 12 ? "AM" : "PM"}";
   }
+}

@@ -64,7 +64,7 @@ class ChatsRepoImplementation implements ChatsRepo {
     var data = dataBaseService.getAllDataQueryStream(
       path: BackendEndPoints.chats,
       query: QueryParams(
-        conditions: [QueryCondition(field: "participants", isEqualTo: userId)],
+        conditions: [QueryCondition(field: "participants", arrayContains: userId)],
         orders: [QueryOrder(field: "updatedAt", descending: true)],
       ),
     );

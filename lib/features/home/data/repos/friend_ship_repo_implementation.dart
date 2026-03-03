@@ -110,7 +110,7 @@ class FriendShipRepoImplementation implements FriendShipRepo {
     var data = dataBaseService.getAllDataQueryStream(
       path: BackendEndPoints.friendShips,
       query: QueryParams(
-        conditions: [QueryCondition(field: "userIds", isEqualTo: userId)],
+        conditions: [QueryCondition(field: "userIds", arrayContains: userId)],
         orders: [],
       ),
     );

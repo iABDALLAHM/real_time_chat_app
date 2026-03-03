@@ -51,9 +51,13 @@ class FriendsChatListView extends StatelessWidget {
             blockerId: getUserData().uId,
           );
         },
-        lastSeenText: getTime(
-          time: friendShipWithUserEntityList[index].friendshipEntity.createdAt,
-        ),
+        lastSeenText:
+            getTime(
+              time: friendShipWithUserEntityList[index]
+                  .friendshipEntity
+                  .createdAt,
+            ) ??
+            "",
       ),
     );
   }
