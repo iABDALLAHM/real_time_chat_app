@@ -63,7 +63,7 @@ class ChatsRepoImplementation implements ChatsRepo {
   Stream<List<ChatEntity>> getUserChatsStream({required String userId}) async* {
     var data = dataBaseService.getAllDataQueryStream(
       path: BackendEndPoints.chats,
-      query: FirestoreQuery(
+      query: QueryParams(
         conditions: [QueryCondition(field: "participants", isEqualTo: userId)],
         orders: [QueryOrder(field: "updatedAt", descending: true)],
       ),

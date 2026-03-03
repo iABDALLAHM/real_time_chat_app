@@ -46,8 +46,13 @@ class NotificationsRepoImplementation implements NotificationsRepo {
     await dataBaseService.getQueryData(
       path: BackendEndPoints.notification,
       relatedId: relatedUserId,
-      query: {"userId": userId, "type": type.name},
-      isQuery: true,
+      query: QueryParams(
+        conditions: [
+          QueryCondition(field: "userId", isEqualTo: userId),
+          QueryCondition(field: "type", isEqualTo: type.name),
+        ],
+        orders: [],
+      ),
     );
   }
 
@@ -57,7 +62,7 @@ class NotificationsRepoImplementation implements NotificationsRepo {
   }) async* {
     var data = dataBaseService.getAllDataQueryStream(
       path: BackendEndPoints.notification,
-      query: FirestoreQuery(
+      query: QueryParams(
         conditions: [QueryCondition(field: "userId", isEqualTo: userId)],
         orders: [QueryOrder(field: "createdAt", descending: true)],
       ),
@@ -83,8 +88,14 @@ class NotificationsRepoImplementation implements NotificationsRepo {
   @override
   Future<void> markAllNotificationAsRead({required String userId}) async {
     await dataBaseService.getQueryData(
-      query: {"userId": userId, "isRead": false},
-      isQuery: true,
+      query: QueryParams(
+        conditions: [
+          QueryCondition(field: "userId", isEqualTo: userId),
+          QueryCondition(field: "isRead", isEqualTo: false),
+        ],
+        orders: [],
+      ),
+
       path: BackendEndPoints.notification,
     );
   }

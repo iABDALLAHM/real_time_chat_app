@@ -51,7 +51,7 @@ class FirestoreService implements DataBaseService {
   @override
   Stream<List<dynamic>> getAllDataQueryStream({
     required String path,
-    required FirestoreQuery query,
+    required QueryParams query,
   }) async* {
     Query<Map<String, dynamic>> data = firestore.collection(path);
     for (var condition in query.conditions) {
@@ -88,43 +88,28 @@ class FirestoreService implements DataBaseService {
 
   @override
   Future<dynamic> getQueryData({
-    Map<String, dynamic>? query,
-    bool isQuery = false,
+    required QueryParams query,
     String? relatedId,
     required String path,
   }) async {
     Query<Map<String, dynamic>> data = firestore.collection(path);
-  
-    if (query != null) {
-      if (query["userId"] != null) {
-        var userId = query["userId"];
-        data = data.where("userId", isEqualTo: userId);
-      }
 
-      if (query["type"] != null) {
-        var type = query["type"];
-        data = data.where("type", isEqualTo: type);
+    for (var condition in query.conditions) {
+      if (condition.isEqualTo != null) {
+        data = data.where(condition.field, isEqualTo: condition.isEqualTo);
       }
-
-      if (query["isRead"] != null) {
-        var isRead = query["isRead"];
-        data = data.where("isRead", isEqualTo: isRead);
+      if (condition.whereIn != null) {
+        data = data.where(condition.field, whereIn: condition.whereIn);
       }
-
-      if (query["senderId"] != null) {
-        var senderId = query["senderId"];
-        data = data.where("senderId", isEqualTo: senderId);
+      if (condition.arrayContains != null) {
+        data = data.where(
+          condition.field,
+          arrayContains: condition.arrayContains,
+        );
       }
-
-      if (query["receiverId"] != null) {
-        var receiverId = query["receiverId"];
-        data = data.where("receiverId", isEqualTo: receiverId);
-      }
-
-      if (query["status"] != null) {
-        var status = query["status"];
-        data = data.where("status", isEqualTo: status);
-      }
+    }
+    for (var order in query.orders) {
+      data = data.orderBy(order.field, descending: order.descending);
     }
 
     final result = await data.get();

@@ -1,8 +1,8 @@
-class FirestoreQuery {
+class QueryParams {
   final List<QueryCondition> conditions;
   final List<QueryOrder> orders;
 
-  FirestoreQuery({required this.conditions, required this.orders});
+  QueryParams({required this.conditions, required this.orders});
 }
 
 class QueryCondition {

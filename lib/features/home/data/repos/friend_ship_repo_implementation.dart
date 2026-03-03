@@ -110,7 +110,7 @@ class FriendShipRepoImplementation implements FriendShipRepo {
   }) async* {
     var data = dataBaseService.getAllDataQueryStream(
       path: BackendEndPoints.friendShips,
-      query: FirestoreQuery(
+      query: QueryParams(
         conditions: [QueryCondition(field: "userIds", isEqualTo: userId)],
         orders: [],
       ),

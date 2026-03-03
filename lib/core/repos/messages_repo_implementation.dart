@@ -60,7 +60,7 @@ class MessagesRepoImplementation implements MessagesRepo {
   }) async* {
     var data = dataBaseService.getAllDataQueryStream(
       path: BackendEndPoints.messages,
-      query: FirestoreQuery(
+      query: QueryParams(
         conditions: [
           QueryCondition(field: "messageSenderId", whereIn: [user1Id, user2Id]),
         ],

@@ -161,7 +161,7 @@ class MainRepoImplementation implements MainRepo {
   }) async* {
     var data = dataBaseService.getAllDataQueryStream(
       path: BackendEndPoints.friendRequests,
-      query: FirestoreQuery(
+      query: QueryParams(
         conditions: [
           QueryCondition(
             field: "status",
@@ -187,7 +187,7 @@ class MainRepoImplementation implements MainRepo {
   }) async* {
     var data = dataBaseService.getAllDataQueryStream(
       path: BackendEndPoints.friendRequests,
-      query: FirestoreQuery(
+      query: QueryParams(
         conditions: [QueryCondition(field: "senderId", isEqualTo: userId)],
         orders: [QueryOrder(field: "createdAt", descending: true)],
       ),
@@ -208,12 +208,14 @@ class MainRepoImplementation implements MainRepo {
   }) async {
     var data = await dataBaseService.getQueryData(
       path: BackendEndPoints.friendRequests,
-      query: {
-        "senderId": senderId,
-        "receiverId": receiverId,
-        "status": "pending",
-      },
-      isQuery: true,
+      query: QueryParams(
+        conditions: [
+          QueryCondition(field: "senderId", isEqualTo: senderId),
+          QueryCondition(field: "receiverId", isEqualTo: receiverId),
+          QueryCondition(field: "status", isEqualTo: "pending"),
+        ],
+        orders: [],
+      ),
     );
 
     List<FriendRequestEntity> friendRequestEntityList = [];

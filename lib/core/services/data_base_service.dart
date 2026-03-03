@@ -36,7 +36,7 @@ abstract class DataBaseService {
 
   Stream<List<dynamic>> getAllDataQueryStream({
     required String path,
-    required  FirestoreQuery query,
+    required  QueryParams query,
   });
 
   Stream<List<dynamic>> getAllDataStream({
@@ -55,7 +55,6 @@ abstract class DataBaseService {
   Future<dynamic> getQueryData({
     required String path,
     String? relatedId,
-    Map<String, dynamic>? query,
-    bool isQuery = false,
+   required QueryParams query,
   });
 }
