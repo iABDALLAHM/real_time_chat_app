@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:real_time_chat_app/core/errors/custom_exception.dart';
+import 'package:real_time_chat_app/core/models/firestore_query.dart';
 import 'package:real_time_chat_app/core/services/data_base_service.dart';
 
 class FirestoreService implements DataBaseService {
@@ -50,53 +51,26 @@ class FirestoreService implements DataBaseService {
   @override
   Stream<List<dynamic>> getAllDataQueryStream({
     required String path,
-   required Map<String, dynamic> query,
+    required FirestoreQuery query,
   }) async* {
     Query<Map<String, dynamic>> data = firestore.collection(path);
-
-      if (query["receiverId"] != null) {
-        var receiverId = query["receiverId"];
-        data = data.where("receiverId", isEqualTo: receiverId);
+    for (var condition in query.conditions) {
+      if (condition.isEqualTo != null) {
+        data = data.where(condition.field, isEqualTo: condition.isEqualTo);
       }
 
-      if (query["status"] != null) {
-        var status = query["status"];
-        data = data.where("status", isEqualTo: status);
+      if (condition.arrayContains != null) {
+        data = data.where(condition.field, arrayContains: condition.isEqualTo);
       }
 
-      if (query["senderId"] != null) {
-        var senderId = query["senderId"];
-        data = data.where("senderId", isEqualTo: senderId);
+      if (condition.whereIn != null) {
+        data = data.where(condition.field, whereIn: condition.whereIn);
       }
-
-      if (query["createdAt"] != null) {
-        var createdAt = query["createdAt"];
-        data = data.orderBy("createdAt", descending: createdAt);
-      }
-
-      if (query["timeStamp"] != null) {
-        var timeStamp = query["timeStamp"];
-        data = data.orderBy("timeStamp", descending: timeStamp);
-      }
-
-      if (query["userIds"] != null) {
-        var userIds = query["userIds"];
-        data = data.where("userIds", arrayContains: userIds);
-      }
-
-      if (query["userId"] != null) {
-        var userId = query["userId"];
-        data = data.where("userId", isEqualTo: userId);
-      }
-
-      // when message is sent
-      if (query["messageSenderId"] != null) {
-        var messageSenderId = query["messageSenderId"];
-        data = data.where("messageSenderId", whereIn: messageSenderId);
-      
+    }
+    for (var order in query.orders) {
+      data = data.orderBy(order.field, descending: order.descending);
     }
 
-    // هنا أنت بتعمل transformation للـ Stream
     var listOfMap = data.snapshots().map(
       (stream) => stream.docs.map((doc) => doc.data()).toList(),
     );
@@ -120,7 +94,7 @@ class FirestoreService implements DataBaseService {
     required String path,
   }) async {
     Query<Map<String, dynamic>> data = firestore.collection(path);
-
+  
     if (query != null) {
       if (query["userId"] != null) {
         var userId = query["userId"];

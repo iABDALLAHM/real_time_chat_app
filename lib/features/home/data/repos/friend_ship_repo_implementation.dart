@@ -1,6 +1,7 @@
 import 'package:real_time_chat_app/core/entities/friendship_entity.dart';
 import 'package:real_time_chat_app/core/entities/notification_entity.dart';
 import 'package:real_time_chat_app/core/enums/notification_type.dart';
+import 'package:real_time_chat_app/core/models/firestore_query.dart';
 import 'package:real_time_chat_app/core/models/friendship_model.dart';
 import 'package:real_time_chat_app/core/services/data_base_service.dart';
 import 'package:real_time_chat_app/core/utils/backend_end_points.dart';
@@ -109,8 +110,10 @@ class FriendShipRepoImplementation implements FriendShipRepo {
   }) async* {
     var data = dataBaseService.getAllDataQueryStream(
       path: BackendEndPoints.friendShips,
-    
-      query: {"userIds": userId},
+      query: FirestoreQuery(
+        conditions: [QueryCondition(field: "userIds", isEqualTo: userId)],
+        orders: [],
+      ),
     );
     List<FriendshipEntity> friendshipEntityList = [];
     await for (var friendshipMaps in data) {

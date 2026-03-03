@@ -3,6 +3,7 @@ import 'package:real_time_chat_app/core/entities/notification_entity.dart';
 import 'package:real_time_chat_app/core/entities/user_entity.dart';
 import 'package:real_time_chat_app/core/enums/friend_request_status.dart';
 import 'package:real_time_chat_app/core/enums/notification_type.dart';
+import 'package:real_time_chat_app/core/models/firestore_query.dart';
 import 'package:real_time_chat_app/core/models/friend_request_model.dart';
 import 'package:real_time_chat_app/core/models/user_model.dart';
 import 'package:real_time_chat_app/core/services/data_base_service.dart';
@@ -160,12 +161,16 @@ class MainRepoImplementation implements MainRepo {
   }) async* {
     var data = dataBaseService.getAllDataQueryStream(
       path: BackendEndPoints.friendRequests,
-
-      query: {
-        "receiverId": userId,
-        "status": FriendRequestStatus.pending.name,
-        "createdAt": true,
-      },
+      query: FirestoreQuery(
+        conditions: [
+          QueryCondition(
+            field: "status",
+            isEqualTo: FriendRequestStatus.pending.name,
+          ),
+          QueryCondition(field: "receiverId", isEqualTo: userId),
+        ],
+        orders: [QueryOrder(field: "createdAt", descending: true)],
+      ),
     );
 
     await for (var userMaps in data) {
@@ -182,8 +187,10 @@ class MainRepoImplementation implements MainRepo {
   }) async* {
     var data = dataBaseService.getAllDataQueryStream(
       path: BackendEndPoints.friendRequests,
-
-      query: {"senderId": userId, "createdAt": true},
+      query: FirestoreQuery(
+        conditions: [QueryCondition(field: "senderId", isEqualTo: userId)],
+        orders: [QueryOrder(field: "createdAt", descending: true)],
+      ),
     );
 
     await for (var userMaps in data) {

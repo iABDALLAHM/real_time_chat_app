@@ -1,6 +1,7 @@
 import 'package:real_time_chat_app/core/entities/chat_entity.dart';
 import 'package:real_time_chat_app/core/entities/message_entity.dart';
 import 'package:real_time_chat_app/core/models/chat_model.dart';
+import 'package:real_time_chat_app/core/models/firestore_query.dart';
 import 'package:real_time_chat_app/core/services/data_base_service.dart';
 import 'package:real_time_chat_app/core/utils/backend_end_points.dart';
 import 'package:real_time_chat_app/features/home/domain/repos/chats_repo.dart';
@@ -62,8 +63,10 @@ class ChatsRepoImplementation implements ChatsRepo {
   Stream<List<ChatEntity>> getUserChatsStream({required String userId}) async* {
     var data = dataBaseService.getAllDataQueryStream(
       path: BackendEndPoints.chats,
- 
-      query: {"participants": userId, "updatedAt": true},
+      query: FirestoreQuery(
+        conditions: [QueryCondition(field: "participants", isEqualTo: userId)],
+        orders: [QueryOrder(field: "updatedAt", descending: true)],
+      ),
     );
     await for (var chatModel in data) {
       var chatList = chatModel

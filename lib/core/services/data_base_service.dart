@@ -1,3 +1,5 @@
+import 'package:real_time_chat_app/core/models/firestore_query.dart';
+
 abstract class DataBaseService {
   // add Data
   Future<void> addData({
@@ -34,7 +36,7 @@ abstract class DataBaseService {
 
   Stream<List<dynamic>> getAllDataQueryStream({
     required String path,
-    required  Map<String, dynamic> query,
+    required  FirestoreQuery query,
   });
 
   Stream<List<dynamic>> getAllDataStream({
