@@ -87,7 +87,6 @@ class FriendShipRepoImplementation implements FriendShipRepo {
     );
   }
 
-  // not now
   @override
   Future<void> unBlockUser({
     required String user1Id,
@@ -145,7 +144,6 @@ class FriendShipRepoImplementation implements FriendShipRepo {
     return friendshipEntity;
   }
 
-  // not now
   @override
   Future<bool> isUserBlocked({
     required String userId,
@@ -164,7 +162,6 @@ class FriendShipRepoImplementation implements FriendShipRepo {
     return isUserBlocked;
   }
 
-  // not now
   @override
   Future<bool> isUnFriended({
     required String userId,

@@ -55,7 +55,10 @@ class MainRepoImplementation implements MainRepo {
       userId: friendRequestEntity.receiverId,
       title: "New Friend Request",
       body: "You have recevied a new friend request",
-      data: {"senderId": friendRequestEntity.senderId, "requestId": friendRequestEntity.id},
+      data: {
+        "senderId": friendRequestEntity.senderId,
+        "requestId": friendRequestEntity.id,
+      },
       type: NotificationType.friendRequest,
       createdAt: DateTime.now(),
     );
@@ -63,7 +66,6 @@ class MainRepoImplementation implements MainRepo {
     await notificationsRepo.createNotification(
       notificationEntity: notificationEntity,
     );
-
   }
 
   @override
@@ -133,7 +135,6 @@ class MainRepoImplementation implements MainRepo {
         receiverId: friendRequestModel.receiverId,
         senderId: friendRequestModel.senderId,
       );
-
     } else if (status == FriendRequestStatus.rejected) {
       NotificationEntity notificationEntity = NotificationEntity(
         isRead: false,
@@ -202,30 +203,4 @@ class MainRepoImplementation implements MainRepo {
       yield usersList;
     }
   }
-
-  // @override
-  // Future<FriendRequestEntity> getFriendRequest({
-  //   required String senderId,
-  //   required String receiverId,
-  // }) async {
-  //   var data = await dataBaseService.getQueryData(
-  //     path: BackendEndPoints.friendRequests,
-  //     query: QueryParams(
-  //       conditions: [
-  //         QueryCondition(field: "senderId", isEqualTo: senderId),
-  //         QueryCondition(field: "receiverId", isEqualTo: receiverId),
-  //         QueryCondition(field: "status", isEqualTo: "pending"),
-  //       ],
-  //       orders: [],
-  //     ),
-  //   );
-
-  //   List<FriendRequestEntity> friendRequestEntityList = [];
-  //   for (var friendMap in data) {
-  //     friendRequestEntityList.add(
-  //       FriendRequestModel.fromMap(friendMap).toEntity(),
-  //     );
-  //   }
-  //   return friendRequestEntityList.first;
-  // }
 }

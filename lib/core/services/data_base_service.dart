@@ -24,7 +24,7 @@ abstract class DataBaseService {
 
   Future<void> updateBatchData({
     required String path,
-    required Map<String,dynamic> updateData,
+    required Map<String,dynamic> updatedData,
     required QueryParams query,
   });
 

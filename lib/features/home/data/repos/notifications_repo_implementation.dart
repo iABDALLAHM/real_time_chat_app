@@ -85,7 +85,7 @@ class NotificationsRepoImplementation implements NotificationsRepo {
   @override
   Future<void> markAllNotificationAsRead({required String userId}) async {
     await dataBaseService.updateBatchData(
-      updateData: {"isRead": true},
+      updatedData: {"isRead": true},
       path: BackendEndPoints.notification,
       query: QueryParams(
         conditions: [

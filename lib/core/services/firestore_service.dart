@@ -144,7 +144,7 @@ class FirestoreService implements DataBaseService {
   @override
   Future<void> updateBatchData({
     required String path,
-    required Map<String, dynamic> updateData,
+    required Map<String, dynamic> updatedData,
 
     required QueryParams query,
   }) async {
@@ -173,7 +173,7 @@ class FirestoreService implements DataBaseService {
     WriteBatch batch = firestore.batch();
 
     for (var doc in result.docs) {
-      batch.update(doc.reference, updateData);
+      batch.update(doc.reference, updatedData);
     }
 
     batch.commit();
