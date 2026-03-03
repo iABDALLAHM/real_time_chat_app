@@ -1,6 +1,7 @@
 import 'package:real_time_chat_app/core/entities/chat_entity.dart';
 import 'package:real_time_chat_app/core/entities/message_entity.dart';
 import 'package:real_time_chat_app/core/models/chat_model.dart';
+import 'package:real_time_chat_app/core/models/firestore_query.dart';
 import 'package:real_time_chat_app/core/models/message_model.dart';
 import 'package:real_time_chat_app/core/services/data_base_service.dart';
 import 'package:real_time_chat_app/core/utils/backend_end_points.dart';
@@ -59,10 +60,12 @@ class MessagesRepoImplementation implements MessagesRepo {
   }) async* {
     var data = dataBaseService.getAllDataQueryStream(
       path: BackendEndPoints.messages,
-      query: {
-        "messageSenderId": [user1Id, user2Id],
-        "timeStamp": true,
-      },
+      query: FirestoreQuery(
+        conditions: [
+          QueryCondition(field: "messageSenderId", whereIn: [user1Id, user2Id]),
+        ],
+        orders: [QueryOrder(field: "timeStamp", descending: true)],
+      ),
     );
 
     List<MessageEntity> messagesList = [];
