@@ -32,11 +32,13 @@ abstract class DataBaseService {
   // get stream data
   Stream getSingleDataStream({required String uId, required String path});
 
+  Stream<List<dynamic>> getAllDataQueryStream({
+    required String path,
+    required  Map<String, dynamic> query,
+  });
+
   Stream<List<dynamic>> getAllDataStream({
     required String path,
-    bool isQuery = false,
-    String? documentId,
-    Map<String, dynamic>? query,
   });
 
   // get data

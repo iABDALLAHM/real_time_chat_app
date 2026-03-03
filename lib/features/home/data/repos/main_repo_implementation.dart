@@ -24,7 +24,6 @@ class MainRepoImplementation implements MainRepo {
   @override
   Stream<List<UserEntity>> getAllUsersStream() async* {
     await for (var userMaps in dataBaseService.getAllDataStream(
-      isQuery: false,
       path: BackendEndPoints.getUsers,
     )) {
       final usersList = userMaps
@@ -159,9 +158,9 @@ class MainRepoImplementation implements MainRepo {
   Stream<List<FriendRequestEntity>> getFriendRequestStream({
     required String userId,
   }) async* {
-    var data = dataBaseService.getAllDataStream(
+    var data = dataBaseService.getAllDataQueryStream(
       path: BackendEndPoints.friendRequests,
-      isQuery: true,
+
       query: {
         "receiverId": userId,
         "status": FriendRequestStatus.pending.name,
@@ -181,9 +180,9 @@ class MainRepoImplementation implements MainRepo {
   Stream<List<FriendRequestEntity>> getSentFriendRequestStream({
     required String userId,
   }) async* {
-    var data = dataBaseService.getAllDataStream(
+    var data = dataBaseService.getAllDataQueryStream(
       path: BackendEndPoints.friendRequests,
-      isQuery: true,
+
       query: {"senderId": userId, "createdAt": true},
     );
 

@@ -57,9 +57,8 @@ class MessagesRepoImplementation implements MessagesRepo {
     required String user1Id,
     required String user2Id,
   }) async* {
-    var data = dataBaseService.getAllDataStream(
+    var data = dataBaseService.getAllDataQueryStream(
       path: BackendEndPoints.messages,
-      isQuery: true,
       query: {
         "messageSenderId": [user1Id, user2Id],
         "timeStamp": true,

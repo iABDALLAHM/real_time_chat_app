@@ -107,9 +107,9 @@ class FriendShipRepoImplementation implements FriendShipRepo {
   Stream<List<FriendshipEntity>> getFriendsStream({
     required String userId,
   }) async* {
-    var data = dataBaseService.getAllDataStream(
+    var data = dataBaseService.getAllDataQueryStream(
       path: BackendEndPoints.friendShips,
-      isQuery: true,
+    
       query: {"userIds": userId},
     );
     List<FriendshipEntity> friendshipEntityList = [];

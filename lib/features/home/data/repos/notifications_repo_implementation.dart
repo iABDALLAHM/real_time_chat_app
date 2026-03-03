@@ -54,9 +54,9 @@ class NotificationsRepoImplementation implements NotificationsRepo {
   Stream<List<NotificationEntity>> getNotificationsStream({
     required String userId,
   }) async* {
-    var data = dataBaseService.getAllDataStream(
+    var data = dataBaseService.getAllDataQueryStream(
       path: BackendEndPoints.notification,
-      isQuery: true,
+  
       query: {"userId": userId, "createdAt": true},
     );
     await for (var notificationMap in data) {

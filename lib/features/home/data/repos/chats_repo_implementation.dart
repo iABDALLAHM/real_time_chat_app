@@ -60,9 +60,9 @@ class ChatsRepoImplementation implements ChatsRepo {
 
   @override
   Stream<List<ChatEntity>> getUserChatsStream({required String userId}) async* {
-    var data = dataBaseService.getAllDataStream(
+    var data = dataBaseService.getAllDataQueryStream(
       path: BackendEndPoints.chats,
-      isQuery: true,
+ 
       query: {"participants": userId, "updatedAt": true},
     );
     await for (var chatModel in data) {

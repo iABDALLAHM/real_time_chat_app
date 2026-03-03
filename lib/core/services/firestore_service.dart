@@ -48,68 +48,59 @@ class FirestoreService implements DataBaseService {
   }
 
   @override
-  Stream<List<dynamic>> getAllDataStream({
+  Stream<List<dynamic>> getAllDataQueryStream({
     required String path,
-    bool isQuery = false,
-    String? documentId,
-    Map<String, dynamic>? query,
+   required Map<String, dynamic> query,
   }) async* {
-    if (isQuery == false) {
-      yield* firestore
-          .collection(path)
-          .snapshots()
-          .map((snapShots) => snapShots.docs.map((doc) => doc.data()).toList());
-    } else {
-      Query<Map<String, dynamic>> data = firestore.collection(path);
-      if (query != null) {
-        if (query["receiverId"] != null) {
-          var receiverId = query["receiverId"];
-          data = data.where("receiverId", isEqualTo: receiverId);
-        }
+    Query<Map<String, dynamic>> data = firestore.collection(path);
 
-        if (query["status"] != null) {
-          var status = query["status"];
-          data = data.where("status", isEqualTo: status);
-        }
-
-        if (query["senderId"] != null) {
-          var senderId = query["senderId"];
-          data = data.where("senderId", isEqualTo: senderId);
-        }
-
-        if (query["createdAt"] != null) {
-          var createdAt = query["createdAt"];
-          data = data.orderBy("createdAt", descending: createdAt);
-        }
-
-        if (query["timeStamp"] != null) {
-          var timeStamp = query["timeStamp"];
-          data = data.orderBy("timeStamp", descending: timeStamp);
-        }
-
-        if (query["userIds"] != null) {
-          var userIds = query["userIds"];
-          data = data.where("userIds", arrayContains: userIds);
-        }
-
-        if (query["userId"] != null) {
-          var userId = query["userId"];
-          data = data.where("userId", isEqualTo: userId);
-        }
-
-        // when message is sent
-        if (query["messageSenderId"] != null) {
-          var messageSenderId = query["messageSenderId"];
-          data = data.where("messageSenderId", whereIn: messageSenderId);
-        }
+      if (query["receiverId"] != null) {
+        var receiverId = query["receiverId"];
+        data = data.where("receiverId", isEqualTo: receiverId);
       }
 
-      // هنا أنت بتعمل transformation للـ Stream
-      var listOfMap = data.snapshots().map(
-        (stream) => stream.docs.map((doc) => doc.data()).toList(),
-      );
-      yield* listOfMap;
+      if (query["status"] != null) {
+        var status = query["status"];
+        data = data.where("status", isEqualTo: status);
+      }
+
+      if (query["senderId"] != null) {
+        var senderId = query["senderId"];
+        data = data.where("senderId", isEqualTo: senderId);
+      }
+
+      if (query["createdAt"] != null) {
+        var createdAt = query["createdAt"];
+        data = data.orderBy("createdAt", descending: createdAt);
+      }
+
+      if (query["timeStamp"] != null) {
+        var timeStamp = query["timeStamp"];
+        data = data.orderBy("timeStamp", descending: timeStamp);
+      }
+
+      if (query["userIds"] != null) {
+        var userIds = query["userIds"];
+        data = data.where("userIds", arrayContains: userIds);
+      }
+
+      if (query["userId"] != null) {
+        var userId = query["userId"];
+        data = data.where("userId", isEqualTo: userId);
+      }
+
+      // when message is sent
+      if (query["messageSenderId"] != null) {
+        var messageSenderId = query["messageSenderId"];
+        data = data.where("messageSenderId", whereIn: messageSenderId);
+      
     }
+
+    // هنا أنت بتعمل transformation للـ Stream
+    var listOfMap = data.snapshots().map(
+      (stream) => stream.docs.map((doc) => doc.data()).toList(),
+    );
+    yield* listOfMap;
   }
 
   @override
@@ -224,5 +215,13 @@ class FirestoreService implements DataBaseService {
       batch.update(doc.reference, {"isRead": true});
     }
     await batch.commit();
+  }
+
+  @override
+  Stream<List<dynamic>> getAllDataStream({required String path}) async* {
+    yield* firestore
+        .collection(path)
+        .snapshots()
+        .map((snapShots) => snapShots.docs.map((doc) => doc.data()).toList());
   }
 }
