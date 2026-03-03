@@ -1,7 +1,6 @@
 import 'package:real_time_chat_app/core/models/firestore_query.dart';
 
 abstract class DataBaseService {
-  // add Data
   Future<void> addData({
     required String path,
     required Map<String, dynamic> data,
@@ -12,49 +11,41 @@ abstract class DataBaseService {
     required String documentId,
   });
 
-  // delete data
   Future<dynamic> deleteSingleData({
     required String path,
     required String documentId,
   });
 
-  // update data
   Future<void> updateSingleData({
     required String path,
     required Map<String, dynamic> data,
     required String documentId,
   });
 
-  Future<void> updateData({
+  Future<void> updateBatchData({
     required String path,
-    required Map<String, dynamic> data,
-        Map<String, dynamic>? query,
+    required Map<String,dynamic> updateData,
+    required QueryParams query,
   });
 
-  // get stream data
+  Future<void> deleteBatchData({
+    required String path,
+    required QueryParams query,
+  });
+
   Stream getSingleDataStream({required String uId, required String path});
 
   Stream<List<dynamic>> getAllDataQueryStream({
     required String path,
-    required  QueryParams query,
+    required QueryParams query,
   });
 
-  Stream<List<dynamic>> getAllDataStream({
-    required String path,
-  });
+  Stream<List<dynamic>> getAllDataStream({required String path});
 
-  // get data
   Future<dynamic> getSingleData({
     required String path,
     required String documentId,
   });
 
   Future<dynamic> getData({required String path});
-
-  // قابلة للنقاش والتعديل
-  Future<dynamic> getQueryData({
-    required String path,
-    String? relatedId,
-   required QueryParams query,
-  });
 }

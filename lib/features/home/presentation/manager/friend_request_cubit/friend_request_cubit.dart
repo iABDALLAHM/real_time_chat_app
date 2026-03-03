@@ -9,7 +9,7 @@ class FriendRequestCubit extends Cubit<UserRelationshipStatus> {
   final MainRepo mainRepo;
 
   void sendRequest({required FriendRequestEntity friendRequestEntity}) async {
-    await mainRepo.sendFriendRequest(friendRequest: friendRequestEntity);
+    await mainRepo.sendFriendRequest(friendRequestEntity: friendRequestEntity);
     emit(UserRelationshipStatus.friendRequestSent);
   }
 

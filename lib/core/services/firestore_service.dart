@@ -6,7 +6,6 @@ import 'package:real_time_chat_app/core/services/data_base_service.dart';
 class FirestoreService implements DataBaseService {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  // delete Data
   @override
   Future<dynamic> deleteSingleData({
     required String path,
@@ -21,7 +20,6 @@ class FirestoreService implements DataBaseService {
     }
   }
 
-  // update Data
   @override
   Future<void> updateSingleData({
     required String path,
@@ -31,7 +29,6 @@ class FirestoreService implements DataBaseService {
     await firestore.collection(path).doc(documentId).update(data);
   }
 
-  // get Data
   @override
   Future<dynamic> getData({required String path}) async {
     return await firestore.collection(path).get();
@@ -87,54 +84,6 @@ class FirestoreService implements DataBaseService {
   }
 
   @override
-  Future<dynamic> getQueryData({
-    required QueryParams query,
-    String? relatedId,
-    required String path,
-  }) async {
-    Query<Map<String, dynamic>> data = firestore.collection(path);
-
-    for (var condition in query.conditions) {
-      if (condition.isEqualTo != null) {
-        data = data.where(condition.field, isEqualTo: condition.isEqualTo);
-      }
-      if (condition.whereIn != null) {
-        data = data.where(condition.field, whereIn: condition.whereIn);
-      }
-      if (condition.arrayContains != null) {
-        data = data.where(
-          condition.field,
-          arrayContains: condition.arrayContains,
-        );
-      }
-    }
-    for (var order in query.orders) {
-      data = data.orderBy(order.field, descending: order.descending);
-    }
-
-    final result = await data.get();
-
-    // a lot of operations Done Here !!
-    WriteBatch batch = firestore.batch();
-
-    for (var doc in result.docs) {
-      batch.update(doc.reference, {"isRead": true});
-    }
-    await batch.commit();
-
-    // for (var doc in result.docs) {
-    //   Map<String, dynamic> data = doc.data();
-
-    //   if ((data["data"]["senderId"] == relatedId ||
-    //       data["data"]["requestId"] == relatedId)) {
-    //     batch.delete(doc.reference);
-    //   }
-    // }
-    // await batch.commit();
-  }
-
-  // add Data
-  @override
   Future<void> addSinleData({
     required String path,
     required Map<String, dynamic> data,
@@ -152,35 +101,81 @@ class FirestoreService implements DataBaseService {
   }
 
   @override
-  Future<void> updateData({
-    Map<String, dynamic>? query,
-    required String path,
-    required Map<String, dynamic> data,
-  }) async {
-    Query<Map<String, dynamic>> data = firestore.collection(path);
-
-    if (query != null) {
-      if (query["isRead"] != null) {
-        var isRead = query["isRead"];
-        data = data.where("isRead", isEqualTo: isRead);
-      }
-    }
-
-    final result = await data.get();
-    // a lot of operations Done Here !!
-    WriteBatch batch = firestore.batch();
-
-    for (var doc in result.docs) {
-      batch.update(doc.reference, {"isRead": true});
-    }
-    await batch.commit();
-  }
-
-  @override
   Stream<List<dynamic>> getAllDataStream({required String path}) async* {
     yield* firestore
         .collection(path)
         .snapshots()
         .map((snapShots) => snapShots.docs.map((doc) => doc.data()).toList());
+  }
+
+  @override
+  Future<void> deleteBatchData({
+    required String path,
+    required QueryParams query,
+  }) async {
+    Query<Map<String, dynamic>> data = firestore.collection(path);
+    for (var condition in query.conditions) {
+      if (condition.isEqualTo != null) {
+        data = data.where(condition.field, isEqualTo: condition.isEqualTo);
+      }
+      if (condition.whereIn != null) {
+        data = data.where(condition.field, whereIn: condition.whereIn);
+      }
+      if (condition.arrayContains != null) {
+        data = data.where(
+          condition.field,
+          arrayContains: condition.arrayContains,
+        );
+      }
+    }
+
+    for (var order in query.orders) {
+      data = data.orderBy(order.field, descending: order.descending);
+    }
+    var result = await data.get();
+    WriteBatch batch = firestore.batch();
+
+    for (var doc in result.docs) {
+      batch.delete(doc.reference);
+    }
+    batch.commit();
+  }
+
+  @override
+  Future<void> updateBatchData({
+    required String path,
+    required Map<String, dynamic> updateData,
+
+    required QueryParams query,
+  }) async {
+    Query<Map<String, dynamic>> data = firestore.collection(path);
+
+    for (var condition in query.conditions) {
+      if (condition.isEqualTo != null) {
+        data = data.where(condition.field, isEqualTo: condition.isEqualTo);
+      }
+      if (condition.whereIn != null) {
+        data = data.where(condition.field, whereIn: condition.whereIn);
+      }
+      if (condition.arrayContains != null) {
+        data = data.where(
+          condition.field,
+          arrayContains: condition.arrayContains,
+        );
+      }
+    }
+
+    for (var order in query.orders) {
+      data = data.orderBy(order.field, descending: order.descending);
+    }
+
+    var result = await data.get();
+    WriteBatch batch = firestore.batch();
+
+    for (var doc in result.docs) {
+      batch.update(doc.reference, updateData);
+    }
+
+    batch.commit();
   }
 }

@@ -15,7 +15,7 @@ class UsersItemListView extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: usersList[index].uId == getUserData().uId
               ? SizedBox.shrink()
-              : UserItem(onTap: () {}, userEntity: usersList[index]),
+              : UserItem(userEntity: usersList[index]),
         );
       },
       separatorBuilder: (context, index) => CustomDivider(),

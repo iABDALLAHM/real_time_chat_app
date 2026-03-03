@@ -33,7 +33,6 @@ class NotificationsRepoImplementation implements NotificationsRepo {
     await deleteNotificationByTypeAndUser(
       userId: receiverId,
       type: NotificationType.friendRequest,
-      relatedUserId: senderId,
     );
   }
 
@@ -41,11 +40,9 @@ class NotificationsRepoImplementation implements NotificationsRepo {
   Future<void> deleteNotificationByTypeAndUser({
     required String userId,
     required NotificationType type,
-    required String relatedUserId,
   }) async {
-    await dataBaseService.getQueryData(
+    await dataBaseService.deleteBatchData(
       path: BackendEndPoints.notification,
-      relatedId: relatedUserId,
       query: QueryParams(
         conditions: [
           QueryCondition(field: "userId", isEqualTo: userId),
@@ -87,7 +84,9 @@ class NotificationsRepoImplementation implements NotificationsRepo {
 
   @override
   Future<void> markAllNotificationAsRead({required String userId}) async {
-    await dataBaseService.getQueryData(
+    await dataBaseService.updateBatchData(
+      updateData: {"isRead": true},
+      path: BackendEndPoints.notification,
       query: QueryParams(
         conditions: [
           QueryCondition(field: "userId", isEqualTo: userId),
@@ -95,8 +94,6 @@ class NotificationsRepoImplementation implements NotificationsRepo {
         ],
         orders: [],
       ),
-
-      path: BackendEndPoints.notification,
     );
   }
 

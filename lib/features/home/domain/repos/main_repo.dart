@@ -4,7 +4,9 @@ import 'package:real_time_chat_app/core/enums/friend_request_status.dart';
 
 abstract class MainRepo {
   Stream<List<UserEntity>> getAllUsersStream();
-  Future<void> sendFriendRequest({required FriendRequestEntity friendRequest});
+  Future<void> sendFriendRequest({
+    required FriendRequestEntity friendRequestEntity,
+  });
   Future<void> cancelFriendRequest({required String requestId});
   Future<void> respondToFriendRequest({
     required String requestId,
@@ -15,9 +17,5 @@ abstract class MainRepo {
   });
   Stream<List<FriendRequestEntity>> getSentFriendRequestStream({
     required String userId,
-  });
-  Future<FriendRequestEntity> getFriendRequest({
-    required String senderId,
-    required String receiverId,
   });
 }

@@ -26,11 +26,11 @@ class FriendRequestModel {
       id: map["id"],
       senderId: map["senderId"],
       receiverId: map["receiverId"],
-      createdAt:(map["createdAt"] as Timestamp).toDate(),
+      createdAt: (map["createdAt"] as Timestamp).toDate(),
       responsedAt: map["responsedAt"] != null
           ? (map["responsedAt"] as Timestamp).toDate()
           : null,
-      // message: map["message"],
+      message: map["message"],
       status: FriendRequestStatus.values.firstWhere(
         (e) => e.name == (map["status"]),
         orElse: () => FriendRequestStatus.pending,

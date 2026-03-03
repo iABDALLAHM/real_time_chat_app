@@ -36,32 +36,34 @@ class MainRepoImplementation implements MainRepo {
 
   @override
   Future<void> sendFriendRequest({
-    required FriendRequestEntity friendRequest,
+    required FriendRequestEntity friendRequestEntity,
   }) async {
     await dataBaseService.addSinleData(
       path: BackendEndPoints.friendRequests,
-      documentId: friendRequest.id,
+      documentId: friendRequestEntity.id,
       data: FriendRequestModel.fromEntity(
-        friendRequestEntity: friendRequest,
+        friendRequestEntity: friendRequestEntity,
       ).toMap(),
     );
 
     String notificationId =
-        "friend_request_${friendRequest.senderId}_${friendRequest.receiverId}_${DateTime.now()}";
+        "friend_request_${friendRequestEntity.senderId}_${friendRequestEntity.receiverId}_${DateTime.now()}";
 
     NotificationEntity notificationEntity = NotificationEntity(
       isRead: false,
       id: notificationId,
-      userId: friendRequest.receiverId,
+      userId: friendRequestEntity.receiverId,
       title: "New Friend Request",
       body: "You have recevied a new friend request",
-      data: {"senderId": friendRequest.senderId, "requestId": friendRequest.id},
+      data: {"senderId": friendRequestEntity.senderId, "requestId": friendRequestEntity.id},
       type: NotificationType.friendRequest,
       createdAt: DateTime.now(),
     );
+
     await notificationsRepo.createNotification(
       notificationEntity: notificationEntity,
     );
+
   }
 
   @override
@@ -78,7 +80,6 @@ class MainRepoImplementation implements MainRepo {
     await notificationsRepo.deleteNotificationByTypeAndUser(
       userId: friendRequestModel.receiverId,
       type: NotificationType.friendRequest,
-      relatedUserId: friendRequestModel.senderId,
     );
 
     await dataBaseService.deleteSingleData(
@@ -132,6 +133,7 @@ class MainRepoImplementation implements MainRepo {
         receiverId: friendRequestModel.receiverId,
         senderId: friendRequestModel.senderId,
       );
+
     } else if (status == FriendRequestStatus.rejected) {
       NotificationEntity notificationEntity = NotificationEntity(
         isRead: false,
@@ -201,29 +203,29 @@ class MainRepoImplementation implements MainRepo {
     }
   }
 
-  @override
-  Future<FriendRequestEntity> getFriendRequest({
-    required String senderId,
-    required String receiverId,
-  }) async {
-    var data = await dataBaseService.getQueryData(
-      path: BackendEndPoints.friendRequests,
-      query: QueryParams(
-        conditions: [
-          QueryCondition(field: "senderId", isEqualTo: senderId),
-          QueryCondition(field: "receiverId", isEqualTo: receiverId),
-          QueryCondition(field: "status", isEqualTo: "pending"),
-        ],
-        orders: [],
-      ),
-    );
+  // @override
+  // Future<FriendRequestEntity> getFriendRequest({
+  //   required String senderId,
+  //   required String receiverId,
+  // }) async {
+  //   var data = await dataBaseService.getQueryData(
+  //     path: BackendEndPoints.friendRequests,
+  //     query: QueryParams(
+  //       conditions: [
+  //         QueryCondition(field: "senderId", isEqualTo: senderId),
+  //         QueryCondition(field: "receiverId", isEqualTo: receiverId),
+  //         QueryCondition(field: "status", isEqualTo: "pending"),
+  //       ],
+  //       orders: [],
+  //     ),
+  //   );
 
-    List<FriendRequestEntity> friendRequestEntityList = [];
-    for (var friendMap in data) {
-      friendRequestEntityList.add(
-        FriendRequestModel.fromMap(friendMap).toEntity(),
-      );
-    }
-    return friendRequestEntityList.first;
-  }
+  //   List<FriendRequestEntity> friendRequestEntityList = [];
+  //   for (var friendMap in data) {
+  //     friendRequestEntityList.add(
+  //       FriendRequestModel.fromMap(friendMap).toEntity(),
+  //     );
+  //   }
+  //   return friendRequestEntityList.first;
+  // }
 }

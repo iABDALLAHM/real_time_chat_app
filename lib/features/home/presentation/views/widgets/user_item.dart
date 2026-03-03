@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:real_time_chat_app/core/entities/friend_request_entity.dart';
 import 'package:real_time_chat_app/core/entities/user_entity.dart';
+import 'package:real_time_chat_app/core/functions/build_default_avatar.dart';
 import 'package:real_time_chat_app/core/functions/get_user_data.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
-import 'package:real_time_chat_app/features/home/presentation/views/widgets/friend_request_bloc_builder.dart';
+import 'package:real_time_chat_app/features/home/presentation/views/widgets/friend_request_bloc_consumer.dart';
 
 class UserItem extends StatelessWidget {
-  const UserItem({super.key, required this.userEntity, required this.onTap});
+  const UserItem({super.key, required this.userEntity});
   final UserEntity userEntity;
-  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -20,16 +20,7 @@ class UserItem extends StatelessWidget {
             CircleAvatar(
               radius: 28,
               backgroundColor: AppTheme.primaryColor,
-              child: Text(
-                userEntity.displayName.isNotEmpty
-                    ? userEntity.displayName.toUpperCase()[0]
-                    : "?",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              child: buildDefaultAvatar(name: userEntity.displayName),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -54,7 +45,7 @@ class UserItem extends StatelessWidget {
                 ],
               ),
             ),
-            SendFriendRequestBlocBuilder(
+            SendFriendRequestBlocConsumer(
               userEntity: userEntity,
               friendRequestEntity: FriendRequestEntity(
                 id: getUserData().uId,

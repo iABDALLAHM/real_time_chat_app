@@ -8,8 +8,8 @@ import 'package:real_time_chat_app/core/functions/show_top_overlay_message.dart'
 import 'package:real_time_chat_app/features/home/presentation/function/user_item_button_status.dart';
 import 'package:real_time_chat_app/features/home/presentation/manager/friend_request_cubit/friend_request_cubit.dart';
 
-class SendFriendRequestBlocBuilder extends StatelessWidget {
-  const SendFriendRequestBlocBuilder({
+class SendFriendRequestBlocConsumer extends StatelessWidget {
+  const SendFriendRequestBlocConsumer({
     super.key,
     required this.friendRequestEntity,
     required this.userEntity,
