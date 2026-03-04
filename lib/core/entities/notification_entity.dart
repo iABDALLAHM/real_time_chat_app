@@ -17,7 +17,7 @@ class NotificationEntity {
     required this.body,
     required this.type,
     required this.data,
-   required this.isRead,
+    required this.isRead,
     required this.createdAt,
   });
 }

@@ -6,5 +6,4 @@ class UserWithChatEntity {
   final ChatEntity chatEntity;
 
   UserWithChatEntity({required this.userEntity, required this.chatEntity});
-  
 }

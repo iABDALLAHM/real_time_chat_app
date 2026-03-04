@@ -21,6 +21,7 @@ class MessageEntity {
     this.isRead = false,
     this.isEdited = false,
     this.editedAt,
-    this.type = MessageType.text, required this.participants,
+    this.type = MessageType.text,
+    required this.participants,
   });
 }
