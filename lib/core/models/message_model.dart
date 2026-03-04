@@ -10,6 +10,7 @@ class MessageModel {
   final DateTime timeStamp;
   final bool isRead;
   final bool isEdited;
+  final String participants;
   final DateTime? editedAt;
   final MessageType type;
 
@@ -23,9 +24,11 @@ class MessageModel {
     this.isEdited = false,
     this.editedAt,
     this.type = MessageType.text,
+    required this.participants,
   });
   factory MessageModel.fromMap(Map<String, dynamic> map) {
     return MessageModel(
+      participants: map["participants"],
       id: map["id"],
       messageSenderId: map["messageSenderId"],
       messageReceiverId: map["messageReceiverId"],
@@ -50,6 +53,7 @@ class MessageModel {
       messageReceiverId: messageEntity.messageReceiverId,
       content: messageEntity.content,
       timeStamp: messageEntity.timeStamp,
+      participants: messageEntity.participants,
     );
   }
 
@@ -60,12 +64,14 @@ class MessageModel {
       messageReceiverId: messageReceiverId,
       content: content,
       timeStamp: timeStamp,
+      participants: participants,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
       "id": id,
+      "participants": participants,
       "messageSenderId": messageSenderId,
       "messageReceiverId": messageReceiverId,
       "content": content,

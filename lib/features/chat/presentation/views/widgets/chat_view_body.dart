@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/entities/message_entity.dart';
@@ -40,12 +38,10 @@ class _ChatViewBodyState extends State<ChatViewBody> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        // Expanded messages List
         Expanded(
           child: BlocBuilder<GetMessagesStreamCubit, GetMessagesStreamStates>(
             builder: (context, state) {
               if (state is SuccessGetMessagesStreamState) {
-                log("update");
                 return ListView.builder(
                   controller: _scrollController,
                   reverse: true,
@@ -76,6 +72,9 @@ class _ChatViewBodyState extends State<ChatViewBody> {
         ),
         MessageInput(
           onPressed: () {
+            List<String> users = [getUserData().uId, widget.userEntity.uId];
+            users.sort();
+            var messagesChatId = "${users[0]}_${users[1]}";
             if (_scrollController.hasClients) {
               _scrollController.animateTo(
                 0,
@@ -87,6 +86,7 @@ class _ChatViewBodyState extends State<ChatViewBody> {
             if (currentMessage.isEmpty) return;
             textController.clear();
             MessageEntity messageEntity = MessageEntity(
+              participants: messagesChatId,
               id: Uuid().v4(),
               messageSenderId: getUserData().uId,
               messageReceiverId: widget.userEntity.uId,

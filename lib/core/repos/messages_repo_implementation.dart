@@ -58,11 +58,14 @@ class MessagesRepoImplementation implements MessagesRepo {
     required String user1Id,
     required String user2Id,
   }) async* {
+    List<String> users = [user1Id, user2Id];
+    users.sort();
+    var messagesChatId = "${users[0]}_${users[1]}";
     var data = dataBaseService.getAllDataQueryStream(
       path: BackendEndPoints.messages,
       query: QueryParams(
         conditions: [
-          QueryCondition(field: "messageSenderId", whereIn: [user1Id, user2Id]),
+          QueryCondition(field: "participants", isEqualTo: messagesChatId),
         ],
         orders: [QueryOrder(field: "timeStamp", descending: true)],
       ),

@@ -87,7 +87,7 @@ class ChatsRepoImplementation implements ChatsRepo {
       data: {
         "lastMessage": message.content,
         "lastMessageTime": message.timeStamp,
-        "lastMessageSenderId": message.messageSenderId,
+        // "lastMessageSenderId": message.participants.firstWhere((ids)=> ids != ),
         "updatedAt": DateTime.now(),
       },
       documentId: chatId,

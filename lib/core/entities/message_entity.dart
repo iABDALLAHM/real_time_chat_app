@@ -2,6 +2,7 @@ import 'package:real_time_chat_app/core/enums/message_type.dart';
 
 class MessageEntity {
   final String id;
+  final String participants;
   final String messageSenderId;
   final String messageReceiverId;
   final String content;
@@ -20,6 +21,6 @@ class MessageEntity {
     this.isRead = false,
     this.isEdited = false,
     this.editedAt,
-    this.type = MessageType.text,
+    this.type = MessageType.text, required this.participants,
   });
 }
