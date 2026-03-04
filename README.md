@@ -13,11 +13,25 @@ A **Clean Architecture** Real-Time **Chat App** built with **Flutter**, supporti
 <p>
   <img src="assets/images/Screenshot_144313.png"  width="100%"/>
   <br><br>
-  <img src="assets/images/Screenshot_144527.png"  width="100%"/>
+  <img src="assets/images/160342.png"  width="100%"/>
   <br><br>
-  <img src="assets/images/Screenshot_144545.png"  width="100%"/>
+  <img src="assets/images/160355.png"  width="100%"/>
   <br><br>
-  <img src="assets/images/Screenshot_144557.png"  width="100%"/>
+  <img src="assets/images/160555.png"  width="100%"/>
+  <br><br>
+    <img src="assets/images/160613.png"  width="100%"/>
+  <br><br>
+    <img src="assets/images/160623.png"  width="100%"/>
+  <br><br>
+    <img src="assets/images/160710.png"  width="100%"/>
+  <br><br>
+    <img src="assets/images/160726.png"  width="100%"/>
+  <br><br>
+    <img src="assets/images/160757.png"  width="100%"/>
+  <br><br>
+    <img src="assets/images/160852.png"  width="100%"/>
+  <br><br>
+    <img src="assets/images/160902.png"  width="100%"/>
   <br><br>
   <img src="assets/images/Screenshot_144629.png"  width="100%"/>
   <br><br>
