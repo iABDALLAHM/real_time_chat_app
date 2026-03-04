@@ -57,7 +57,10 @@ class FirestoreService implements DataBaseService {
       }
 
       if (condition.arrayContains != null) {
-        data = data.where(condition.field, arrayContains: condition.arrayContains);
+        data = data.where(
+          condition.field,
+          arrayContains: condition.arrayContains,
+        );
       }
 
       if (condition.whereIn != null) {

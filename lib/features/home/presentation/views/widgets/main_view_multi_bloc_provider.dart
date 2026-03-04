@@ -6,9 +6,10 @@ import 'package:real_time_chat_app/features/auth/domain/repos/auth_repo.dart';
 import 'package:real_time_chat_app/features/home/domain/repos/chats_repo.dart';
 import 'package:real_time_chat_app/features/home/domain/repos/friend_ship_repo.dart';
 import 'package:real_time_chat_app/features/home/domain/repos/main_repo.dart';
+import 'package:real_time_chat_app/features/home/presentation/manager/cancel_friend_request_cubit/cancel_friend_request_cubit.dart';
 import 'package:real_time_chat_app/features/home/presentation/manager/friend_ship_cubit/friend_ship_cubit.dart';
 import 'package:real_time_chat_app/features/home/presentation/manager/get_all_users_stream_cubit/get_all_users_stream_cubit.dart';
-import 'package:real_time_chat_app/features/home/presentation/manager/friend_request_cubit/friend_request_cubit.dart';
+import 'package:real_time_chat_app/features/home/presentation/manager/send_friend_request_cubit/friend_request_cubit.dart';
 import 'package:real_time_chat_app/features/home/presentation/manager/get_my_friends_stream_cubit.dart/get_my_friends_stream_cubit.dart';
 import 'package:real_time_chat_app/features/home/presentation/manager/chat_cubit/get_or_create_chat_cubit.dart';
 import 'package:real_time_chat_app/features/home/presentation/manager/get_user_chats_stream_cubit/get_user_chats_cubit.dart';
@@ -32,7 +33,11 @@ class MainViewMultiBlocProvider extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) =>
-              FriendRequestCubit(mainRepo: getIt.get<MainRepo>()),
+              SendFriendRequestCubit(mainRepo: getIt.get<MainRepo>()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              CancelFriendRequestCubit(mainRepo: getIt.get<MainRepo>()),
         ),
         BlocProvider(
           create: (context) => GetMyFriendsStreamCubit(
@@ -49,8 +54,9 @@ class MainViewMultiBlocProvider extends StatelessWidget {
               GetOrCreateChatCubit(chatsRepo: getIt.get<ChatsRepo>()),
         ),
         BlocProvider(
-          create: (context) =>
-              RestoreUnReadCountMessagesCubit(chatsRepo: getIt.get<ChatsRepo>()),
+          create: (context) => RestoreUnReadCountMessagesCubit(
+            chatsRepo: getIt.get<ChatsRepo>(),
+          ),
         ),
         BlocProvider(
           create: (context) => GetUserChatsCubit(

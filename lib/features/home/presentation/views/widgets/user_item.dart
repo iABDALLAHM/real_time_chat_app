@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/entities/friend_request_entity.dart';
 import 'package:real_time_chat_app/core/entities/user_entity.dart';
+import 'package:real_time_chat_app/core/enums/user_relationship_status.dart';
 import 'package:real_time_chat_app/core/functions/build_default_avatar.dart';
 import 'package:real_time_chat_app/core/functions/get_user_data.dart';
 import 'package:real_time_chat_app/core/utils/app_theme.dart';
-import 'package:real_time_chat_app/features/home/presentation/views/widgets/friend_request_bloc_consumer.dart';
+import 'package:real_time_chat_app/features/home/presentation/function/user_item_button_status.dart';
+import 'package:real_time_chat_app/features/home/presentation/manager/cancel_friend_request_cubit/cancel_friend_request_cubit.dart';
+import 'package:real_time_chat_app/features/home/presentation/manager/send_friend_request_cubit/friend_request_cubit.dart';
+import 'package:uuid/uuid.dart';
 
-class UserItem extends StatelessWidget {
+class UserItem extends StatefulWidget {
   const UserItem({super.key, required this.userEntity});
   final UserEntity userEntity;
+
+  @override
+  State<UserItem> createState() => _UserItemState();
+}
+
+class _UserItemState extends State<UserItem> {
+  late String currentRequestID;
+  UserRelationshipStatus relationshipStatus = UserRelationshipStatus.none;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +33,7 @@ class UserItem extends StatelessWidget {
             CircleAvatar(
               radius: 28,
               backgroundColor: AppTheme.primaryColor,
-              child: buildDefaultAvatar(name: userEntity.displayName),
+              child: buildDefaultAvatar(name: widget.userEntity.displayName),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -28,7 +41,7 @@ class UserItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    userEntity.displayName,
+                    widget.userEntity.displayName,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.w600,
                       overflow: TextOverflow.ellipsis,
@@ -36,7 +49,7 @@ class UserItem extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    userEntity.email,
+                    widget.userEntity.email,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: AppTheme.textsecondaryColor,
                       overflow: TextOverflow.ellipsis,
@@ -45,14 +58,36 @@ class UserItem extends StatelessWidget {
                 ],
               ),
             ),
-            SendFriendRequestBlocConsumer(
-              userEntity: userEntity,
-              friendRequestEntity: FriendRequestEntity(
-                id: getUserData().uId,
-                senderId: getUserData().uId,
-                receiverId: userEntity.uId,
-                createdAt: DateTime.now(),
-              ),
+            userItemButtonStatus(
+              onTap: () {
+                final requestId = Uuid().v4();
+                if (relationshipStatus == UserRelationshipStatus.none) {
+                  context.read<SendFriendRequestCubit>().sendRequest(
+                    friendRequestEntity: FriendRequestEntity(
+                      id: requestId,
+                      senderId: getUserData().uId,
+                      receiverId: widget.userEntity.uId,
+                      createdAt: DateTime.now(),
+                    ),
+                  );
+
+                  setState(() {
+                    currentRequestID = requestId;
+                    relationshipStatus =
+                        UserRelationshipStatus.friendRequestSent;
+                  });
+                } else if (relationshipStatus ==
+                    UserRelationshipStatus.friendRequestSent) {
+                  context.read<CancelFriendRequestCubit>().cancelFriend(
+                    requestId: currentRequestID,
+                  );
+
+                  setState(() {
+                    relationshipStatus = UserRelationshipStatus.none;
+                  });
+                }
+              },
+              relationshipStatus: relationshipStatus,
             ),
           ],
         ),

@@ -76,11 +76,13 @@ class _ChatViewBodyState extends State<ChatViewBody> {
         ),
         MessageInput(
           onPressed: () {
-            _scrollController.animateTo(
-              0,
-              duration: Duration(milliseconds: 300),
-              curve: Curves.easeIn,
-            );
+            if (_scrollController.hasClients) {
+              _scrollController.animateTo(
+                0,
+                duration: Duration(milliseconds: 300),
+                curve: Curves.easeIn,
+              );
+            }
             currentMessage = textController.text.trim();
             if (currentMessage.isEmpty) return;
             textController.clear();
