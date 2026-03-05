@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:real_time_chat_app/core/entities/chat_entity.dart';
 import 'package:real_time_chat_app/core/entities/message_entity.dart';
@@ -62,6 +64,9 @@ class ChatsRepoImplementation implements ChatsRepo {
 
       return Right(chatId);
     } on CustomException catch (e) {
+      log(
+        "this error happend in Chats Repo Implementation in create or get Chat Method ${e.toString()}",
+      );
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -88,6 +93,9 @@ class ChatsRepoImplementation implements ChatsRepo {
         yield Right(chatList);
       }
     } on CustomException catch (e) {
+      log(
+        "this error happend in Chats Repo Implementation in get User Chats Stream Method ${e.toString()}",
+      );
       yield Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -110,6 +118,9 @@ class ChatsRepoImplementation implements ChatsRepo {
       );
       return Right(null);
     } on CustomException catch (e) {
+      log(
+        "this error happend in Chats Repo Implementation in update Chat Last Message Method ${e.toString()}",
+      );
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -127,6 +138,9 @@ class ChatsRepoImplementation implements ChatsRepo {
       );
       return Right(null);
     } on CustomException catch (e) {
+      log(
+        "this error happend in Chats Repo Implementation in update User Last Seen Method ${e.toString()}",
+      );
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -144,6 +158,9 @@ class ChatsRepoImplementation implements ChatsRepo {
       );
       return Right(null);
     } on CustomException catch (e) {
+      log(
+        "this error happend in Chats Repo Implementation in delete Chat For User Method ${e.toString()}",
+      );
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -161,6 +178,9 @@ class ChatsRepoImplementation implements ChatsRepo {
       );
       return Right(null);
     } on CustomException catch (e) {
+      log(
+        "this error happend in Chats Repo Implementation in restore Chat For User Method ${e.toString()}",
+      );
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -179,6 +199,9 @@ class ChatsRepoImplementation implements ChatsRepo {
       );
       return Right(null);
     } on CustomException catch (e) {
+      log(
+        "this error happend in Chats Repo Implementation in update unRead Count Method ${e.toString()}",
+      );
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -196,6 +219,9 @@ class ChatsRepoImplementation implements ChatsRepo {
       );
       return Right(null);
     } on CustomException catch (e) {
+      log(
+        "this error happend in Chats Repo Implementation in restore unRead Count Method ${e.toString()}",
+      );
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
