@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:real_time_chat_app/core/entities/friend_request_entity.dart';
 import 'package:real_time_chat_app/core/entities/notification_entity.dart';
@@ -37,6 +38,9 @@ class MainRepoImplementation implements MainRepo {
         yield Right(usersList);
       }
     } on CustomException catch (e) {
+      log(
+        "this error happend in MainRepoImplementation in getAllUsersStream method ${e.toString()}",
+      );
       yield left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -76,6 +80,9 @@ class MainRepoImplementation implements MainRepo {
       );
       return Right(null);
     } on CustomException catch (e) {
+      log(
+        "this error happend in MainRepoImplementation in sendFriendRequest method ${e.toString()}",
+      );
       return left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -105,6 +112,9 @@ class MainRepoImplementation implements MainRepo {
       );
       return Right(null);
     } on CustomException catch (e) {
+      log(
+        "this error happend in MainRepoImplementation in cancelFriendRequest method ${e.toString()}",
+      );
       return left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -178,6 +188,9 @@ class MainRepoImplementation implements MainRepo {
       }
       return Right(null);
     } on CustomException catch (e) {
+      log(
+        "this error happend in MainRepoImplementation in respond To Friend Request method ${e.toString()}",
+      );
       return left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -208,6 +221,9 @@ class MainRepoImplementation implements MainRepo {
         yield Right(usersList);
       }
     } on CustomException catch (e) {
+      log(
+        "this error happend in MainRepoImplementation in get Friend Request Stream method ${e.toString()}",
+      );
       yield left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -231,6 +247,9 @@ class MainRepoImplementation implements MainRepo {
         yield Right(usersList);
       }
     } on CustomException catch (e) {
+      log(
+        "this error happend in MainRepoImplementation in get Sent Friend Request Stream method ${e.toString()}",
+      );
       yield left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
