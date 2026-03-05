@@ -14,7 +14,14 @@ class UserDataStreamCubit extends Cubit<UserStreamStates> {
     _streamSubscription = profileRepo.getUserStream(uId: userId).listen((
       result,
     ) {
-      emit(SuccessUserStreamState(userEntity: result));
+      result.fold(
+        (failure) {
+          emit(FailureUserStreamState());
+        },
+        (success) {
+          emit(SuccessUserStreamState(userEntity: success));
+        },
+      );
     });
   }
 

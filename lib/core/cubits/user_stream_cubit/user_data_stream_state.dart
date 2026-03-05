@@ -11,3 +11,6 @@ final class SuccessUserStreamState extends UserStreamStates {
 
   SuccessUserStreamState({required this.userEntity});
 }
+
+
+final class FailureUserStreamState extends UserStreamStates {}
