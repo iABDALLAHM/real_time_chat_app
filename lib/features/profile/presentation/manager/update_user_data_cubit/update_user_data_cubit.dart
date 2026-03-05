@@ -9,7 +9,14 @@ class UpdateUserDataCubit extends Cubit<UpdateUserDataStates> {
   final ProfileRepo profileRepo;
   Future<void> updateUserInfo({required UserEntity userEntity}) async {
     emit(LoadingUpdateUserDataState());
-    await profileRepo.updateUserInfo(userEntity: userEntity);
-    emit(SuccessUpdateUserDataState());
+    var result = await profileRepo.updateUserInfo(userEntity: userEntity);
+    result.fold(
+      (l) {
+        emit(FailureUpdateUserDataState());
+      },
+      (R) {
+        emit(SuccessUpdateUserDataState());
+      },
+    );
   }
 }

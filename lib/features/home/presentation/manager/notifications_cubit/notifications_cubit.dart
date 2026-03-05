@@ -9,19 +9,46 @@ class NotificationsCubit extends Cubit<NotificationStates> {
 
   void deleteNotification({required String notificationId}) async {
     emit(LoadingDeleteNotificationState());
-    await notificationsRepo.deleteNotification(notificationId: notificationId);
-    emit(SuccessDeleteNotificationState());
+    var result = await notificationsRepo.deleteNotification(
+      notificationId: notificationId,
+    );
+    result.fold(
+      (L) {
+        emit(FailureDeleteNotificationState());
+      },
+      (R) {
+        emit(SuccessDeleteNotificationState());
+      },
+    );
   }
 
   void markNotificationAsRead({required String notificationId}) async {
     emit(LoadingMarkNotificationAsReadState());
-    await notificationsRepo.markNotificationAsRead(notificationId: notificationId);
-    emit(SuccessMarkNotificationAsReadState());
+    var result = await notificationsRepo.markNotificationAsRead(
+      notificationId: notificationId,
+    );
+    result.fold(
+      (l) {
+        emit(FailureMarkNotificationAsReadState());
+      },
+      (R) {
+        emit(SuccessMarkNotificationAsReadState());
+      },
+    );
   }
 
   void markAllNotificationsAsRead({required String userId}) async {
     emit(LoadingMarkAllNotificationsAsReadState());
-    await notificationsRepo.markAllNotificationAsRead(userId: userId);
-    emit(SuccessMarkAllNotificationsAsReadState());
+    var result = await notificationsRepo.markAllNotificationAsRead(
+      userId: userId,
+    );
+    result.fold(
+      (L) {
+        emit(FailureMarkAllNotificationsAsReadState());
+      },
+      (R) {
+        emit(SuccessMarkAllNotificationsAsReadState());
+      },
+    );
   }
 }

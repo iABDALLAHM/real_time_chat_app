@@ -7,11 +7,24 @@ class RestoreUnReadCountMessagesCubit
   RestoreUnReadCountMessagesCubit({required this.chatsRepo})
     : super(InitialRestoreUnReadCountMessagesState());
 
-  final ChatsRepo  chatsRepo;
+  final ChatsRepo chatsRepo;
 
-  void restoreunReadCount({required String userId, required String chatId}) {
+  void restoreunReadCount({
+    required String userId,
+    required String chatId,
+  }) async {
     emit(LoadingRestoreUnReadCountMessagesState());
-    chatsRepo.restoreunReadCount(chatId: chatId, userId: userId);
-    emit(SuccessRestoreUnReadCountMessagesState());
+    var result = await chatsRepo.restoreunReadCount(
+      chatId: chatId,
+      userId: userId,
+    );
+    result.fold(
+      (L) {
+        emit(FailureRestoreUnReadCountMessagesState());
+      },
+      (R) {
+        emit(SuccessRestoreUnReadCountMessagesState());
+      },
+    );
   }
 }

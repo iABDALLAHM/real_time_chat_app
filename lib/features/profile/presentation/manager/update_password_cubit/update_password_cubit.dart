@@ -9,7 +9,14 @@ class UpdatePasswordCubit extends Cubit<UpdatePasswordStates> {
 
   Future<void> updatePassword({required String newPassword}) async {
     emit(LoadingUpdatePasswordState());
-    await profileRepo.updateUserPassword(newPassword: newPassword);
-    emit(SuccessUpdatePasswordState());
+    var result = await profileRepo.updateUserPassword(newPassword: newPassword);
+    result.fold(
+      (l) {
+        emit(FailureUpdatePasswordState());
+      },
+      (r) {
+        emit(SuccessUpdatePasswordState());
+      },
+    );
   }
 }

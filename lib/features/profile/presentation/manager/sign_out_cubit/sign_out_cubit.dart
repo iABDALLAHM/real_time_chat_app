@@ -8,7 +8,14 @@ class SignOutCubit extends Cubit<SignOutStates> {
 
   Future signOut({required String userId}) async {
     emit(LoadingSignOutState());
-    await profileRepo.signOut(userId: userId);
-    emit(SuccessSignOutState());
+    var result = await profileRepo.signOut(userId: userId);
+    result.fold(
+      (L) {
+        emit(FailureSignOutState());
+      },
+      (R) {
+        emit(SuccessSignOutState());
+      },
+    );
   }
 }

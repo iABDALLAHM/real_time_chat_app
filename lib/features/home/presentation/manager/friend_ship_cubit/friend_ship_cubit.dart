@@ -3,18 +3,45 @@ import 'package:real_time_chat_app/features/home/domain/repos/friend_ship_repo.d
 import 'package:real_time_chat_app/features/home/presentation/manager/friend_ship_cubit/friend_ship_states.dart';
 
 class FriendShipCubit extends Cubit<FriendShipStates> {
-  FriendShipCubit({required this.friendShipRepo}) : super(InitialFriendShipState());
+  FriendShipCubit({required this.friendShipRepo})
+    : super(InitialFriendShipState());
   final FriendShipRepo friendShipRepo;
 
-  void removeFriendShip({required String user1Id, required String user2Id}) {
+  void removeFriendShip({
+    required String user1Id,
+    required String user2Id,
+  }) async {
     emit(LoadingRemoveFriendShipState());
-    friendShipRepo.removeFriendShip(user1Id: user1Id, user2Id: user2Id);
-    emit(SuccessRemoveFriendShipState());
+    var result = await friendShipRepo.removeFriendShip(
+      user1Id: user1Id,
+      user2Id: user2Id,
+    );
+    result.fold(
+      (L) {
+        emit(FailureRemoveFriendShipState());
+      },
+      (R) {
+        emit(SuccessRemoveFriendShipState());
+      },
+    );
   }
 
-  void blockFriendShip({required String blockedId, required String blockerId}) {
+  void blockFriendShip({
+    required String blockedId,
+    required String blockerId,
+  }) async {
     emit(LoadingBlockFriendShipState());
-    friendShipRepo.blockUser(blockedId: blockedId, blockerId: blockerId);
-    emit(SuccessBlockFriendShipState());
+    var result = await friendShipRepo.blockUser(
+      blockedId: blockedId,
+      blockerId: blockerId,
+    );
+    result.fold(
+      (L) {
+        emit(FailureBlockFriendShipState());
+      },
+      (R) {
+        emit(SuccessBlockFriendShipState());
+      },
+    );
   }
 }

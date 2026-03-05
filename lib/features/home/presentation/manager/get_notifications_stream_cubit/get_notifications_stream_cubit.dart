@@ -14,16 +14,23 @@ class GetNotificationsStreamCubit extends Cubit<GetNotificationsStreamStates> {
     _streamSubscription = notificationsRepo
         .getNotificationsStream(userId: userId)
         .listen((result) {
-          result.fold((failure) {}, (success) {
-            notificationLenght = success.length;
-            if (success.isEmpty) {
-              emit(EmptyNotificationsStreamState());
-            } else {
-              emit(
-                SuccessGetNotificationsStreamState(notificationsList: success),
-              );
-            }
-          });
+          result.fold(
+            (failure) {
+              emit(FailureGetNotificationsStreamState());
+            },
+            (success) {
+              notificationLenght = success.length;
+              if (success.isEmpty) {
+                emit(EmptyNotificationsStreamState());
+              } else {
+                emit(
+                  SuccessGetNotificationsStreamState(
+                    notificationsList: success,
+                  ),
+                );
+              }
+            },
+          );
         });
   }
 

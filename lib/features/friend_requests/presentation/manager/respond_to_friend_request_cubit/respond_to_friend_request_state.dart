@@ -6,4 +6,7 @@ final class LoadingRespondToFriendRequestState extends RespondToFriendRequestSta
 
 final class SuccessRespondToFriendRequestState extends RespondToFriendRequestStates {}
 
+final class FailureRespondToFriendRequestState extends RespondToFriendRequestStates {}
+
+
 

@@ -13,10 +13,17 @@ class RespondToFriendRequestCubit extends Cubit<RespondToFriendRequestStates> {
     required String requestId,
   }) async {
     emit(LoadingRespondToFriendRequestState());
-    await mainRepo.respondToFriendRequest(
+    var result = await mainRepo.respondToFriendRequest(
       requestId: requestId,
       status: friendRequestStatus,
     );
-    emit(SuccessRespondToFriendRequestState());
+    result.fold(
+      (L) {
+        emit(FailureRespondToFriendRequestState());
+      },
+      (R) {
+        emit(SuccessRespondToFriendRequestState());
+      },
+    );
   }
 }

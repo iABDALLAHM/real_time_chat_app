@@ -9,7 +9,10 @@ class DeleteAccountCubit extends Cubit<DeleteAccountStates> {
 
   Future<void> deleteAccount({required String userId}) async {
     emit(LoadingDeleteAccountState());
-    await profileRepo.deleteUser(userId: userId);
-    emit(SuccessDeleteAccountState());
+    var result = await profileRepo.deleteUser(userId: userId);
+    result.fold(
+      (l) => emit(FailureDeleteAccountState()),
+      (R) => emit(SuccessDeleteAccountState()),
+    );
   }
 }

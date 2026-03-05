@@ -7,10 +7,22 @@ class GetOrCreateChatCubit extends Cubit<GetOrCreateChatStates> {
     : super(InitialGetOrCreateChatState());
   final ChatsRepo chatsRepo;
 
-  void getOrCreateChat({required String user1Id, required String user2Id}) {
+  void getOrCreateChat({
+    required String user1Id,
+    required String user2Id,
+  }) async {
     emit(LoadingGetOrCreateChatState());
-    var result = chatsRepo.createOrGetChat(user1Id: user1Id, user2Id: user2Id);
-    result.toString();
-    emit(SuccessGetOrCreateChatState());
+    var result = await chatsRepo.createOrGetChat(
+      user1Id: user1Id,
+      user2Id: user2Id,
+    );
+    result.fold(
+      (L) {
+        emit(FailureGetOrCreateChatState());
+      },
+      (R) {
+        emit(SuccessGetOrCreateChatState());
+      },
+    );
   }
 }
