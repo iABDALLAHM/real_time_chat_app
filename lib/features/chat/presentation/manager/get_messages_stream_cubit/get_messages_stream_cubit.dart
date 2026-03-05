@@ -13,12 +13,19 @@ class GetMessagesStreamCubit extends Cubit<GetMessagesStreamStates> {
     emit(LoadingGetMessagesStreamState());
     _streamSubscription = messagesRepo
         .getMessagesStream(user1Id: user1Id, user2Id: user2Id)
-        .listen((messages) {
-          if (messages.isEmpty) {
-            emit(EmptyMessagesStreamState());
-          } else {
-            emit(SuccessGetMessagesStreamState(messagesList: messages));
-          }
+        .listen((result) {
+          result.fold(
+            (failure) {
+              emit(FailureGetMessagesStreamState());
+            },
+            (messages) {
+              if (messages.isEmpty) {
+                emit(EmptyMessagesStreamState());
+              } else {
+                emit(SuccessGetMessagesStreamState(messagesList: messages));
+              }
+            },
+          );
         });
   }
 

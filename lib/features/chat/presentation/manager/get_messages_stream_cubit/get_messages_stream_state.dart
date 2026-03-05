@@ -13,3 +13,5 @@ final class SuccessGetMessagesStreamState extends GetMessagesStreamStates {
 final class LoadingGetMessagesStreamState extends GetMessagesStreamStates {}
 
 final class EmptyMessagesStreamState extends GetMessagesStreamStates {}
+
+final class FailureGetMessagesStreamState extends GetMessagesStreamStates {}
