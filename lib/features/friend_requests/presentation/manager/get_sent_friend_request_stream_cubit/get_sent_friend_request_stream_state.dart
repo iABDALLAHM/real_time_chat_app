@@ -13,3 +13,7 @@ final class SuccessGetSentFriendRequestStreamState
   final List<FriendRequestWithUserEntity> friendRequestWithUserList;
   SuccessGetSentFriendRequestStreamState({required this.friendRequestWithUserList});
 }
+
+
+final class FailureGetSentFriendRequestStreamState
+    extends GetSentFriendRequestStreamStates {}

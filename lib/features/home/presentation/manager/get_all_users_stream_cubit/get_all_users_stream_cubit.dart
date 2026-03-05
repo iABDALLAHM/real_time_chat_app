@@ -11,7 +11,14 @@ class GetAllUsersStreamCubit extends Cubit<GetAllUsersStreamStates> {
   void getAllUsers() {
     emit(LoadingGetAllUsersState());
     _streamSubscription = mainRepo.getAllUsersStream().listen((result) {
-      emit(SuccessGetAllUsersState(users: result));
+      result.fold(
+        (failure) {
+          emit(FailureGetAllUsersState());
+        },
+        (success) {
+          emit(SuccessGetAllUsersState(users: success));
+        },
+      );
     });
   }
 

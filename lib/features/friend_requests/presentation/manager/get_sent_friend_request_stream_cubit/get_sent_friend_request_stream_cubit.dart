@@ -20,26 +20,33 @@ class GetSentFriendRequestStreamCubit
     emit(LoadingGetSentFriendRequestStreamState());
     _streamSubscription = mainRepo
         .getSentFriendRequestStream(userId: userId)
-        .listen((result) async {
-          length = result.length;
-          List<FriendRequestWithUserEntity> friendRequestWithUserList = [];
-          for (var request in result) {
-            var sentRequestId = request.id == userId
-                ? request.receiverId
-                : request.senderId;
-            var user = await authRepo.getUserData(uId: sentRequestId);
-            friendRequestWithUserList.add(
-              FriendRequestWithUserEntity(
-                friendRequestEntity: request,
-                userEntity: user,
-              ),
-            );
-            emit(
-              SuccessGetSentFriendRequestStreamState(
-                friendRequestWithUserList: friendRequestWithUserList,
-              ),
-            );
-          }
+        .listen((result) {
+          result.fold(
+            (failure) {
+              emit(FailureGetSentFriendRequestStreamState());
+            },
+            (success) async {
+              length = success.length;
+              List<FriendRequestWithUserEntity> friendRequestWithUserList = [];
+              for (var request in success) {
+                var sentRequestId = request.id == userId
+                    ? request.receiverId
+                    : request.senderId;
+                var user = await authRepo.getUserData(uId: sentRequestId);
+                friendRequestWithUserList.add(
+                  FriendRequestWithUserEntity(
+                    friendRequestEntity: request,
+                    userEntity: user,
+                  ),
+                );
+                emit(
+                  SuccessGetSentFriendRequestStreamState(
+                    friendRequestWithUserList: friendRequestWithUserList,
+                  ),
+                );
+              }
+            },
+          );
         });
   }
 

@@ -1,8 +1,11 @@
+import 'package:dartz/dartz.dart';
 import 'package:real_time_chat_app/core/entities/friend_request_entity.dart';
 import 'package:real_time_chat_app/core/entities/notification_entity.dart';
 import 'package:real_time_chat_app/core/entities/user_entity.dart';
 import 'package:real_time_chat_app/core/enums/friend_request_status.dart';
 import 'package:real_time_chat_app/core/enums/notification_type.dart';
+import 'package:real_time_chat_app/core/errors/custom_exception.dart';
+import 'package:real_time_chat_app/core/errors/failure.dart';
 import 'package:real_time_chat_app/core/models/firestore_query.dart';
 import 'package:real_time_chat_app/core/models/friend_request_model.dart';
 import 'package:real_time_chat_app/core/models/user_model.dart';
@@ -23,184 +26,212 @@ class MainRepoImplementation implements MainRepo {
   });
 
   @override
-  Stream<List<UserEntity>> getAllUsersStream() async* {
-    await for (var userMaps in dataBaseService.getAllDataStream(
-      path: BackendEndPoints.getUsers,
-    )) {
-      final usersList = userMaps
-          .map((user) => UserModel.fromMap(user).toEntity())
-          .toList();
-      yield usersList;
+  Stream<Either<Failure, List<UserEntity>>> getAllUsersStream() async* {
+    try {
+      await for (var userMaps in dataBaseService.getAllDataStream(
+        path: BackendEndPoints.getUsers,
+      )) {
+        final usersList = userMaps
+            .map((user) => UserModel.fromMap(user).toEntity())
+            .toList();
+        yield Right(usersList);
+      }
+    } on CustomException catch (e) {
+      yield left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
 
   @override
-  Future<void> sendFriendRequest({
+  Future<Either<Failure, void>> sendFriendRequest({
     required FriendRequestEntity friendRequestEntity,
   }) async {
-    await dataBaseService.addSinleData(
-      path: BackendEndPoints.friendRequests,
-      documentId: friendRequestEntity.id,
-      data: FriendRequestModel.fromEntity(
-        friendRequestEntity: friendRequestEntity,
-      ).toMap(),
-    );
+    try {
+      await dataBaseService.addSinleData(
+        path: BackendEndPoints.friendRequests,
+        documentId: friendRequestEntity.id,
+        data: FriendRequestModel.fromEntity(
+          friendRequestEntity: friendRequestEntity,
+        ).toMap(),
+      );
 
-    // String notificationId =
-    //     "friend_request_${friendRequestEntity.senderId}_${friendRequestEntity.receiverId}_${DateTime.now()}";
+      // String notificationId =
+      //     "friend_request_${friendRequestEntity.senderId}_${friendRequestEntity.receiverId}_${DateTime.now()}";
 
-    NotificationEntity notificationEntity = NotificationEntity(
-      isRead: false,
-      id: friendRequestEntity.id,
-      userId: friendRequestEntity.receiverId,
-      title: "New Friend Request",
-      body: "You have recevied a new friend request",
-      data: {
-        "senderId": friendRequestEntity.senderId,
-        "requestId": friendRequestEntity.receiverId,
-      },
-      type: NotificationType.friendRequest,
-      createdAt: DateTime.now(),
-    );
+      NotificationEntity notificationEntity = NotificationEntity(
+        isRead: false,
+        id: friendRequestEntity.id,
+        userId: friendRequestEntity.receiverId,
+        title: "New Friend Request",
+        body: "You have recevied a new friend request",
+        data: {
+          "senderId": friendRequestEntity.senderId,
+          "requestId": friendRequestEntity.receiverId,
+        },
+        type: NotificationType.friendRequest,
+        createdAt: DateTime.now(),
+      );
 
-    await notificationsRepo.createNotification(
-      notificationEntity: notificationEntity,
-    );
+      await notificationsRepo.createNotification(
+        notificationEntity: notificationEntity,
+      );
+      return Right(null);
+    } on CustomException catch (e) {
+      return left(ServerFailure(errMessage: e.exceptionMeassge));
+    }
   }
 
   @override
-  Future<void> cancelFriendRequest({required String requestId}) async {
-    var requestDoc = await dataBaseService.getSingleData(
-      path: BackendEndPoints.friendRequests,
-      documentId: requestId,
-    );
+  Future<Either<Failure, void>> cancelFriendRequest({
+    required String requestId,
+  }) async {
+    try {
+      var requestDoc = await dataBaseService.getSingleData(
+        path: BackendEndPoints.friendRequests,
+        documentId: requestId,
+      );
 
-    FriendRequestModel friendRequestModel = FriendRequestModel.fromMap(
-      requestDoc,
-    );
+      FriendRequestModel friendRequestModel = FriendRequestModel.fromMap(
+        requestDoc,
+      );
 
-    await notificationsRepo.deleteNotificationByTypeAndUser(
-      userId: friendRequestModel.receiverId,
-      type: NotificationType.friendRequest,
-    );
+      await notificationsRepo.deleteNotificationByTypeAndUser(
+        userId: friendRequestModel.receiverId,
+        type: NotificationType.friendRequest,
+      );
 
-    await dataBaseService.deleteSingleData(
-      path: BackendEndPoints.friendRequests,
-      documentId: requestId,
-    );
+      await dataBaseService.deleteSingleData(
+        path: BackendEndPoints.friendRequests,
+        documentId: requestId,
+      );
+      return Right(null);
+    } on CustomException catch (e) {
+      return left(ServerFailure(errMessage: e.exceptionMeassge));
+    }
   }
 
   @override
-  Future<void> respondToFriendRequest({
+  Future<Either<Failure, void>> respondToFriendRequest({
     required String requestId,
     required FriendRequestStatus status,
   }) async {
-    await dataBaseService.updateSingleData(
-      documentId: requestId,
-      path: BackendEndPoints.friendRequests,
-      data: {"status": status.name, "responsedAt": DateTime.now()},
-    );
-
-    var requestDoc = await dataBaseService.getSingleData(
-      path: BackendEndPoints.friendRequests,
-      documentId: requestId,
-    );
-
-    FriendRequestModel friendRequestModel = FriendRequestModel.fromMap(
-      requestDoc,
-    );
-
-    if (status == FriendRequestStatus.accepted) {
-      await friendShipRepo.createFriendShip(
-        user1Id: friendRequestModel.senderId,
-        user2Id: friendRequestModel.receiverId,
+    try {
+      await dataBaseService.updateSingleData(
+        documentId: requestId,
+        path: BackendEndPoints.friendRequests,
+        data: {"status": status.name, "responsedAt": DateTime.now()},
       );
 
-      NotificationEntity notificationEntity = NotificationEntity(
-        isRead: false,
-        id: DateTime.now().toString(),
-        userId: friendRequestModel.senderId,
-        data: {"userId": friendRequestModel.receiverId},
-        title: "Friend Request Accepted",
-        body: "Your friend request has been accepted",
-        type: NotificationType.friendRequestAccepted,
-        createdAt: DateTime.now(),
+      var requestDoc = await dataBaseService.getSingleData(
+        path: BackendEndPoints.friendRequests,
+        documentId: requestId,
       );
 
-      await notificationsRepo.createNotification(
-        notificationEntity: notificationEntity,
+      FriendRequestModel friendRequestModel = FriendRequestModel.fromMap(
+        requestDoc,
       );
 
-      await notificationsRepo.removeNotificationForCancelledRequest(
-        receiverId: friendRequestModel.receiverId,
-        senderId: friendRequestModel.senderId,
-      );
-    } else if (status == FriendRequestStatus.rejected) {
-      NotificationEntity notificationEntity = NotificationEntity(
-        isRead: false,
-        id: DateTime.now().toString(),
-        userId: friendRequestModel.senderId,
-        data: {"userId": friendRequestModel.receiverId},
-        title: "Friend Request declined",
-        body: "Your friend request has been declined",
-        type: NotificationType.friendRequestDecliend,
-        createdAt: DateTime.now(),
-      );
+      if (status == FriendRequestStatus.accepted) {
+        await friendShipRepo.createFriendShip(
+          user1Id: friendRequestModel.senderId,
+          user2Id: friendRequestModel.receiverId,
+        );
 
-      await notificationsRepo.createNotification(
-        notificationEntity: notificationEntity,
-      );
+        NotificationEntity notificationEntity = NotificationEntity(
+          isRead: false,
+          id: DateTime.now().toString(),
+          userId: friendRequestModel.senderId,
+          data: {"userId": friendRequestModel.receiverId},
+          title: "Friend Request Accepted",
+          body: "Your friend request has been accepted",
+          type: NotificationType.friendRequestAccepted,
+          createdAt: DateTime.now(),
+        );
 
-      await notificationsRepo.removeNotificationForCancelledRequest(
-        receiverId: friendRequestModel.receiverId,
-        senderId: friendRequestModel.senderId,
-      );
+        await notificationsRepo.createNotification(
+          notificationEntity: notificationEntity,
+        );
+
+        await notificationsRepo.removeNotificationForCancelledRequest(
+          receiverId: friendRequestModel.receiverId,
+          senderId: friendRequestModel.senderId,
+        );
+      } else if (status == FriendRequestStatus.rejected) {
+        NotificationEntity notificationEntity = NotificationEntity(
+          isRead: false,
+          id: DateTime.now().toString(),
+          userId: friendRequestModel.senderId,
+          data: {"userId": friendRequestModel.receiverId},
+          title: "Friend Request declined",
+          body: "Your friend request has been declined",
+          type: NotificationType.friendRequestDecliend,
+          createdAt: DateTime.now(),
+        );
+
+        await notificationsRepo.createNotification(
+          notificationEntity: notificationEntity,
+        );
+
+        await notificationsRepo.removeNotificationForCancelledRequest(
+          receiverId: friendRequestModel.receiverId,
+          senderId: friendRequestModel.senderId,
+        );
+      }
+      return Right(null);
+    } on CustomException catch (e) {
+      return left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
 
   @override
-  Stream<List<FriendRequestEntity>> getFriendRequestStream({
+  Stream<Either<Failure, List<FriendRequestEntity>>> getFriendRequestStream({
     required String userId,
   }) async* {
-    var data = dataBaseService.getAllDataQueryStream(
-      path: BackendEndPoints.friendRequests,
-      query: QueryParams(
-        conditions: [
-          QueryCondition(
-            field: "status",
-            isEqualTo: FriendRequestStatus.pending.name,
-          ),
-          QueryCondition(field: "receiverId", isEqualTo: userId),
-        ],
-        orders: [QueryOrder(field: "createdAt", descending: true)],
-      ),
-    );
+    try {
+      var data = dataBaseService.getAllDataQueryStream(
+        path: BackendEndPoints.friendRequests,
+        query: QueryParams(
+          conditions: [
+            QueryCondition(
+              field: "status",
+              isEqualTo: FriendRequestStatus.pending.name,
+            ),
+            QueryCondition(field: "receiverId", isEqualTo: userId),
+          ],
+          orders: [QueryOrder(field: "createdAt", descending: true)],
+        ),
+      );
 
-    await for (var userMaps in data) {
-      final usersList = userMaps
-          .map((user) => FriendRequestModel.fromMap(user).toEntity())
-          .toList();
-      yield usersList;
+      await for (var userMaps in data) {
+        final usersList = userMaps
+            .map((user) => FriendRequestModel.fromMap(user).toEntity())
+            .toList();
+        yield Right(usersList);
+      }
+    } on CustomException catch (e) {
+      yield left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
 
   @override
-  Stream<List<FriendRequestEntity>> getSentFriendRequestStream({
-    required String userId,
-  }) async* {
-    var data = dataBaseService.getAllDataQueryStream(
-      path: BackendEndPoints.friendRequests,
-      query: QueryParams(
-        conditions: [QueryCondition(field: "senderId", isEqualTo: userId)],
-        orders: [QueryOrder(field: "createdAt", descending: true)],
-      ),
-    );
+  Stream<Either<Failure, List<FriendRequestEntity>>>
+  getSentFriendRequestStream({required String userId}) async* {
+    try {
+      var data = dataBaseService.getAllDataQueryStream(
+        path: BackendEndPoints.friendRequests,
+        query: QueryParams(
+          conditions: [QueryCondition(field: "senderId", isEqualTo: userId)],
+          orders: [QueryOrder(field: "createdAt", descending: true)],
+        ),
+      );
 
-    await for (var userMaps in data) {
-      final usersList = userMaps
-          .map((user) => FriendRequestModel.fromMap(user).toEntity())
-          .toList();
-      yield usersList;
+      await for (var userMaps in data) {
+        final usersList = userMaps
+            .map((user) => FriendRequestModel.fromMap(user).toEntity())
+            .toList();
+        yield Right(usersList);
+      }
+    } on CustomException catch (e) {
+      yield left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
 }
