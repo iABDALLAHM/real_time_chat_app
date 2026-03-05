@@ -82,6 +82,9 @@ class AuthRepoImplementation implements AuthRepo {
       saveUserData(userEntity: userEntity);
       return Right(userEntity);
     } on CustomException catch (e) {
+      log(
+        "error in the AuthRepoImplementation in signIn method the error is $e",
+      );
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -92,6 +95,9 @@ class AuthRepoImplementation implements AuthRepo {
       await authService.sendPasswordResetEmail(email: email);
       return Right(null);
     } catch (e) {
+      log(
+        "error in the AuthRepoImplementation in resetPassword method the error is $e",
+      );
       return Left(ServerFailure(errMessage: e.toString()));
     }
   }
