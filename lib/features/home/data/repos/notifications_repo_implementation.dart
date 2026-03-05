@@ -1,5 +1,7 @@
 // notifications collection all done
 
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:real_time_chat_app/core/entities/notification_entity.dart';
 import 'package:real_time_chat_app/core/enums/notification_type.dart';
@@ -29,6 +31,9 @@ class NotificationsRepoImplementation implements NotificationsRepo {
       );
       return Right(null);
     } on CustomException catch (e) {
+      log(
+        "this error happend in NotificationsRepoImplementation in createNotification method ${e.toString()}",
+      );
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -45,6 +50,9 @@ class NotificationsRepoImplementation implements NotificationsRepo {
       );
       return Right(null);
     } on CustomException catch (e) {
+      log(
+        "this error happend in NotificationsRepoImplementation in removeNotificationForCancelledRequest method ${e.toString()}",
+      );
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -67,6 +75,9 @@ class NotificationsRepoImplementation implements NotificationsRepo {
       );
       return Right(null);
     } on CustomException catch (e) {
+      log(
+        "this error happend in NotificationsRepoImplementation in deleteNotificationByTypeAndUser method ${e.toString()}",
+      );
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -91,6 +102,9 @@ class NotificationsRepoImplementation implements NotificationsRepo {
         yield Right(notificationList);
       }
     } on CustomException catch (e) {
+      log(
+        "this error happend in NotificationsRepoImplementation in get Notifications Stream method ${e.toString()}",
+      );
       yield Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -107,6 +121,9 @@ class NotificationsRepoImplementation implements NotificationsRepo {
       );
       return Right(null);
     } on CustomException catch (e) {
+      log(
+        "this error happend in NotificationsRepoImplementation in mark Notification As Read method ${e.toString()}",
+      );
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -129,6 +146,9 @@ class NotificationsRepoImplementation implements NotificationsRepo {
       );
       return Right(null);
     } on CustomException catch (e) {
+      log(
+        "this error happend in NotificationsRepoImplementation in mark All Notification As Read method ${e.toString()}",
+      );
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -144,6 +164,9 @@ class NotificationsRepoImplementation implements NotificationsRepo {
       );
       return Right(null);
     } on CustomException catch (e) {
+      log(
+        "this error happend in NotificationsRepoImplementation in delete Notification method ${e.toString()}",
+      );
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
