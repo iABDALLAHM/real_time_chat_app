@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:real_time_chat_app/core/entities/friendship_entity.dart';
 import 'package:real_time_chat_app/core/entities/notification_entity.dart';
@@ -42,6 +43,9 @@ class FriendShipRepoImplementation implements FriendShipRepo {
       );
       return Right(null);
     } on CustomException catch (e) {
+      log(
+        "this error happend in FriendShipRepoImplementation in create FriendShip method ${e.toString()}",
+      );
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -80,6 +84,9 @@ class FriendShipRepoImplementation implements FriendShipRepo {
       );
       return Right(null);
     } on CustomException catch (e) {
+      log(
+        "this error happend in FriendShipRepoImplementation in remove FriendShip method ${e.toString()}",
+      );
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -101,6 +108,9 @@ class FriendShipRepoImplementation implements FriendShipRepo {
       );
       return Right(null);
     } on CustomException catch (e) {
+      log(
+        "this error happend in FriendShipRepoImplementation in block User method ${e.toString()}",
+      );
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -122,6 +132,9 @@ class FriendShipRepoImplementation implements FriendShipRepo {
       );
       return Right(null);
     } on CustomException catch (e) {
+      log(
+        "this error happend in FriendShipRepoImplementation in un Block User method ${e.toString()}",
+      );
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -150,6 +163,9 @@ class FriendShipRepoImplementation implements FriendShipRepo {
         yield Right(friendshipEntityList);
       }
     } on CustomException catch (e) {
+      log(
+        "this error happend in FriendShipRepoImplementation in get Friends Stream method ${e.toString()}",
+      );
       yield Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -173,6 +189,9 @@ class FriendShipRepoImplementation implements FriendShipRepo {
       ).toEntity();
       return Right(friendshipEntity);
     } on CustomException catch (e) {
+      log(
+        "this error happend in FriendShipRepoImplementation in get FriendShips method ${e.toString()}",
+      );
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -195,6 +214,9 @@ class FriendShipRepoImplementation implements FriendShipRepo {
       bool isUserBlocked = FriendshipModel.fromMap(doc).toEntity().isBlocked;
       return Right(isUserBlocked);
     } on CustomException catch (e) {
+      log(
+        "this error happend in FriendShipRepoImplementation in is User Blocked method ${e.toString()}",
+      );
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -217,6 +239,9 @@ class FriendShipRepoImplementation implements FriendShipRepo {
       }
       return Right(false);
     } on CustomException catch (e) {
+      log(
+        "this error happend in FriendShipRepoImplementation in is Un Friended method ${e.toString()}",
+      );
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
