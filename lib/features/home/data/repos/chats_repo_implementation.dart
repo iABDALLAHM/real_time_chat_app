@@ -1,5 +1,8 @@
+import 'package:dartz/dartz.dart';
 import 'package:real_time_chat_app/core/entities/chat_entity.dart';
 import 'package:real_time_chat_app/core/entities/message_entity.dart';
+import 'package:real_time_chat_app/core/errors/custom_exception.dart';
+import 'package:real_time_chat_app/core/errors/failure.dart';
 import 'package:real_time_chat_app/core/models/chat_model.dart';
 import 'package:real_time_chat_app/core/models/firestore_query.dart';
 import 'package:real_time_chat_app/core/services/data_base_service.dart';
@@ -11,147 +14,189 @@ class ChatsRepoImplementation implements ChatsRepo {
 
   ChatsRepoImplementation({required this.dataBaseService});
   @override
-  Future<String> createOrGetChat({
+  Future<Either<Failure, String>> createOrGetChat({
     required String user1Id,
     required String user2Id,
   }) async {
-    List<String> participants = [user1Id, user2Id];
-    participants.sort();
-    String chatId = "${participants[0]}_${participants[1]}";
+    try {
+      List<String> participants = [user1Id, user2Id];
+      participants.sort();
+      String chatId = "${participants[0]}_${participants[1]}";
 
-    var chatRefernce = await dataBaseService.getSingleData(
-      path: BackendEndPoints.chats,
-      documentId: chatId,
-    );
-
-    if (chatRefernce == null) {
-      ChatEntity newChat = ChatEntity(
-        id: chatId,
-        participants: participants,
-        unreadCount: {user1Id: 0, user2Id: 0},
-        deletedBy: {user1Id: false, user2Id: false},
-        deletedAt: {user1Id: null, user2Id: null},
-        lastSeenBy: {user1Id: DateTime.now(), user2Id: DateTime.now()},
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-      );
-
-      await dataBaseService.addSinleData(
-        documentId: chatId,
+      var chatRefernce = await dataBaseService.getSingleData(
         path: BackendEndPoints.chats,
-        data: ChatModel.fromEntity(chatEntity: newChat).toMap(),
+        documentId: chatId,
       );
+
+      if (chatRefernce == null) {
+        ChatEntity newChat = ChatEntity(
+          id: chatId,
+          participants: participants,
+          unreadCount: {user1Id: 0, user2Id: 0},
+          deletedBy: {user1Id: false, user2Id: false},
+          deletedAt: {user1Id: null, user2Id: null},
+          lastSeenBy: {user1Id: DateTime.now(), user2Id: DateTime.now()},
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        );
+
+        await dataBaseService.addSinleData(
+          documentId: chatId,
+          path: BackendEndPoints.chats,
+          data: ChatModel.fromEntity(chatEntity: newChat).toMap(),
+        );
+      }
+
+      // not now
+      //  else {
+      //   ChatEntity existingChat = ChatModel.fromMap(chatRefernce).toEntity();
+
+      //   if (existingChat.isDeletedBy(userId: user1Id)) {
+      //     await restoreChatForUser(chatId: chatId, userId: user1Id);
+      //   }
+
+      //   if (existingChat.isDeletedBy(userId: user2Id)) {
+      //     await restoreChatForUser(chatId: chatId, userId: user2Id);
+      //   }
+      // }
+
+      return Right(chatId);
+    } on CustomException catch (e) {
+      return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
-
-    // not now
-    //  else {
-    //   ChatEntity existingChat = ChatModel.fromMap(chatRefernce).toEntity();
-
-    //   if (existingChat.isDeletedBy(userId: user1Id)) {
-    //     await restoreChatForUser(chatId: chatId, userId: user1Id);
-    //   }
-
-    //   if (existingChat.isDeletedBy(userId: user2Id)) {
-    //     await restoreChatForUser(chatId: chatId, userId: user2Id);
-    //   }
-    // }
-
-    return chatId;
   }
 
   @override
-  Stream<List<ChatEntity>> getUserChatsStream({required String userId}) async* {
-    var data = dataBaseService.getAllDataQueryStream(
-      path: BackendEndPoints.chats,
-      query: QueryParams(
-        conditions: [QueryCondition(field: "participants", arrayContains: userId)],
-        orders: [QueryOrder(field: "updatedAt", descending: true)],
-      ),
-    );
-    await for (var chatModel in data) {
-      var chatList = chatModel
-          .map((chat) => ChatModel.fromMap(chat).toEntity())
-          .where((chat) => !chat.isDeletedBy(userId: userId))
-          .toList();
-      yield chatList;
+  Stream<Either<Failure, List<ChatEntity>>> getUserChatsStream({
+    required String userId,
+  }) async* {
+    try {
+      var data = dataBaseService.getAllDataQueryStream(
+        path: BackendEndPoints.chats,
+        query: QueryParams(
+          conditions: [
+            QueryCondition(field: "participants", arrayContains: userId),
+          ],
+          orders: [QueryOrder(field: "updatedAt", descending: true)],
+        ),
+      );
+      await for (var chatModel in data) {
+        var chatList = chatModel
+            .map((chat) => ChatModel.fromMap(chat).toEntity())
+            .where((chat) => !chat.isDeletedBy(userId: userId))
+            .toList();
+        yield Right(chatList);
+      }
+    } on CustomException catch (e) {
+      yield Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
 
   @override
-  Future<void> updateChatLastMessage({
+  Future<Either<Failure, void>> updateChatLastMessage({
     required String chatId,
     required MessageEntity message,
   }) async {
-    dataBaseService.updateSingleData(
-      path: BackendEndPoints.chats,
-      data: {
-        "lastMessage": message.content,
-        "lastMessageTime": message.timeStamp,
-        // "lastMessageSenderId": message.participants.firstWhere((ids)=> ids != ),
-        "updatedAt": DateTime.now(),
-      },
-      documentId: chatId,
-    );
+    try {
+      dataBaseService.updateSingleData(
+        path: BackendEndPoints.chats,
+        data: {
+          "lastMessage": message.content,
+          "lastMessageTime": message.timeStamp,
+          // "lastMessageSenderId": message.participants.firstWhere((ids)=> ids != ),
+          "updatedAt": DateTime.now(),
+        },
+        documentId: chatId,
+      );
+      return Right(null);
+    } on CustomException catch (e) {
+      return Left(ServerFailure(errMessage: e.exceptionMeassge));
+    }
   }
 
   @override
-  Future<void> updateUserLastSeen({
+  Future<Either<Failure, void>> updateUserLastSeen({
     required String chatId,
     required String userId,
   }) async {
-    await dataBaseService.updateSingleData(
-      path: BackendEndPoints.chats,
-      data: {"lastSeenBy.$userId": DateTime.now()},
-      documentId: chatId,
-    );
+    try {
+      await dataBaseService.updateSingleData(
+        path: BackendEndPoints.chats,
+        data: {"lastSeenBy.$userId": DateTime.now()},
+        documentId: chatId,
+      );
+      return Right(null);
+    } on CustomException catch (e) {
+      return Left(ServerFailure(errMessage: e.exceptionMeassge));
+    }
   }
 
   @override
-  Future<void> deleteChatForUser({
+  Future<Either<Failure, void>> deleteChatForUser({
     required String chatId,
     required String userId,
   }) async {
-    await dataBaseService.updateSingleData(
-      path: BackendEndPoints.chats,
-      data: {"deletedBy.$userId": true, "deletedAt.$userId": DateTime.now()},
-      documentId: chatId,
-    );
+    try {
+      await dataBaseService.updateSingleData(
+        path: BackendEndPoints.chats,
+        data: {"deletedBy.$userId": true, "deletedAt.$userId": DateTime.now()},
+        documentId: chatId,
+      );
+      return Right(null);
+    } on CustomException catch (e) {
+      return Left(ServerFailure(errMessage: e.exceptionMeassge));
+    }
   }
 
   @override
-  Future<void> restoreChatForUser({
+  Future<Either<Failure, void>> restoreChatForUser({
     required String chatId,
     required String userId,
   }) async {
-    await dataBaseService.updateSingleData(
-      path: BackendEndPoints.chats,
-      data: {"deletedBy.$userId": false},
-      documentId: chatId,
-    );
+    try {
+      await dataBaseService.updateSingleData(
+        path: BackendEndPoints.chats,
+        data: {"deletedBy.$userId": false},
+        documentId: chatId,
+      );
+      return Right(null);
+    } on CustomException catch (e) {
+      return Left(ServerFailure(errMessage: e.exceptionMeassge));
+    }
   }
 
   @override
-  Future<void> updateunReadCount({
+  Future<Either<Failure, void>> updateunReadCount({
     required String chatId,
     required String userId,
     required int count,
   }) async {
-    await dataBaseService.updateSingleData(
-      path: BackendEndPoints.chats,
-      data: {"unreadCount.$userId": count},
-      documentId: chatId,
-    );
+    try {
+      await dataBaseService.updateSingleData(
+        path: BackendEndPoints.chats,
+        data: {"unreadCount.$userId": count},
+        documentId: chatId,
+      );
+      return Right(null);
+    } on CustomException catch (e) {
+      return Left(ServerFailure(errMessage: e.exceptionMeassge));
+    }
   }
 
   @override
-  Future<void> restoreunReadCount({
+  Future<Either<Failure, void>> restoreunReadCount({
     required String chatId,
     required String userId,
   }) async {
-    await dataBaseService.updateSingleData(
-      path: BackendEndPoints.chats,
-      data: {"unreadCount.$userId": 0},
-      documentId: chatId,
-    );
+    try {
+      await dataBaseService.updateSingleData(
+        path: BackendEndPoints.chats,
+        data: {"unreadCount.$userId": 0},
+        documentId: chatId,
+      );
+      return Right(null);
+    } on CustomException catch (e) {
+      return Left(ServerFailure(errMessage: e.exceptionMeassge));
+    }
   }
 }

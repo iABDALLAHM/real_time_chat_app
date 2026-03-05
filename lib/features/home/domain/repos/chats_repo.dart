@@ -1,34 +1,38 @@
+import 'package:dartz/dartz.dart';
 import 'package:real_time_chat_app/core/entities/chat_entity.dart';
 import 'package:real_time_chat_app/core/entities/message_entity.dart';
+import 'package:real_time_chat_app/core/errors/failure.dart';
 
 abstract class ChatsRepo {
-  Future<String> createOrGetChat({
+  Future<Either<Failure, String>> createOrGetChat({
     required String user1Id,
     required String user2Id,
   });
-  Stream<List<ChatEntity>> getUserChatsStream({required String userId});
-  Future<void> updateChatLastMessage({
+  Stream<Either<Failure, List<ChatEntity>>> getUserChatsStream({
+    required String userId,
+  });
+  Future<Either<Failure,void>> updateChatLastMessage({
     required String chatId,
     required MessageEntity message,
   });
-  Future<void> updateUserLastSeen({
+  Future<Either<Failure, void>> updateUserLastSeen({
     required String chatId,
     required String userId,
   });
-  Future<void> deleteChatForUser({
+  Future<Either<Failure, void>> deleteChatForUser({
     required String chatId,
     required String userId,
   });
-  Future<void> restoreChatForUser({
+  Future<Either<Failure, void>> restoreChatForUser({
     required String chatId,
     required String userId,
   });
-  Future<void> updateunReadCount({
+  Future<Either<Failure, void>> updateunReadCount({
     required String chatId,
     required String userId,
     required int count,
   });
-  Future<void> restoreunReadCount({
+  Future<Either<Failure, void>> restoreunReadCount({
     required String chatId,
     required String userId,
   });

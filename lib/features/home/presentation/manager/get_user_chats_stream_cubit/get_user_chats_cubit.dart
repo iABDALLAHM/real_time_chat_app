@@ -19,22 +19,31 @@ class GetUserChatsCubit extends Cubit<GetUserChatsStates> {
     emit(LoadingGetUserChatsState());
     _streamSubscription = chatsRepo.getUserChatsStream(userId: userId).listen((
       result,
-    ) async {
-      List<UserWithChatEntity> userWithChatList = [];
+    ) {
+      result.fold(
+        (failure) {
+          emit(FailureGetUserChatsState());
+        },
+        (success) async {
+          List<UserWithChatEntity> userWithChatList = [];
 
-      if (result.isEmpty) {
-        emit(EmptyGetUserChatsState());
-      } else {
-        chats = result;
-        for (var user in result) {
-          var otherUserId = user.participants.firstWhere((id) => id != userId);
-          var userData = await authRepo.getUserData(uId: otherUserId);
-          userWithChatList.add(
-            UserWithChatEntity(chatEntity: user, userEntity: userData),
-          );
-        }
-        emit(SuccessGetUserChatsState(userWithChatList: userWithChatList));
-      }
+          if (success.isEmpty) {
+            emit(EmptyGetUserChatsState());
+          } else {
+            chats = success;
+            for (var user in success) {
+              var otherUserId = user.participants.firstWhere(
+                (id) => id != userId,
+              );
+              var userData = await authRepo.getUserData(uId: otherUserId);
+              userWithChatList.add(
+                UserWithChatEntity(chatEntity: user, userEntity: userData),
+              );
+            }
+            emit(SuccessGetUserChatsState(userWithChatList: userWithChatList));
+          }
+        },
+      );
     });
   }
 

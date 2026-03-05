@@ -32,10 +32,12 @@ class MessagesRepoImplementation implements MessagesRepo {
         data: MessageModel.formEntity(messageEntity: message).toMap(),
       );
 
-      String chatId = await chatsRepo.createOrGetChat(
-        user1Id: message.messageSenderId,
-        user2Id: message.messageReceiverId,
-      );
+      String chatId =
+          await chatsRepo.createOrGetChat(
+                user1Id: message.messageSenderId,
+                user2Id: message.messageReceiverId,
+              )
+              as String;
 
       await chatsRepo.updateChatLastMessage(chatId: chatId, message: message);
 
