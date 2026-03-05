@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:real_time_chat_app/constants.dart';
 import 'package:real_time_chat_app/core/entities/user_entity.dart';
@@ -28,6 +29,9 @@ class ProfileRepoImplementation implements ProfileRepo {
       await updateUserOnlineStatus(userId: userId, isOnline: false);
       return Right(null);
     } on CustomException catch (e) {
+      log(
+        "this error happend in ProfileRepoImplementation in signOut method ${e.toString()}",
+      );
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -42,6 +46,9 @@ class ProfileRepoImplementation implements ProfileRepo {
       );
       return Right(null);
     } on CustomException catch (e) {
+      log(
+        "this error happend in ProfileRepoImplementation in deleteUser method ${e.toString()}",
+      );
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -59,6 +66,9 @@ class ProfileRepoImplementation implements ProfileRepo {
       updateUserData(userEntity: userEntity);
       return Right(null);
     } on CustomException catch (e) {
+      log(
+        "this error happend in ProfileRepoImplementation in updateUserInfo method ${e.toString()}",
+      );
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -72,6 +82,9 @@ class ProfileRepoImplementation implements ProfileRepo {
       await authService.signOut();
       return Right(null);
     } on CustomException catch (e) {
+      log(
+        "this error happend in ProfileRepoImplementation in updateUserPassword method ${e.toString()}",
+      );
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -96,6 +109,9 @@ class ProfileRepoImplementation implements ProfileRepo {
         yield Right(data);
       }
     } on CustomException catch (e) {
+      log(
+        "this error happend in ProfileRepoImplementation in getUserStream method ${e.toString()}",
+      );
       yield Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
@@ -113,6 +129,9 @@ class ProfileRepoImplementation implements ProfileRepo {
       );
       return Right(null);
     } on CustomException catch (e) {
+      log(
+        "this error happend in ProfileRepoImplementation in updateUserOnlineStatus method ${e.toString()}",
+      );
       return Left(ServerFailure(errMessage: e.exceptionMeassge));
     }
   }
