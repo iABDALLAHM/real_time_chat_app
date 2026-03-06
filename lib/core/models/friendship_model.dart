@@ -5,8 +5,8 @@ class FriendshipModel {
   final String id;
   final List<String> userIds;
   final DateTime createdAt;
-  final bool isBlocked;
-  final String? blockedBy;
+  bool isBlocked;
+  String? blockedBy;
 
   FriendshipModel({
     required this.id,
@@ -17,7 +17,7 @@ class FriendshipModel {
   });
   factory FriendshipModel.fromMap(Map<String, dynamic> map) {
     return FriendshipModel(
-      userIds: List<String>.from(map["userIds"] ?? []),
+      userIds: List<String>.from(map["userIds"]),
       id: map["id"],
       createdAt: (map["createdAt"] as Timestamp).toDate(),
       isBlocked: map["isBlocked"],

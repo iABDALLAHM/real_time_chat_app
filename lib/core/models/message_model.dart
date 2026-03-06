@@ -33,10 +33,7 @@ class MessageModel {
       messageSenderId: map["messageSenderId"],
       messageReceiverId: map["messageReceiverId"],
       content: map["content"],
-      type: MessageType.values.firstWhere(
-        (e) => e.name == (map["type"] ?? "text"),
-        orElse: () => MessageType.text,
-      ),
+      type: MessageType.values.firstWhere((e) => e.name == (map["type"])),
       timeStamp: (map["timeStamp"] as Timestamp).toDate(),
       isRead: map["isRead"],
       isEdited: map["isEdited"],
@@ -59,6 +56,7 @@ class MessageModel {
 
   MessageEntity toEntity() {
     return MessageEntity(
+      type: type,
       id: id,
       messageSenderId: messageSenderId,
       messageReceiverId: messageReceiverId,

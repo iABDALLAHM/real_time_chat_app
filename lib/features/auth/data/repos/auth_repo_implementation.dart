@@ -36,6 +36,7 @@ class AuthRepoImplementation implements AuthRepo {
               )
               as User;
       UserEntity userEntity = UserEntity(
+        isOnline: false,
         uId: user.uid,
         email: email,
         displayName: name,

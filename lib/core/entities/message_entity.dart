@@ -9,7 +9,7 @@ class MessageEntity {
   final DateTime timeStamp;
   final bool isRead;
   final bool isEdited;
-  final DateTime? editedAt;
+  DateTime? editedAt;
   final MessageType type;
 
   MessageEntity({
@@ -21,7 +21,7 @@ class MessageEntity {
     this.isRead = false,
     this.isEdited = false,
     this.editedAt,
-    this.type = MessageType.text,
+    required this.type,
     required this.participants,
   });
 }

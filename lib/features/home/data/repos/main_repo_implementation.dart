@@ -58,9 +58,6 @@ class MainRepoImplementation implements MainRepo {
         ).toMap(),
       );
 
-      // String notificationId =
-      //     "friend_request_${friendRequestEntity.senderId}_${friendRequestEntity.receiverId}_${DateTime.now()}";
-
       NotificationEntity notificationEntity = NotificationEntity(
         isRead: false,
         id: friendRequestEntity.id,

@@ -29,7 +29,7 @@ class GetSentFriendRequestStreamCubit
               length = success.length;
               List<FriendRequestWithUserEntity> friendRequestWithUserList = [];
               for (var request in success) {
-                var sentRequestId = request.id == userId
+                var sentRequestId = request.senderId == userId
                     ? request.receiverId
                     : request.senderId;
                 var user = await authRepo.getUserData(uId: sentRequestId);

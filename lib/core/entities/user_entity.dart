@@ -12,7 +12,7 @@ class UserEntity {
     required this.email,
     required this.displayName,
     this.photoUrl,
-    this.isOnline = false,
+    required this.isOnline,
     required this.lastSeen,
     required this.createdAt,
   });

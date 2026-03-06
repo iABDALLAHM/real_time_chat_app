@@ -56,10 +56,7 @@ class NotificationModel {
       userId: map["userId"],
       title: map["title"],
       body: map["body"],
-      type: NotificationType.values.firstWhere(
-        (e) => e.name == map["type"],
-        orElse: () => NotificationType.friendRequest,
-      ),
+      type: NotificationType.values.firstWhere((e) => e.name == map["type"]),
       data: Map<String, dynamic>.from(map["data"]),
       isRead: map["isRead"],
       createdAt: (map["createdAt"] as Timestamp).toDate(),

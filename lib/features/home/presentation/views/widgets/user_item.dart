@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/entities/friend_request_entity.dart';
 import 'package:real_time_chat_app/core/entities/user_entity.dart';
+import 'package:real_time_chat_app/core/enums/friend_request_status.dart';
 import 'package:real_time_chat_app/core/enums/user_relationship_status.dart';
 import 'package:real_time_chat_app/core/functions/build_default_avatar.dart';
 import 'package:real_time_chat_app/core/functions/get_user_data.dart';
@@ -64,6 +65,7 @@ class _UserItemState extends State<UserItem> {
                 if (relationshipStatus == UserRelationshipStatus.none) {
                   context.read<SendFriendRequestCubit>().sendRequest(
                     friendRequestEntity: FriendRequestEntity(
+                      status: FriendRequestStatus.pending,
                       id: requestId,
                       senderId: getUserData().uId,
                       receiverId: widget.userEntity.uId,

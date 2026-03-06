@@ -7,13 +7,13 @@ class FriendRequestEntity {
   final FriendRequestStatus status;
   final DateTime createdAt;
   DateTime? responsedAt;
-  final String? message;
+  String? message;
 
   FriendRequestEntity({
     required this.id,
     required this.senderId,
     required this.receiverId,
-    this.status = FriendRequestStatus.pending,
+    required this.status,
     required this.createdAt,
     this.responsedAt,
     this.message,

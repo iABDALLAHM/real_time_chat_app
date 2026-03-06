@@ -15,7 +15,7 @@ class FriendRequestModel {
     required this.id,
     required this.senderId,
     required this.receiverId,
-    this.status = FriendRequestStatus.pending,
+    required this.status,
     required this.createdAt,
     this.responsedAt,
     this.message,
@@ -33,7 +33,6 @@ class FriendRequestModel {
       message: map["message"],
       status: FriendRequestStatus.values.firstWhere(
         (e) => e.name == (map["status"]),
-        orElse: () => FriendRequestStatus.pending,
       ),
     );
   }
@@ -42,6 +41,7 @@ class FriendRequestModel {
     required FriendRequestEntity friendRequestEntity,
   }) {
     return FriendRequestModel(
+      status: friendRequestEntity.status,
       id: friendRequestEntity.id,
       senderId: friendRequestEntity.senderId,
       receiverId: friendRequestEntity.receiverId,

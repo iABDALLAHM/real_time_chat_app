@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_time_chat_app/core/entities/message_entity.dart';
 import 'package:real_time_chat_app/core/entities/user_entity.dart';
+import 'package:real_time_chat_app/core/enums/message_type.dart';
 import 'package:real_time_chat_app/core/functions/get_user_data.dart';
 import 'package:real_time_chat_app/features/chat/presentation/manager/get_messages_stream_cubit/get_messages_stream_cubit.dart';
 import 'package:real_time_chat_app/features/chat/presentation/manager/get_messages_stream_cubit/get_messages_stream_state.dart';
@@ -86,6 +87,7 @@ class _ChatViewBodyState extends State<ChatViewBody> {
             if (currentMessage.isEmpty) return;
             textController.clear();
             MessageEntity messageEntity = MessageEntity(
+              type: MessageType.text,
               participants: messagesChatId,
               id: Uuid().v4(),
               messageSenderId: getUserData().uId,
