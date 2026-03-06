@@ -97,8 +97,8 @@ class MessagesRepoImplementation implements MessagesRepo {
         messagesList = messageMap
             .map((element) => MessageModel.fromMap(element).toEntity())
             .toList();
+        yield Right(messagesList);
       }
-      yield Right(messagesList);
     } on CustomException catch (e) {
       log(
         "this Error is happend in MessagesRepoImplementation in get Messages Stream Method the error is ${e.exceptionMeassge}",
