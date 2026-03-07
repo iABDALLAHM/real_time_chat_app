@@ -1,4 +1,4 @@
-import 'package:real_time_chat_app/core/models/firestore_query.dart';
+import 'package:real_time_chat_app/core/models/query_params.dart';
 
 abstract class DataBaseService {
   Future<void> addData({

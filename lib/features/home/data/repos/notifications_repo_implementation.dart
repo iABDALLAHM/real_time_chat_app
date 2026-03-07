@@ -7,7 +7,7 @@ import 'package:real_time_chat_app/core/entities/notification_entity.dart';
 import 'package:real_time_chat_app/core/enums/notification_type.dart';
 import 'package:real_time_chat_app/core/errors/custom_exception.dart';
 import 'package:real_time_chat_app/core/errors/failure.dart';
-import 'package:real_time_chat_app/core/models/firestore_query.dart';
+import 'package:real_time_chat_app/core/models/query_params.dart';
 import 'package:real_time_chat_app/core/models/notification_model.dart';
 import 'package:real_time_chat_app/core/services/data_base_service.dart';
 import 'package:real_time_chat_app/core/utils/backend_end_points.dart';
